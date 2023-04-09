@@ -16,7 +16,7 @@ import 'package:uuid/uuid.dart';
   class Utils {
 
 
-  static String URL_WEB_SERVICE = "http://192.168.0.11:8080/api/";
+  static String URL_WEB_SERVICE = "http://192.168.0.6:5000/api/";
   //String URL_WEB_SERVICE = "http://avaliacoes-backend.herokuapp.com/";
   static const String IMG_KEY = 'IMAGE_KEY';
 
@@ -25,6 +25,20 @@ import 'package:uuid/uuid.dart';
   }
   static bool validarCPF(String cpf){
     return CPFValidator.isValid(cpf);
+  }
+
+  static saveSession(String key, value) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(key, json.encode(value));
+  }
+  static readSession(String? key) async {
+    var prefs = await SharedPreferences.getInstance();
+    var chave = prefs.getString(key!);
+    return json.decode(chave!);
+  }
+  static removeSession(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove(key);
   }
 
   static bool invalidEmail(String? value) {

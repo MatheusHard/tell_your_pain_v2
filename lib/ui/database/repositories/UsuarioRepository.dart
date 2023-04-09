@@ -6,20 +6,22 @@ import 'interfaces/IUsuarioRepository.dart';
 
 class UsuarioRepository  implements IUsuarioRepository{
 
+  var _db;
+  UsuarioRepository(var db){
+    _db = db;
+  }
+
   @override
-  Future<List<Usuario>>getAll() async {
-    var db = await DBHelper.instance.database;
-    var usuarios = await db.query(UsuarioDataModel.getTabela(), orderBy: UsuarioDataModel.nome);
-    List<Usuario> list = usuarios.isNotEmpty
-        ? usuarios.map((u) => Usuario.fromMap(u)).toList()
-        : [];
-    return list;
+  Future<List>getAll() async {
+    //var db = await DBHelper.instance.database;
+    var usuarios = await _db.query(UsuarioDataModel.getTabela(), orderBy: UsuarioDataModel.nome);
+    return usuarios.toList();
   }
 
   @override
   Future<int> add(Usuario usuario) async {
-    var db = await DBHelper.instance.database;
-    return await db.insert(UsuarioDataModel.getTabela(), usuario.toMap());
+    //var _db = await DBHelper.instance.database;
+    return await _db.insert(UsuarioDataModel.getTabela(), usuario.toMap());
   }
 
 }

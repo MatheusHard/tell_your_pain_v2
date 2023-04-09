@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tell_your_pain_v2/ui/api/usuario_api.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 
 class LoginPage extends StatefulWidget {
@@ -60,7 +61,17 @@ class _LoginPageState extends State<LoginPage> {
           minWidth: 200.0,
           height: 42.0,
           onPressed: () {
-            Navigator.pushNamed(context, '/home_page', arguments: null);
+            var user =  {
+              "Email": "matheus@gmail.com",
+              "Nome": "Luiz Silva",
+              "Password": "1254",
+              "Cpf": "05698754521",
+              "Fone" : "05698754521",
+              "Foto" : "fgff/ggh"
+            };
+//UsuarioApi().getJson();
+            UsuarioApi(context).loginUsuario(user);
+
             /*FirebaseAuth.instance
                 .signInWithEmailAndPassword(
               email: _email,
