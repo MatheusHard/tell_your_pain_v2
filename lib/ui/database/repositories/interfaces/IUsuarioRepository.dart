@@ -4,5 +4,6 @@ abstract class IUsuarioRepository {
 
   Future<List> getAll();
   Future<int> add(Usuario usuario);
+  Future<int> deleteAll();
 
 }

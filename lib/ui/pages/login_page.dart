@@ -12,7 +12,18 @@ class _LoginPageState extends State<LoginPage> {
   late String _email;
   late String _senha;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late FocusNode _myFocusNode;
+  late FocusNode _myFocusNode_2;
 
+  @override
+  void initState (){
+
+    _myFocusNode = FocusNode();
+    _myFocusNode_2 = FocusNode();
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final logo = Hero(
@@ -36,7 +47,13 @@ class _LoginPageState extends State<LoginPage> {
         hintText: 'Email',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
       ),
-    );
+      validator:  (value){
+        if(value!.isEmpty || value == ""){
+          _myFocusNode.requestFocus();
+          return "Digite o Email";
+        }
+        return null;
+      },    );
 
     final senha = TextFormField(
       autofocus: false,
@@ -50,6 +67,13 @@ class _LoginPageState extends State<LoginPage> {
         hintText: 'Senha',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
       ),
+      validator:  (value){
+        if(value!.isEmpty || value == ""){
+          _myFocusNode.requestFocus();
+          return "Digite a Senha";
+        }
+        return null;
+      },
     );
 
     final botao = Padding(
@@ -61,17 +85,17 @@ class _LoginPageState extends State<LoginPage> {
           minWidth: 200.0,
           height: 42.0,
           onPressed: () {
-            var user =  {
-              "Email": "matheus@gmail.com",
-              "Nome": "Luiz Silva",
-              "Password": "1254",
-              "Cpf": "05698754521",
-              "Fone" : "05698754521",
-              "Foto" : "fgff/ggh"
-            };
-//UsuarioApi().getJson();
-            UsuarioApi(context).loginUsuario(user);
-
+                if(_formKey.currentState!.validate()) {
+                  var user = {
+                    "Email": _email,
+                    "Nome": "Luiz Silva",
+                    "Password": Utils.toSha1(_senha),
+                    "Cpf": "05698754521",
+                    "Fone": "05698754521",
+                    "Foto": "fgff/ggh"
+                  };
+                  UsuarioApi(context).loginUsuario(user);
+                }
             /*FirebaseAuth.instance
                 .signInWithEmailAndPassword(
               email: _email,
@@ -96,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    final cadastrar = FloatingActionButton(
+    final cadastrar = TextButton(
       child: const Text(
         'Não tem uma conta? Cadastre-se',
         style: TextStyle(color: Colors.blue, fontSize: 16),
@@ -111,6 +135,8 @@ class _LoginPageState extends State<LoginPage> {
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       body: Center(
+        child: Form(
+        key: _formKey,
         child: ListView(
           shrinkWrap: true,
           padding: const EdgeInsets.only(left: 24, right: 24),
@@ -132,6 +158,10 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
+     )
     );
+
+
   }
+
 }

@@ -1,14 +1,27 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
+import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+
+
+
   var textos = [
     "Questionário Diário",
     "Avaliação Do Dia",
     "Chat Da Turma",
     "Sair"
   ];
+
   var images = [
     'assets/images/icones_home/questionario.png',
     'assets/images/icones_home/estado.png',
@@ -29,9 +42,15 @@ class MainPage extends StatelessWidget {
       //});
     }
   }
-
+  @override
+  void initState (){
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+
+    ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
+
     return GridView.builder(
       itemCount: textos.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -42,8 +61,9 @@ class MainPage extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return Card(
           child: InkWell(
-            onTap: () {
+            onTap: () async {
               click(index, context);
+
             },
             child: Column(
               children: <Widget>[
@@ -73,4 +93,13 @@ class MainPage extends StatelessWidget {
       },
     );
   }
-}
+
+  Future<void>  getSession() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final usuario = prefs.getString('usuarioLogado');
+    var usuarioLogado = jsonDecode(usuario!);
+
+    return usuarioLogado;
+    }
+  }
+

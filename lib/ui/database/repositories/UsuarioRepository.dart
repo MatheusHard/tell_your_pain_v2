@@ -24,4 +24,8 @@ class UsuarioRepository  implements IUsuarioRepository{
     return await _db.insert(UsuarioDataModel.getTabela(), usuario.toMap());
   }
 
+  Future<int> deleteAll() async{
+    return await _db.rawDelete(UsuarioDataModel.zerarTabela());
+  }
+
 }

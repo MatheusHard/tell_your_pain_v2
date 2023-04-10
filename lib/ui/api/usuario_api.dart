@@ -3,9 +3,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tell_your_pain_v2/ui/database/db_helper.dart';
+import 'package:tell_your_pain_v2/ui/database/repositories/UsuarioRepository.dart';
 import 'dart:convert';
 
 import '../models/usuario.dart';
+import '../pages/screen_arguments/ScreenArgumentsUsuario.dart';
 import '../pages/utils/metods/utils.dart';
 
 class UsuarioApi{
@@ -16,16 +19,13 @@ class UsuarioApi{
     _context = context;
   }
   final URL_API_USUARIO = "usuario";
-  final URL_API_CIDADES_POST = "cidade/add";
   final URL_LOGIN = "/login";
 
 
-  //Future<int> getJson(BuildContext context) async{
-  Future<int> getJson() async{
+  //Get All Users
+  Future<int> getAll() async{
 
-    String url_ = Platform.isAndroid ? 'http://192.168.0.6:5000/api/usuario' : 'https://localhost:5001/api/usuario';
-
-    Uri url = Uri.parse(url_);
+    Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_USUARIO''');
     http.Response response = await http.get(url);
 
     print(response);
@@ -50,25 +50,34 @@ class UsuarioApi{
 
     }
   }
-/************ENVIAR***************/
 
+//Login
 loginUsuario(Map login) async{
 
     Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_USUARIO$URL_LOGIN''');
-    //Uri url = Uri.parse(url_);
     http.Response response = await http.post(
       url,
       headers: {
        //"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
         "Content-type": "application/json; charset=UTF-8"
        },
-      body:  jsonEncode( login)
+      body:  jsonEncode(login)
 
     );
 
     if(response.statusCode == 200){
-      var usuario = jsonDecode(response.body);
-      Navigator.pushNamed(_context!, '/home_page', arguments: null);
+      //Usuario Repositorio:
+      var usuarioRepository = UsuarioRepository(await DBHelper.instance.database);
+
+      Usuario usuario = Usuario.fromMap(jsonDecode(response.body));
+
+       int deleteALl = await usuarioRepository.deleteAll();
+
+        if(deleteALl == 1) {
+          int resultAdd = await usuarioRepository.add(usuario);
+          if (resultAdd == 1) Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
+        }
+      //Utils.saveSession("usuarioLogado", usuario);
 
     }else{
       Utils.showDefaultSnackbar(_context!, response.body);
