@@ -73,10 +73,10 @@ loginUsuario(Map login) async{
 
        int deleteALl = await usuarioRepository.deleteAll();
 
-        if(deleteALl == 1) {
+       // if(deleteALl == 1) {
           int resultAdd = await usuarioRepository.add(usuario);
           if (resultAdd == 1) Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
-        }
+      //  }
       //Utils.saveSession("usuarioLogado", usuario);
 
     }else{

@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:tell_your_pain_v2/ui/api/resposta_api.dart';
 import 'package:tell_your_pain_v2/ui/api/usuario_api.dart';
 import 'package:tell_your_pain_v2/ui/database/db_helper.dart';
+import 'package:tell_your_pain_v2/ui/database/repositories/RespostaRepository.dart';
 import 'package:tell_your_pain_v2/ui/database/repositories/UsuarioRepository.dart';
+import 'package:tell_your_pain_v2/ui/models/resposta.dart';
 import 'package:tell_your_pain_v2/ui/models/usuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/avaliacao_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/cadastro_page.dart';
@@ -24,7 +26,14 @@ void main() async{
 //  await dotenv.load(fileName: ".env");
 
   //Usuario Repositorio:
-  var usuarioRepository = UsuarioRepository(await DBHelper.instance.database);
+  //var usuarioRepository = UsuarioRepository(await DBHelper.instance.database);
+var respRepo =  RespostaRepository(await DBHelper.instance.database);
+
+Resposta resposta = Resposta(id: "24943f43-ff2e-4309-a3c2-12f154751ebf", turma: 1, alunoId: "0f8fad5b-d9cb-469f-a165-70867728950e",
+    statusEnvio: 1, erros: "", respostaCodigo: 3, dataCadastro: Utils.getDataHoraDotNet(), latitude: "2541.332",
+    longitude: "65584,33221", enderecoIp: "192.168.2.6", perguntaTipo: 2);
+
+//int res = await respRepo.add(resposta);
 
 
 
@@ -33,12 +42,16 @@ void main() async{
                                              email: 'burumungu@gmail.com', escolaId: '2012-kkjj-kjnjkk', turmaId: '2541'));
 */
 
-  List lista = await usuarioRepository.getAll();
+  List lista = await respRepo.getAll();
+  //List lista = await respRepo.getAllAEnviar(1);
 
   for (var u in lista) {
     print("--------------DONO---------------------");
-    print('''Dono: ${u['nome']}''');
-    print('''Cpf: ${u['cpf']}''');
+    print('''Id: ${u['id']}''');
+    print('''alunoId: ${u['alunoId']}''');
+    print('''dataCadastro: ${u['dataCadastro']}''');
+    print('''statusEnvio: ${u['statusEnvio']}''');
+
 
     print("-----------------------------------------");
 

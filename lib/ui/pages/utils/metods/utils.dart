@@ -86,6 +86,11 @@ import 'package:uuid/uuid.dart';
   static DateTime getDataHora(){
   return DateTime.now();
   }
+  static String getDataHoraDotNet(){
+    var now = DateTime.now();
+    var dateFormatted = DateFormat("yyyy-MM-ddTHH:mm:ss").format(now);
+    return dateFormatted;
+  }
   static DateTime? stringToDate(String dataHora){
     return DateTime.tryParse(dataHora);
   }

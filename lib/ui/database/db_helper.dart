@@ -4,6 +4,8 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tell_your_pain_v2/ui/database/data_model/usuario_data_model.dart';
 
+import 'data_model/resposta_data_model.dart';
+
 class DBHelper{
 
   DBHelper._privateConstructor();
@@ -26,6 +28,7 @@ class DBHelper{
   void _onCreate(Database db, int version) async{
 
     await db.execute(UsuarioDataModel.criarTabela());
+    await db.execute(RespostaDataModel.criarTabela());
 
   }
 
