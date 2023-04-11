@@ -1,8 +1,10 @@
 
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:crypto/crypto.dart';
+import 'package:dart_ipify/dart_ipify.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -79,9 +81,32 @@ import 'package:uuid/uuid.dart';
       return value.toString();
 
     }
+   static Future<bool> isConnected() async {
 
+    bool flag = false;
+      try {
+        final result = await InternetAddress.lookup('globo.com');
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+          flag = true;
+          print('connected');
+        }
+        } on SocketException catch (_) {
 
-  /***************DataHora***************/
+        print('not connected');
+        flag = false;
+        }
+        return flag;
+    }
+    //Get my IP:
+    static Future<String> getIpDevice() async{
+      if(await isConnected()){
+        final ipv4 = await Ipify.ipv4();
+        return ipv4;
+      }else{
+        return "";
+      }
+    }
+    /***************DataHora***************/
 
   static DateTime getDataHora(){
   return DateTime.now();
@@ -109,7 +134,7 @@ import 'package:uuid/uuid.dart';
     return date;
   }
   /**************Mostrar Texto**************/
-  static void showDefaultSnackbar(BuildContext context, String texto) {
+  static void showDefaultSnackbar(BuildContext context, String texto){
   //Scaffold.of(context).showSnackBar(
     final snackBar = SnackBar(
       content: Text((texto.isEmpty) ? "" : texto.toString()),

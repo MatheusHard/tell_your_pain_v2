@@ -50,11 +50,18 @@ class RespostaApi{
   }
 
 //Login
-enviarRespostas(List respostas) async{
+Future<int> enviarRespostas(List respostas) async{
 
   var respostaRepository =  RespostaRepository(await DBHelper.instance.database);
 
-  List lista = await respostaRepository.getAllAEnviar(1);
+  List listaAEnviar = await respostaRepository.getAllAEnviar(1);
+
+  if(listaAEnviar.isEmpty) {
+    return 0;
+  }
+
+
+  List lista = await _atualizarLista(jsonEncode(listaAEnviar));
 
     Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_RESPOSTA''');
     http.Response response = await http.post(
@@ -81,7 +88,22 @@ enviarRespostas(List respostas) async{
     }else{
       Utils.showDefaultSnackbar(_context!, response.body);
     }
+    return 1;
+  }
 
+  Future<List> _atualizarLista(String listaAux) async{
+
+    List listaAux2 = jsonDecode(listaAux);
+    List lista = [];
+    for(var item in listaAux2){
+      if(item['enderecoIp'] == "") {
+        item['enderecoIp'] = await Utils.getIpDevice();
+        lista.add(item);
+      }else{
+        lista.add(item);
+      }
+    }
+    return lista;
   }
 }
 

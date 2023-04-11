@@ -130,7 +130,11 @@ class _MainPageState extends State<MainPage> {
         "respostaCodigo": 0
       }
     ];
-    RespostaApi(context).enviarRespostas(lista);
+    Future<int> res = RespostaApi(context).enviarRespostas(lista);
+
+    if(await res == 0){
+      Utils.showDefaultSnackbar(context, "Sem dados à enviar");
+    }
 
   }
   }

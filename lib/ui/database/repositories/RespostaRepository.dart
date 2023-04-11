@@ -25,7 +25,7 @@ class RespostaRepository  implements IRespostaRepository{
   @override
   Future<List> getAll() async {
     var repostas = await _db.query(RespostaDataModel.getTabela(), orderBy: RespostaDataModel.statusEnvio);
-    return repostas.toList();
+       return repostas.toList();
 
   }
 
