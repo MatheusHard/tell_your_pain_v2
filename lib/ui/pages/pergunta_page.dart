@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
 
 class PerguntaPage extends StatefulWidget {
   @override
@@ -124,6 +125,9 @@ class _PerguntaPageState extends State<PerguntaPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
+
     _atualizarPergunta();
 
     final logo = Hero(

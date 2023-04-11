@@ -3,8 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tell_your_pain_v2/ui/models/usuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
+
+import '../api/resposta_api.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -16,7 +19,7 @@ class _MainPageState extends State<MainPage> {
 
 
   var textos = [
-    "Questionário Diário",
+    "Como se Sente",
     "Avaliação Do Dia",
     "Chat Da Turma",
     "Sair"
@@ -29,13 +32,13 @@ class _MainPageState extends State<MainPage> {
     'assets/images/icones_home/deslogar.png'
   ];
 
-  click(int index, context) {
+  click(int index, context, usuarioLogado) {
     if (index == 0) {
-      Navigator.of(context).pushNamed('/pergunta_page');
+      Navigator.of(context).pushNamed('/pergunta_page', arguments: ScreenArgumentsUsuario(usuarioLogado));
     } else if (index == 1) {
-      Navigator.of(context).pushNamed('/avaliacao_page');
+      Navigator.of(context).pushNamed('/avaliacao_page', arguments: ScreenArgumentsUsuario(usuarioLogado));
     } else if (index == 2) {
-      Navigator.of(context).pushNamed('/chat_page');
+      Navigator.of(context).pushNamed('/chat_page', arguments: ScreenArgumentsUsuario(usuarioLogado));
     } else if (index == 3) {
       //FirebaseAuth.instance.signOut().then((user) {
         exit(0);
@@ -62,7 +65,8 @@ class _MainPageState extends State<MainPage> {
         return Card(
           child: InkWell(
             onTap: () async {
-              click(index, context);
+              testeEnvio();
+              click(index, context, usuarioLogado?.data);
 
             },
             child: Column(
@@ -94,12 +98,30 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Future<void>  getSession() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final usuario = prefs.getString('usuarioLogado');
-    var usuarioLogado = jsonDecode(usuario!);
+  Future<void>  testeEnvio() async {
 
-    return usuarioLogado;
-    }
+    //RespostaApi(context).getAll();
+
+    var lista = [
+      {
+        "codigo": 1,
+        "perguntaId": "c1bf252f-2b6b-4adb-848a-bd50b8963c32",
+        "alunoId": "0f8fad5b-d9cb-469f-a165-70867728950e",
+        "id": "0d8d15be-6396-4541-a1a2-9323f66d0db7",
+        "dataCadastro": "0001-01-01T00:00:00",
+        "ativo": false
+      },
+      {
+        "codigo": 1,
+        "perguntaId": "2427adad-4f64-40c4-b4d5-313a1044619f",
+        "alunoId": "0f8fad5b-d9cb-469f-a165-70867728950e",
+        "id": "dddf4386-054d-4b27-bf1e-f7c174f034e5",
+        "dataCadastro": "0001-01-01T00:00:00",
+        "ativo": false
+      }
+    ];
+    RespostaApi(context).enviarRespostas(lista);
+
+  }
   }
 
