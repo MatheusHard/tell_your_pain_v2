@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 
+import '../api/resposta_api.dart';
 import '../database/db_helper.dart';
 import '../database/repositories/RespostaRepository.dart';
 import '../enums/perguntaTipo.dart';
@@ -604,7 +605,25 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
               ],
             ),
             /*********FIM EMOGIS*********/
-          ])
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ElevatedButton(
+
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.green),
+                    padding: MaterialStateProperty.all(const EdgeInsets.only(left: 60, right: 60)),
+                    textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 20))),
+
+                onPressed:(){
+                  _enviarRespostasApi();
+                } ,
+                child: const Text("CONFIRMAR"),
+
+              ),
+            )
+          ]
+
+        )
             
             )
           /**END Sentimentos*/
@@ -617,7 +636,21 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
   }
 
+  Future<void>  _enviarRespostasApi() async{
 
+var lista = [];
+
+    Future<int> res = RespostaApi(context).enviarRespostas(lista);
+
+    if(await res == 0){
+      Utils.showDefaultSnackbar(context, "Sem dados à enviar");
+    }else if(await res == 1){
+      Utils.showDefaultSnackbar(context, "Dados enviados");
+
+    }
+
+
+}
   _changeTemaSentimento(int numero){
 
     switch(numero){

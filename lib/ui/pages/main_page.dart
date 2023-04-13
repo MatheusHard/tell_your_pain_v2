@@ -65,7 +65,7 @@ class _MainPageState extends State<MainPage> {
         return Card(
           child: InkWell(
             onTap: () async {
-              testeEnvio();
+              //testeEnvio();
               click(index, context, usuarioLogado?.data);
 
             },
