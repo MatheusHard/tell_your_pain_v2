@@ -7,7 +7,7 @@ class RespostaDataModel{
   static const String latitude = "latitude";
   static const String longitude = "longitude";
   static const String enderecoIp = "enderecoIp";
-  static const String turma = "turma";
+  static const String turmaId = "turmaId";
   static const String alunoId = "alunoId";
   static const String statusEnvio = "statusEnvio";
   static const String erros = "erros";
@@ -20,7 +20,7 @@ class RespostaDataModel{
   static String criarTabela() {
 
     return '''CREATE TABLE $TABELA ($id TEXT PRIMARY KEY, $dataCadastro TEXT, $latitude TEXT, $longitude TEXT, $enderecoIp TEXT,
-                                    $turma INTEGER, $alunoId TEXT, $statusEnvio INTEGER, $erros TEXT, $respostaCodigo INTEGER,
+                                    $turmaId TEXT, $alunoId TEXT, $statusEnvio INTEGER, $erros TEXT, $respostaCodigo INTEGER,
                                     $perguntaTipo INTEGER);
            ''';
   }

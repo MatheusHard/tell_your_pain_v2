@@ -3,7 +3,7 @@
 class Resposta {
 
   String id;
-  int turma;
+  String turmaId;
   String alunoId;
   int statusEnvio;
   String erros;
@@ -16,14 +16,14 @@ class Resposta {
 
 
   Resposta({
-    required this.id, required this.turma, required this.alunoId, required this.statusEnvio,
+    required this.id, required this.turmaId, required this.alunoId, required this.statusEnvio,
     required this.erros, required this.respostaCodigo, required this.dataCadastro,
     required this.latitude, required this.longitude, required this.enderecoIp, required this.perguntaTipo});
 
   factory Resposta.fromMap(Map<String, dynamic> json) => Resposta(
 
       id: json['id']  ?? '',
-      turma: json['turma'] ?? '',
+      turmaId: json['turmaId'] ?? '',
       alunoId: json['alunoId'],
       statusEnvio: json['statusEnvio'],
       erros:  json['erros'],
@@ -39,7 +39,7 @@ class Resposta {
   Map<String, dynamic> toMap(){
     return {
       'id': id,
-      'turma': turma,
+      'turmaId': turmaId,
       'alunoId': alunoId,
       'statusEnvio': statusEnvio,
       'erros':  erros,

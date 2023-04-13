@@ -31,7 +31,7 @@ var respRepo =  RespostaRepository(await DBHelper.instance.database);
 
   var meuEnderecoIp = await Utils.getIpDevice();
 
-Resposta resposta = Resposta(id: "5343c520-5467-49f6-997e-8d8bc49d1c08", turma: 1, alunoId: "0f8fad5b-d9cb-469f-a165-70867728950e",
+Resposta resposta = Resposta(id: "5343c520-5467-49f6-997e-8d8bc49d1c08", turmaId: "Fddss-ddss", alunoId: "0f8fad5b-d9cb-469f-a165-70867728950e",
     statusEnvio: 2, erros: "", respostaCodigo: 3, dataCadastro: Utils.getDataHoraDotNet(), latitude: "2541.332",
     longitude: "65584,33221", enderecoIp: meuEnderecoIp, perguntaTipo: 2);
 
@@ -54,9 +54,6 @@ Resposta resposta = Resposta(id: "5343c520-5467-49f6-997e-8d8bc49d1c08", turma: 
     print('''dataCadastro: ${u['dataCadastro']}''');
     print('''statusEnvio: ${u['statusEnvio']}''');
     print('''enderecoIp: ${u['enderecoIp']}''');
-
-
-
 
     print("-----------------------------------------");
 

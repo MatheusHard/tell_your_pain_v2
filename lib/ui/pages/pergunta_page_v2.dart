@@ -1,6 +1,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
+import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
+
+import '../database/db_helper.dart';
+import '../database/repositories/RespostaRepository.dart';
+import '../enums/perguntaTipo.dart';
+import '../enums/statusEnvio.dart';
+import '../models/resposta.dart';
+import '../models/usuario.dart';
 
 class PerguntaPage2 extends StatefulWidget {
   const PerguntaPage2({Key? key}) : super(key: key);
@@ -11,14 +19,19 @@ class PerguntaPage2 extends StatefulWidget {
 
 class _PerguntaPage2State extends State<PerguntaPage2> {
 
-  bool flagColor = true;
-  bool _pressed = true;
   bool _pressedIconMuitoFeliz = true;
   bool _pressedIconFeliz = true;
   bool _pressedIconNormal = true;
   bool _pressedIconTriste = true;
   bool _pressedIconMuitoTriste = true;
-
+  //
+  bool _pressedFamilia = true;
+  bool _pressedSaude = true;
+  bool _pressedEscola = true;
+  bool _pressedProfessores = true;
+  bool _pressedEstudos = true;
+  bool _pressedColegas = true;
+  int _perguntaTipo = -1;
 
   var textos = [
     "Família",
@@ -69,7 +82,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-             GridView.builder(
+            /* GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
 
@@ -128,11 +141,320 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                 );
 
             },
-      ),
+      ),*/
+        Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        //childAspectRatio: MediaQuery.of(context).size.width /
+          //  (MediaQuery.of(context).size.height / 2.6),
+            //),
+          children: [
+            Card(
+            child: Container(
+              width: MediaQuery.of(context).size.width / 2.6,
+              height: MediaQuery.of(context).size.width / 3.1,
+              color: _pressedFamilia ? Colors.transparent : Colors.grey.withOpacity(0.5),
+
+              child: InkWell(
+                onTap: () async {
+                  setState(() {
+                    _changeTemaSentimento(0);
+
+                    //_showDialogBuilder(context);
+
+                  });
+
+
+//                click(index, context, usuarioLogado?.data);
+
+                },
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Image.asset(
+                      images[0],
+                      width: 50,
+                      height: 50,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(6),
+                      child: Text(
+                        textos[0],
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+                ),
+            /**CARD SAÚDE*/
+            Card(
+              child: Container(
+
+                width: MediaQuery.of(context).size.width / 2.6,
+                height: MediaQuery.of(context).size.width / 3.1,
+                color: _pressedSaude ? Colors.transparent : Colors.grey.withOpacity(0.5),
+
+                child: InkWell(
+                  onTap: () async {
+                    setState(() {
+                      _changeTemaSentimento(1);
+
+                      //_showDialogBuilder(context);
+
+                    });
+
+
+
+//                click(index, context, usuarioLogado?.data);
+
+                  },
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Image.asset(
+                        images[1],
+                        width: 50,
+                        height: 50,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Text(
+                          textos[1],
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+            /**2ª ROW*/
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              //childAspectRatio: MediaQuery.of(context).size.width /
+              //  (MediaQuery.of(context).size.height / 2.6),
+              //),
+              children: [
+                Card(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2.6,
+                    height: MediaQuery.of(context).size.width / 3.1,
+                    color: _pressedEscola ? Colors.transparent : Colors.grey.withOpacity(0.5),
+
+                    child: InkWell(
+                      onTap: () async {
+                        setState(() {
+                          _changeTemaSentimento(2);
+
+                          //_showDialogBuilder(context);
+
+                        });
+
+
+
+//                click(index, context, usuarioLogado?.data);
+
+                      },
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Image.asset(
+                            images[2],
+                            width: 50,
+                            height: 50,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Text(
+                              textos[2],
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                /**CARD Professores**/
+                Card(
+                  child: Container(
+
+                    width: MediaQuery.of(context).size.width / 2.6,
+                    height: MediaQuery.of(context).size.width / 3.1,
+                    color: _pressedProfessores ? Colors.transparent : Colors.grey.withOpacity(0.5),
+
+                    child: InkWell(
+                      onTap: () async {
+                        setState(() {
+                          _changeTemaSentimento(3);
+
+                          //_showDialogBuilder(context);
+
+                        });
+
+
+
+//                click(index, context, usuarioLogado?.data);
+
+                      },
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Image.asset(
+                            images[3],
+                            width: 50,
+                            height: 50,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Text(
+                              textos[3],
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            /**3ª ROW*/
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              //childAspectRatio: MediaQuery.of(context).size.width /
+              //  (MediaQuery.of(context).size.height / 2.6),
+              //),
+              children: [
+                /**CARD ESTUDOS*/
+                Card(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2.6,
+                    height: MediaQuery.of(context).size.width / 3.1,
+                    color: _pressedEstudos ? Colors.transparent : Colors.grey.withOpacity(0.5),
+
+                    child: InkWell(
+                      onTap: () async {
+                        setState(() {
+                          _changeTemaSentimento(4);
+
+                          //_showDialogBuilder(context);
+
+                        });
+
+
+
+//                click(index, context, usuarioLogado?.data);
+
+                      },
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Image.asset(
+                            images[4],
+                            width: 50,
+                            height: 50,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Text(
+                              textos[4],
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  child: Container(
+
+                    width: MediaQuery.of(context).size.width / 2.6,
+                    height: MediaQuery.of(context).size.width / 3.1,
+                    color: _pressedColegas ? Colors.transparent : Colors.grey.withOpacity(0.5),
+
+                    child: InkWell(
+                      onTap: () async {
+                        setState(() {
+                          _changeTemaSentimento(5);
+
+                          //_showDialogBuilder(context);
+
+                        });
+
+
+//                click(index, context, usuarioLogado?.data);
+
+                      },
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Image.asset(
+                            images[5],
+                            width: 50,
+                            height: 50,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Text(
+                              textos[5],
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
             const SizedBox(
               height: 20,
               width: 20,
             ),
+            /*********EMOGIS*********/
+
             Row(
               children: <Widget>[
                 Column(
@@ -141,8 +463,8 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
                       onTap: () {
                         setState(() {
-                          _registrar(0);
                           _changeIcons(1);
+                          _registrar(0, usuarioLogado);
 
                         });
                       },
@@ -169,8 +491,9 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          _registrar(1);
                           _changeIcons(2);
+                          _registrar(1, usuarioLogado);
+
 
                         });
                       },
@@ -196,8 +519,8 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          _registrar(2);
                           _changeIcons(3);
+                          _registrar(2, usuarioLogado);
 
                         });
                       },
@@ -223,8 +546,9 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          _registrar(3);
                           _changeIcons(4);
+                          _registrar(3, usuarioLogado);
+
 
                         });
                        // Navigator.of(context).pop();
@@ -252,8 +576,9 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
                       onTap: () {
                         setState(() {
-                          _registrar(4);
                           _changeIcons(5);
+                          _registrar(4, usuarioLogado);
+
 
                         });
 
@@ -278,9 +603,8 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                 ),
               ],
             ),
-
-
-               ])
+            /*********FIM EMOGIS*********/
+          ])
             
             )
           /**END Sentimentos*/
@@ -294,7 +618,65 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
   }
 
 
+  _changeTemaSentimento(int numero){
 
+    switch(numero){
+      case 0:
+          _perguntaTipo = 0;
+         _pressedFamilia = !_pressedFamilia;
+         _pressedSaude = true;
+         _pressedEscola = true;
+         _pressedProfessores = true;
+         _pressedEstudos = true;
+         _pressedColegas = true;
+      break;
+      case 1:
+         _perguntaTipo = 1;
+        _pressedFamilia = true;
+        _pressedSaude = !_pressedSaude;
+        _pressedEscola = true;
+        _pressedProfessores = true;
+        _pressedEstudos = true;
+        _pressedColegas = true;break;
+      case 2:
+        _perguntaTipo = 2;
+        _pressedFamilia = true;
+        _pressedSaude = true;
+        _pressedEscola = !_pressedEscola;
+        _pressedProfessores = true;
+        _pressedEstudos = true;
+        _pressedColegas = true;
+      break;
+      case 3:
+        _perguntaTipo = 3;
+        _pressedFamilia = true;
+        _pressedSaude = true;
+        _pressedEscola = true;
+        _pressedProfessores = !_pressedProfessores;
+        _pressedEstudos = true;
+        _pressedColegas = true;
+        break;
+      case 4:
+        _perguntaTipo = 4;
+        _pressedFamilia = true;
+        _pressedSaude = true;
+        _pressedEscola = true;
+        _pressedProfessores = true;
+        _pressedEstudos = !_pressedEstudos;
+        _pressedColegas = true;
+      break;
+      case 5:
+        _perguntaTipo = 5;
+        _pressedFamilia = true;
+        _pressedSaude = true;
+        _pressedEscola = true;
+        _pressedProfessores = true;
+        _pressedEstudos = true;
+        _pressedColegas = !_pressedColegas;
+        break;
+    }
+    print("_perguntaTipo $_perguntaTipo");
+  }
   _changeIcons(int numero){
 
     switch(numero){
@@ -335,18 +717,75 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
         break;
     }
   }
-  void _registrar(int index) async {
-   print("Indice $index");
+  void _registrar(int indexSentimento, var usuarioLogado) async {
+
+    var respostaRepository =  RespostaRepository(await DBHelper.instance.database);
+
+    print("PerguntaTipo: $_perguntaTipo");
+    print("Indice Sentimento: $indexSentimento");
+    //print("Usuario "+usuarioLogado);
+    /**
+        Indice Felicidade:
+
+        MUITO_TRISTE = 0,
+        TRISTE = 1,
+        NORMAL = 2,
+        FELIZ = 3,
+        MUITO_FELIZ = 4
+
+        Indice Tipod eResposta/Dimenção:
+
+        FAMILIA = 0,
+        SAUDE = 1,
+        ESCOLA = 2,
+        PROFESSORES= 3,
+        ESTUDOS = 4,
+        COLEGAS = 5
+     */
+    if(_perguntaTipo == -1) {
+      if(!mounted) return;
+      Utils.showDefaultSnackbar(context, "Selecione um Tema!!!");
+      return;
+    }
+    var meuEnderecoIp = await Utils.getIpDevice();
+
+    Resposta resposta = Resposta(id: Utils.generateGuide(), turmaId: usuarioLogado.data.turmaId,
+                                alunoId: usuarioLogado.data.id, statusEnvio: StatusEnvio.A_ENVIAR.index,
+                                erros: "", respostaCodigo: indexSentimento, dataCadastro: Utils.getDataHoraDotNet(),
+                                latitude: "2541.332", longitude: "65584,33221", enderecoIp: meuEnderecoIp,
+                                perguntaTipo: _perguntaTipo);
+
+   int res = await respostaRepository.add(resposta);
+
+   if(res == 1){
+     if(!mounted) return;
+     Utils.showDefaultSnackbar(context, "Sentimento salvo");
+   }
+
+    ///_perguntaTipo = -1;
   }
-  _changeColor(){
-
-    var cor;
+  Future<int> zerarBooleansSelected() async {
 
 
-    return cor;
+    _perguntaTipo = -1;
 
+    _pressedFamilia = true;
+    _pressedSaude = true;
+    _pressedEscola = true;
+    _pressedProfessores = true;
+    _pressedEstudos = true;
+    _pressedColegas = true;
+
+      _pressedIconMuitoFeliz = true;
+      _pressedIconFeliz = true;
+      _pressedIconNormal = true;
+      _pressedIconTriste = true;
+      _pressedIconMuitoTriste = true;
+
+      return 1;
   }
-  Future<void> _showDialogBuilder(BuildContext context) {
+
+  /*Future<void> _showDialogBuilder(BuildContext context) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -370,9 +809,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     Navigator.of(context).pop();
                   },
                   child: Padding(
-                    padding: EdgeInsets.only(
-                      // left: MediaQuery.of(context).size.width / 60),
-                        left: 0),
+                    padding: const EdgeInsets.only(left: 0),
                     child: Image.asset(
                       'assets/images/Triste.png',
                       height: MediaQuery.of(context).size.width / 10,
@@ -466,5 +903,5 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
         );
       },
     );
-  }
+  }*/
 }
