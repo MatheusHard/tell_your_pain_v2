@@ -1,0 +1,24 @@
+
+ 1.0 ENUMS
+     1.1 Indice Felicidade(Enum-> respostraCodigo)
+
+        MUITO_TRISTE = 0,
+        TRISTE = 1,
+        NORMAL = 2,
+        FELIZ = 3,
+        MUITO_FELIZ = 4
+
+     1.2 Indice do Tipo de Resposta/Dimenção(Enum-> perguntaTipo)
+
+        FAMILIA = 0,
+        SAUDE = 1,
+        ESCOLA = 2,
+        PROFESSORES= 3,
+        ESTUDOS = 4,
+        COLEGAS = 5
+
+     1.3 Indice Status de Envio(Enum-> statusEnvio)
+
+       A_ENVIAR = 0
+       ENVIADO = 1
+       ERRO_NO_ENVIO = 2

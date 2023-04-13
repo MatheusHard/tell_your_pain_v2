@@ -7,6 +7,7 @@ import '../api/resposta_api.dart';
 import '../database/db_helper.dart';
 import '../database/repositories/RespostaRepository.dart';
 import '../enums/perguntaTipo.dart';
+import '../enums/respostraCodigo.dart';
 import '../enums/statusEnvio.dart';
 import '../models/resposta.dart';
 import '../models/usuario.dart';
@@ -51,8 +52,6 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
     'assets/images/professor.png',
     'assets/images/estudo.png',
     'assets/images/amigos.png',
-
-
 
   ];
   final _textoEmogis = [
@@ -143,6 +142,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
             },
       ),*/
+        ///Temas do Sentimento;
         Row(
         mainAxisAlignment: MainAxisAlignment.center,
         //childAspectRatio: MediaQuery.of(context).size.width /
@@ -158,7 +158,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
               child: InkWell(
                 onTap: () async {
                   setState(() {
-                    _changeTemaSentimento(0);
+                    _changeTemaSentimento(PerguntaTipo.FAMILIA.index);
 
                     //_showDialogBuilder(context);
 
@@ -205,7 +205,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                 child: InkWell(
                   onTap: () async {
                     setState(() {
-                      _changeTemaSentimento(1);
+                      _changeTemaSentimento(PerguntaTipo.SAUDE.index);
 
                       //_showDialogBuilder(context);
 
@@ -244,7 +244,8 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
             ),
           ],
         ),
-            /**2ª ROW*/
+            ///2ª ROW
+            ///Escola
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               //childAspectRatio: MediaQuery.of(context).size.width /
@@ -260,7 +261,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     child: InkWell(
                       onTap: () async {
                         setState(() {
-                          _changeTemaSentimento(2);
+                          _changeTemaSentimento(PerguntaTipo.ESCOLA.index);
 
                           //_showDialogBuilder(context);
 
@@ -297,7 +298,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     ),
                   ),
                 ),
-                /**CARD Professores**/
+                ///CARD Professores
                 Card(
                   child: Container(
 
@@ -308,7 +309,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     child: InkWell(
                       onTap: () async {
                         setState(() {
-                          _changeTemaSentimento(3);
+                          _changeTemaSentimento(PerguntaTipo.PROFESSORES.index);
 
                           //_showDialogBuilder(context);
 
@@ -347,14 +348,14 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                 ),
               ],
             ),
-            /**3ª ROW*/
+            ///3ª ROW
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               //childAspectRatio: MediaQuery.of(context).size.width /
               //  (MediaQuery.of(context).size.height / 2.6),
               //),
               children: [
-                /**CARD ESTUDOS*/
+                ///CARD ESTUDOS
                 Card(
                   child: Container(
                     width: MediaQuery.of(context).size.width / 2.6,
@@ -364,7 +365,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     child: InkWell(
                       onTap: () async {
                         setState(() {
-                          _changeTemaSentimento(4);
+                          _changeTemaSentimento(PerguntaTipo.ESTUDOS.index);
 
                           //_showDialogBuilder(context);
 
@@ -401,6 +402,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     ),
                   ),
                 ),
+                ///Card Colegas
                 Card(
                   child: Container(
 
@@ -411,9 +413,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     child: InkWell(
                       onTap: () async {
                         setState(() {
-                          _changeTemaSentimento(5);
-
-                          //_showDialogBuilder(context);
+                          _changeTemaSentimento(PerguntaTipo.COLEGAS.index);
 
                         });
 
@@ -454,8 +454,9 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
               height: 20,
               width: 20,
             ),
-            /*********EMOGIS*********/
 
+            ///INICIO EMOGIS
+            ///Emogi Muito Triste
             Row(
               children: <Widget>[
                 Column(
@@ -464,13 +465,13 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
                       onTap: () {
                         setState(() {
-                          _changeIcons(1);
-                          _registrar(0, usuarioLogado);
+                          _changeIcons(RespostaCodigo.MUITO_TRISTE.index);
+                          _registrar(RespostaCodigo.MUITO_TRISTE.index, usuarioLogado);
 
                         });
                       },
                       child: Padding(
-                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 8.5 ),
+                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 10 ),
                         child:
                         Image.asset(
                           _pressedIconMuitoTriste ? 'assets/images/Triste.png' : 'assets/images/TristeSelected.png',
@@ -481,26 +482,28 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 8.5 , top: 5),
-                      child: Text(_textoEmogis[0]),
+                          left: MediaQuery.of(context).size.width / 10 , top: 5),
+                      child:
+                      Text(_textoEmogis[0], style: _estiloEmogis(35),),
                     )
 
                   ],
                 ),
+                ///Emogi Triste
                 Column(
                   children: [
                     InkWell(
                       onTap: () {
                         setState(() {
-                          _changeIcons(2);
-                          _registrar(1, usuarioLogado);
+                          _changeIcons(RespostaCodigo.TRISTE.index);
+                          _registrar(RespostaCodigo.TRISTE.index, usuarioLogado);
 
 
                         });
                       },
                       child: Padding(
                         padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width / 16),
+                            left: MediaQuery.of(context).size.width / 18),
                         child: Image.asset(
                           _pressedIconTriste ? 'assets/images/Chateado.png': 'assets/images/ChateadoSelected.png',
                           height: MediaQuery.of(context).size.width / 10,
@@ -510,24 +513,25 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 16 , top: 5),
-                      child: Text(_textoEmogis[1]),
+                          left: MediaQuery.of(context).size.width / 18 , top: 5),
+                      child: Text(_textoEmogis[1], style: _estiloEmogis(35),),
                     )
                   ],
                 ),
+                ///Emogi Normal
                 Column(
                   children: [
                     InkWell(
                       onTap: () {
                         setState(() {
-                          _changeIcons(3);
-                          _registrar(2, usuarioLogado);
+                          _changeIcons(RespostaCodigo.NORMAL.index);
+                          _registrar(RespostaCodigo.NORMAL.index, usuarioLogado);
 
                         });
                       },
                       child: Padding(
                         padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width / 16),
+                            left: MediaQuery.of(context).size.width / 18),
                         child: Image.asset(
                           _pressedIconNormal ? 'assets/images/Normal.png': 'assets/images/NormalSelected.png',
                           height: MediaQuery.of(context).size.width / 10,
@@ -537,26 +541,26 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 16 , top: 5),
-                      child: Text(_textoEmogis[2]),
+                          left: MediaQuery.of(context).size.width / 18 , top: 5),
+                      child: Text(_textoEmogis[2], style: _estiloEmogis(35),),
                     )
                   ],
                 ),
+                ///Emogi Feliz
                 Column(
                   children: [
                     InkWell(
                       onTap: () {
                         setState(() {
-                          _changeIcons(4);
-                          _registrar(3, usuarioLogado);
-
+                          _changeIcons(RespostaCodigo.FELIZ.index);
+                          _registrar(RespostaCodigo.FELIZ.index, usuarioLogado);
 
                         });
                        // Navigator.of(context).pop();
                       },
                       child: Padding(
                         padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width / 16),
+                            left: MediaQuery.of(context).size.width / 18),
                         child: Image.asset(
                           _pressedIconFeliz == true ? 'assets/images/Feliz.png': 'assets/images/FelizSelected.png',
                           height: MediaQuery.of(context).size.width / 10,
@@ -566,20 +570,20 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 16 , top: 5),
-                      child: Text(_textoEmogis[3]),
+                          left: MediaQuery.of(context).size.width / 18 , top: 5),
+                      child: Text(_textoEmogis[3], style: _estiloEmogis(35),),
                     )
                   ],
                 ),
+                ///Emogi Muito Feliz
                 Column(
                   children: [
                     InkWell(
 
                       onTap: () {
                         setState(() {
-                          _changeIcons(5);
-                          _registrar(4, usuarioLogado);
-
+                          _changeIcons(RespostaCodigo.MUITO_FELIZ.index);
+                          _registrar(RespostaCodigo.MUITO_FELIZ.index, usuarioLogado);
 
                         });
 
@@ -587,7 +591,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                       },
                       child: Padding(
                         padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width / 16),
+                            left: MediaQuery.of(context).size.width / 20),
                         child: Image.asset(
                           _pressedIconMuitoFeliz == true ? 'assets/images/Muito_Feliz.png' : 'assets/images/MuitoFelizSelected.png',
                           height: MediaQuery.of(context).size.width / 10,
@@ -597,14 +601,16 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 16 , top: 5),
-                      child: Text(_textoEmogis[4]),
+                          left: MediaQuery.of(context).size.width / 20 , top: 5),
+                      child: Text(_textoEmogis[4] , style: _estiloEmogis(35)),
                     )
                   ],
                 ),
               ],
             ),
-            /*********FIM EMOGIS*********/
+            ///FIM EMOGIS
+
+            ///Botão confirmar
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
@@ -624,9 +630,8 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
           ]
 
         )
-            
+
             )
-          /**END Sentimentos*/
 
 
 
@@ -636,17 +641,23 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
   }
 
+  TextStyle _estiloEmogis(var numero){
+
+    return TextStyle(fontSize: MediaQuery.of(context).size.width / numero);
+  }
   Future<void>  _enviarRespostasApi() async{
 
-var lista = [];
+  var lista = [];
 
     Future<int> res = RespostaApi(context).enviarRespostas(lista);
 
     if(await res == 0){
       Utils.showDefaultSnackbar(context, "Sem dados à enviar");
+      Navigator.of(context).pop();
     }else if(await res == 1){
-      Utils.showDefaultSnackbar(context, "Dados enviados");
 
+      Utils.showDefaultSnackbar(context, "Dados enviados");
+      Navigator.of(context).pop();
     }
 
 
@@ -713,35 +724,35 @@ var lista = [];
   _changeIcons(int numero){
 
     switch(numero){
-      case 1:
+      case 0:
         _pressedIconMuitoFeliz = true;
         _pressedIconFeliz = true;
         _pressedIconNormal = true;
         _pressedIconTriste = true;
         _pressedIconMuitoTriste = !_pressedIconMuitoTriste;
         break;
-      case 2:
+      case 1:
         _pressedIconMuitoFeliz = true;
         _pressedIconFeliz = true;
         _pressedIconNormal = true;
         _pressedIconTriste = !_pressedIconTriste;
         _pressedIconMuitoTriste = true;
         break;
-      case 3:
+      case 2:
         _pressedIconMuitoFeliz = true;
         _pressedIconFeliz = true;
         _pressedIconNormal = !_pressedIconNormal;
         _pressedIconTriste = true;
         _pressedIconMuitoTriste = true;
         break;
-      case 4:
+      case 3:
         _pressedIconMuitoFeliz = true;
         _pressedIconFeliz = !_pressedIconFeliz;
         _pressedIconNormal = true;
         _pressedIconTriste = true;
         _pressedIconMuitoTriste = true;
         break;
-      case 5:
+      case 4:
          _pressedIconMuitoFeliz = !_pressedIconMuitoFeliz;
          _pressedIconFeliz = true;
          _pressedIconNormal = true;
@@ -788,14 +799,17 @@ var lista = [];
                                 latitude: "2541.332", longitude: "65584,33221", enderecoIp: meuEnderecoIp,
                                 perguntaTipo: _perguntaTipo);
 
-   int res = await respostaRepository.add(resposta);
+      int res = await respostaRepository.add(resposta).catchError((error){
+        Utils.showDefaultSnackbar(context, '''Sentimento não salvo -> [ ${error.toString().substring(0,35)} ]...''');
+      });
 
-   if(res == 1){
+
+   if(res > 0){
      if(!mounted) return;
      Utils.showDefaultSnackbar(context, "Sentimento salvo");
    }
 
-    ///_perguntaTipo = -1;
+
   }
   Future<int> zerarBooleansSelected() async {
 
