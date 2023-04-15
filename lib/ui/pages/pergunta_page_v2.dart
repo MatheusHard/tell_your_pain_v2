@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
+import 'package:tell_your_pain_v2/ui/pages/widgets/appbar/app_bar_usuario.dart';
 
 import '../api/resposta_api.dart';
 import '../database/db_helper.dart';
@@ -65,13 +66,11 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
   @override
   Widget build(BuildContext context) {
-
+    var width = MediaQuery.of(context).size.width;
     ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
 
     return Scaffold(
-        appBar: AppBar(
-          title:  Text('''Olá ${usuarioLogado != null ? usuarioLogado?.data.nome: ""}, como se sente?'''),
-        ),
+        appBar: AppBarUsuario(usuarioLogado, context),
 
 
         body:
@@ -80,68 +79,8 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
         child:
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children:[
 
-            /* GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-
-              itemCount: textos.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: MediaQuery.of(context).size.width /
-                  (MediaQuery.of(context).size.height / 2.6),
-            ),
-            itemBuilder: (BuildContext context, int index) {
-              return     Card(
-                  child: Container(
-
-                    color: _pressed ? Colors.orange : Colors.transparent,
-
-                    child: InkWell(
-                      onTap: () async {
-                          setState(() {
-                            _pressed = !_pressed;
-
-                            int? indice = index;
-                            print("INDICE $indice");
-                            //_showDialogBuilder(context);
-
-                          });
-
-
-//                click(index, context, usuarioLogado?.data);
-
-                      },
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Image.asset(
-                            images[index],
-                            width: 50,
-                            height: 50,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Text(
-                              textos[index],
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-
-            },
-      ),*/
         ///Temas do Sentimento;
         Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -302,7 +241,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
             ///INICIO EMOGIS
             ///Emogi Muito Triste
-            Container(
+            /*Container(
               height: MediaQuery.of(context).size.width / 6,
               //width: MediaQuery.of(context).size.width / 10,
               decoration:  BoxDecoration(
@@ -315,7 +254,8 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                       offset: Offset(4, 8), // Shadow position
                     )]
               ),
-              child: Row(
+
+              child:*/ Row(
                 children: [
                   Column(
                     children: [
@@ -466,17 +406,17 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                   ),
                 ],
               ),
-            ),
+          /*  ),*/
             ///FIM EMOGIS
 
             ///Botão confirmar
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.only(left: 0, right: 0, top: 15),
               child: ElevatedButton(
 
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.green),
-                    padding: MaterialStateProperty.all(const EdgeInsets.only(left: 60, right: 60)),
+                    padding: MaterialStateProperty.all( EdgeInsets.only(left: width / 5, right: width / 5)),
                     textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 20))),
 
                 onPressed:(){

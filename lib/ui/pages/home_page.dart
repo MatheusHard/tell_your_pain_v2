@@ -31,6 +31,7 @@ class HomePage extends StatelessWidget {
               label: 'Histórico'),
           BottomNavigationBarItem(
               icon: Image.asset(
+
                 'assets/images/icones_home/user.png',
                 width: 40,
                 height: 40,
