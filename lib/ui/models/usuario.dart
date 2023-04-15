@@ -4,19 +4,19 @@ class Usuario {
 
   String id;
   String nome;
-  String? cpf;
+  String cpf;
   String email;
-  String password;
-  String dataDeNascimento;
+  String senha;
+  String dataNascimento;
   String escolaId;
   String turmaId;
-  String? foto;
-  String? fone;
+  String foto;
+  String telefone;
 
   Usuario({
     required this.id, required this.nome, required this.cpf, required this.email,
-    required this.password, required this.dataDeNascimento, required this.escolaId,
-    required this.turmaId, this.foto, this.fone});
+    required this.senha, required this.dataNascimento, required this.escolaId,
+    required this.turmaId, required this.foto, required this.telefone});
 
   factory Usuario.fromMap(Map<String, dynamic> json) => Usuario(
 
@@ -24,12 +24,12 @@ class Usuario {
       nome: json['nome'] ?? '',
       cpf: json['cpf'],
       email: json['email'],
-      password:  (json['password']),
-      dataDeNascimento: json['dataDeNascimento'],
+      senha:  (json['senha']),
+      dataNascimento: json['dataNascimento'],
       escolaId: json['escolaId'],
       turmaId: json['turmaId'],
       foto: json['foto'],
-      fone: json['fone']
+      telefone: json['telefone']
 
   );
 
@@ -39,12 +39,12 @@ class Usuario {
       'nome': nome,
       'cpf': cpf,
       'email': email,
-      'password':  password,
-      'dataDeNascimento': dataDeNascimento,
+      'senha':  senha,
+      'dataNascimento': dataNascimento,
       'escolaId': escolaId,
       'turmaId': turmaId,
       'foto': foto,
-      'fone': fone
+      'telefone': telefone
     };
   }
 }

@@ -6,21 +6,20 @@ class UsuarioDataModel{
   static const String nome = "nome";
   static const String cpf = "cpf";
   static const String email = "email";
-  static const String password = "password";
-  static const String escolaId = "escolaId";
+  static const String senha = "senha";
   static const String turmaId = 'turmaId';
+  static const String escolaId = "escolaId";
   static const String foto = 'foto';
-  static const String fone = 'fone';
-  static const String dataDeNascimento = 'dataDeNascimento';
+  static const String telefone = 'telefone';
+  static const String dataNascimento = 'dataNascimento';
 
   static String queryCriarTabela = "";
 
   static String criarTabela() {
 
-    return '''CREATE TABLE $TABELA ($id TEXT PRIMARY KEY,
-                                    $nome TEXT, $cpf TEXT, $email TEXT, $turmaId TEXT,
-                                    $password TEXT, $dataDeNascimento TEXT, $escolaId TEXT,
-                                    $foto TEXT, $fone TEXT);
+    return '''CREATE TABLE $TABELA ($id TEXT PRIMARY KEY, $nome TEXT, $cpf TEXT, $email TEXT,
+                                    $senha  TEXT, $turmaId TEXT, $escolaId TEXT, $foto TEXT,
+                                    $telefone TEXT, $dataNascimento TEXT);
            ''';
   }
 

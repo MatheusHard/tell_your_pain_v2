@@ -89,9 +89,9 @@ class _LoginPageState extends State<LoginPage> {
                   var user = {
                     "Email": _email,
                     "Nome": "Luiz Silva",
-                    "Password": Utils.toSha1(_senha),
+                    "Senha": Utils.toSha1(_senha),
                     "Cpf": "05698754521",
-                    "Fone": "05698754521",
+                    "Telefone": "05698754521",
                     "Foto": "fgff/ggh"
                   };
                   UsuarioApi(context).loginUsuario(user);

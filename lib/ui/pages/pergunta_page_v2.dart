@@ -145,105 +145,55 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
         ///Temas do Sentimento;
         Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        //childAspectRatio: MediaQuery.of(context).size.width /
-          //  (MediaQuery.of(context).size.height / 2.6),
-            //),
+
           children: [
-            Card(
-            child: Container(
-              width: MediaQuery.of(context).size.width / 2.6,
-              height: MediaQuery.of(context).size.width / 3.1,
-              color: _pressedFamilia ? Colors.transparent : Colors.grey.withOpacity(0.5),
-
-              child: InkWell(
-                onTap: () async {
-                  setState(() {
-                    _changeTemaSentimento(PerguntaTipo.FAMILIA.index);
-
-                    //_showDialogBuilder(context);
-
-                  });
-
-
-//                click(index, context, usuarioLogado?.data);
-
-                },
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Image.asset(
-                      images[0],
-                      width: 50,
-                      height: 50,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(6),
-                      child: Text(
-                        textos[0],
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
+           ///Tema Familia
+           Container(
+                decoration: BoxDecoration(
+                  color:   _pressedFamilia ? Colors.white : Colors.grey.withOpacity(0.8),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow:const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 4,
+                      offset: Offset(4, 8), // Shadow position
+                    )]
                 ),
-              ),
-            ),
-                ),
-            /**CARD SAÚDE*/
-            Card(
-              child: Container(
-
                 width: MediaQuery.of(context).size.width / 2.6,
                 height: MediaQuery.of(context).size.width / 3.1,
-                color: _pressedSaude ? Colors.transparent : Colors.grey.withOpacity(0.5),
+               // color: _pressedFamilia ? Colors.transparent : Colors.grey.withOpacity(0.5),
 
-                child: InkWell(
-                  onTap: () async {
-                    setState(() {
-                      _changeTemaSentimento(PerguntaTipo.SAUDE.index);
+                child:
+                _inkWellTema(PerguntaTipo.FAMILIA.index, 0, 0),
 
-                      //_showDialogBuilder(context);
-
-                    });
-
-
-
-//                click(index, context, usuarioLogado?.data);
-
-                  },
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Image.asset(
-                        images[1],
-                        width: 50,
-                        height: 50,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: Text(
-                          textos[1],
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
               ),
+
+          const Padding(padding: EdgeInsets.all(4.0)),
+
+            /**CARD SAÚDE*/
+            Container(
+              decoration: BoxDecoration(
+                  color:   _pressedSaude ? Colors.white : Colors.grey.withOpacity(0.8),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow:const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 4,
+                      offset: Offset(4, 8), // Shadow position
+                    )]
+              ),
+                width: MediaQuery.of(context).size.width / 2.6,
+                height: MediaQuery.of(context).size.width / 3.1,
+
+
+                child: _inkWellTema(PerguntaTipo.SAUDE.index, 1, 1),
+
             ),
+
           ],
         ),
+            const Padding(padding: EdgeInsets.only(top: 4.0)),
+
             ///2ª ROW
             ///Escola
             Row(
@@ -252,102 +202,49 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
               //  (MediaQuery.of(context).size.height / 2.6),
               //),
               children: [
-                Card(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 2.6,
-                    height: MediaQuery.of(context).size.width / 3.1,
-                    color: _pressedEscola ? Colors.transparent : Colors.grey.withOpacity(0.5),
-
-                    child: InkWell(
-                      onTap: () async {
-                        setState(() {
-                          _changeTemaSentimento(PerguntaTipo.ESCOLA.index);
-
-                          //_showDialogBuilder(context);
-
-                        });
-
-
-
-//                click(index, context, usuarioLogado?.data);
-
-                      },
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Image.asset(
-                            images[2],
-                            width: 50,
-                            height: 50,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Text(
-                              textos[2],
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                Container(
+                  decoration: BoxDecoration(
+                      color:   _pressedEscola ? Colors.white : Colors.grey.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow:const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 4,
+                          offset: Offset(4, 8), // Shadow position
+                        )]
                   ),
+                  width: MediaQuery.of(context).size.width / 2.6,
+                  height: MediaQuery.of(context).size.width / 3.1,
+
+
+                  child: _inkWellTema(PerguntaTipo.ESCOLA.index, 2, 2),
+
                 ),
+                const Padding(padding: EdgeInsets.all(4.0)),
+
                 ///CARD Professores
-                Card(
-                  child: Container(
-
-                    width: MediaQuery.of(context).size.width / 2.6,
-                    height: MediaQuery.of(context).size.width / 3.1,
-                    color: _pressedProfessores ? Colors.transparent : Colors.grey.withOpacity(0.5),
-
-                    child: InkWell(
-                      onTap: () async {
-                        setState(() {
-                          _changeTemaSentimento(PerguntaTipo.PROFESSORES.index);
-
-                          //_showDialogBuilder(context);
-
-                        });
-
-
-
-//                click(index, context, usuarioLogado?.data);
-
-                      },
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Image.asset(
-                            images[3],
-                            width: 50,
-                            height: 50,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Text(
-                              textos[3],
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                Container(
+                  decoration: BoxDecoration(
+                      color:   _pressedProfessores ? Colors.white : Colors.grey.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow:const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 4,
+                          offset: Offset(4, 8), // Shadow position
+                        )]
                   ),
+                  width: MediaQuery.of(context).size.width / 2.6,
+                  height: MediaQuery.of(context).size.width / 3.1,
+
+
+                  child: _inkWellTema(PerguntaTipo.PROFESSORES.index, 3, 3),
+
                 ),
               ],
             ),
+            const Padding(padding: EdgeInsets.only(top: 4.0)),
+
             ///3ª ROW
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -356,96 +253,44 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
               //),
               children: [
                 ///CARD ESTUDOS
-                Card(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 2.6,
-                    height: MediaQuery.of(context).size.width / 3.1,
-                    color: _pressedEstudos ? Colors.transparent : Colors.grey.withOpacity(0.5),
-
-                    child: InkWell(
-                      onTap: () async {
-                        setState(() {
-                          _changeTemaSentimento(PerguntaTipo.ESTUDOS.index);
-
-                          //_showDialogBuilder(context);
-
-                        });
-
-
-
-//                click(index, context, usuarioLogado?.data);
-
-                      },
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Image.asset(
-                            images[4],
-                            width: 50,
-                            height: 50,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Text(
-                              textos[4],
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                Container(
+                  decoration: BoxDecoration(
+                      color:   _pressedEstudos ? Colors.white : Colors.grey.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow:const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 4,
+                          offset: Offset(4, 8), // Shadow position
+                        )]
                   ),
+                  width: MediaQuery.of(context).size.width / 2.6,
+                  height: MediaQuery.of(context).size.width / 3.1,
+
+
+                  child: _inkWellTema(PerguntaTipo.ESTUDOS.index, 4, 4),
+
                 ),
+                const Padding(padding: EdgeInsets.all(4.0)),
+
                 ///Card Colegas
-                Card(
-                  child: Container(
-
-                    width: MediaQuery.of(context).size.width / 2.6,
-                    height: MediaQuery.of(context).size.width / 3.1,
-                    color: _pressedColegas ? Colors.transparent : Colors.grey.withOpacity(0.5),
-
-                    child: InkWell(
-                      onTap: () async {
-                        setState(() {
-                          _changeTemaSentimento(PerguntaTipo.COLEGAS.index);
-
-                        });
-
-
-//                click(index, context, usuarioLogado?.data);
-
-                      },
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Image.asset(
-                            images[5],
-                            width: 50,
-                            height: 50,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Text(
-                              textos[5],
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                Container(
+                  decoration: BoxDecoration(
+                      color:   _pressedColegas ? Colors.white : Colors.grey.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow:const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 4,
+                          offset: Offset(4, 8), // Shadow position
+                        )]
                   ),
+                  width: MediaQuery.of(context).size.width / 2.6,
+                  height: MediaQuery.of(context).size.width / 3.1,
+
+
+                  child: _inkWellTema(PerguntaTipo.COLEGAS.index, 5, 5),
+
                 ),
               ],
             ),
@@ -457,156 +302,170 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
             ///INICIO EMOGIS
             ///Emogi Muito Triste
-            Row(
-              children: <Widget>[
-                Column(
-                  children: [
-                    InkWell(
+            Container(
+              height: MediaQuery.of(context).size.width / 6,
+              //width: MediaQuery.of(context).size.width / 10,
+              decoration:  BoxDecoration(
+                  color:   Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow:const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 4,
+                      offset: Offset(4, 8), // Shadow position
+                    )]
+              ),
+              child: Row(
+                children: [
+                  Column(
+                    children: [
+                      InkWell(
 
-                      onTap: () {
-                        setState(() {
-                          _changeIcons(RespostaCodigo.MUITO_TRISTE.index);
-                          _registrar(RespostaCodigo.MUITO_TRISTE.index, usuarioLogado);
+                        onTap: () {
+                          setState(() {
+                            _changeIcons(RespostaCodigo.MUITO_TRISTE.index);
+                            _registrar(RespostaCodigo.MUITO_TRISTE.index, usuarioLogado);
 
-                        });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 10 ),
+                          });
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 10 ),
+                          child:
+                          Image.asset(
+                            _pressedIconMuitoTriste ? 'assets/images/Triste.png' : 'assets/images/TristeSelected.png',
+                            height: MediaQuery.of(context).size.width / 10,
+                            width: MediaQuery.of(context).size.width / 10,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width / 10 , top: 5),
                         child:
-                        Image.asset(
-                          _pressedIconMuitoTriste ? 'assets/images/Triste.png' : 'assets/images/TristeSelected.png',
-                          height: MediaQuery.of(context).size.width / 10,
-                          width: MediaQuery.of(context).size.width / 10,
+                        Text(_textoEmogis[0], style: _estiloEmogis(35),),
+                      )
+
+                    ],
+                  ),
+                  ///Emogi Triste
+                  Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            _changeIcons(RespostaCodigo.TRISTE.index);
+                            _registrar(RespostaCodigo.TRISTE.index, usuarioLogado);
+
+
+                          });
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width / 18),
+                          child: Image.asset(
+                            _pressedIconTriste ? 'assets/images/Chateado.png': 'assets/images/ChateadoSelected.png',
+                            height: MediaQuery.of(context).size.width / 10,
+                            width: MediaQuery.of(context).size.width / 10,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 10 , top: 5),
-                      child:
-                      Text(_textoEmogis[0], style: _estiloEmogis(35),),
-                    )
-
-                  ],
-                ),
-                ///Emogi Triste
-                Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          _changeIcons(RespostaCodigo.TRISTE.index);
-                          _registrar(RespostaCodigo.TRISTE.index, usuarioLogado);
-
-
-                        });
-                      },
-                      child: Padding(
+                      Padding(
                         padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width / 18),
-                        child: Image.asset(
-                          _pressedIconTriste ? 'assets/images/Chateado.png': 'assets/images/ChateadoSelected.png',
-                          height: MediaQuery.of(context).size.width / 10,
-                          width: MediaQuery.of(context).size.width / 10,
+                            left: MediaQuery.of(context).size.width / 18 , top: 5),
+                        child: Text(_textoEmogis[1], style: _estiloEmogis(35),),
+                      )
+                    ],
+                  ),
+                  ///Emogi Normal
+                  Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            _changeIcons(RespostaCodigo.NORMAL.index);
+                            _registrar(RespostaCodigo.NORMAL.index, usuarioLogado);
+
+                          });
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width / 18),
+                          child: Image.asset(
+                            _pressedIconNormal ? 'assets/images/Normal.png': 'assets/images/NormalSelected.png',
+                            height: MediaQuery.of(context).size.width / 10,
+                            width: MediaQuery.of(context).size.width / 10,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 18 , top: 5),
-                      child: Text(_textoEmogis[1], style: _estiloEmogis(35),),
-                    )
-                  ],
-                ),
-                ///Emogi Normal
-                Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          _changeIcons(RespostaCodigo.NORMAL.index);
-                          _registrar(RespostaCodigo.NORMAL.index, usuarioLogado);
-
-                        });
-                      },
-                      child: Padding(
+                      Padding(
                         padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width / 18),
-                        child: Image.asset(
-                          _pressedIconNormal ? 'assets/images/Normal.png': 'assets/images/NormalSelected.png',
-                          height: MediaQuery.of(context).size.width / 10,
-                          width: MediaQuery.of(context).size.width / 10,
+                            left: MediaQuery.of(context).size.width / 18 , top: 5),
+                        child: Text(_textoEmogis[2], style: _estiloEmogis(35),),
+                      )
+                    ],
+                  ),
+                  ///Emogi Feliz
+                  Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            _changeIcons(RespostaCodigo.FELIZ.index);
+                            _registrar(RespostaCodigo.FELIZ.index, usuarioLogado);
+
+                          });
+                         // Navigator.of(context).pop();
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width / 18),
+                          child: Image.asset(
+                            _pressedIconFeliz == true ? 'assets/images/Feliz.png': 'assets/images/FelizSelected.png',
+                            height: MediaQuery.of(context).size.width / 10,
+                            width: MediaQuery.of(context).size.width / 10,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 18 , top: 5),
-                      child: Text(_textoEmogis[2], style: _estiloEmogis(35),),
-                    )
-                  ],
-                ),
-                ///Emogi Feliz
-                Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          _changeIcons(RespostaCodigo.FELIZ.index);
-                          _registrar(RespostaCodigo.FELIZ.index, usuarioLogado);
-
-                        });
-                       // Navigator.of(context).pop();
-                      },
-                      child: Padding(
+                      Padding(
                         padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width / 18),
-                        child: Image.asset(
-                          _pressedIconFeliz == true ? 'assets/images/Feliz.png': 'assets/images/FelizSelected.png',
-                          height: MediaQuery.of(context).size.width / 10,
-                          width: MediaQuery.of(context).size.width / 10,
+                            left: MediaQuery.of(context).size.width / 18 , top: 5),
+                        child: Text(_textoEmogis[3], style: _estiloEmogis(35),),
+                      )
+                    ],
+                  ),
+                  ///Emogi Muito Feliz
+                  Column(
+                    children: [
+                      InkWell(
+
+                        onTap: () {
+                          setState(() {
+                            _changeIcons(RespostaCodigo.MUITO_FELIZ.index);
+                            _registrar(RespostaCodigo.MUITO_FELIZ.index, usuarioLogado);
+
+                          });
+
+                          //Navigator.of(context).pop();
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width / 20),
+                          child: Image.asset(
+                            _pressedIconMuitoFeliz == true ? 'assets/images/Muito_Feliz.png' : 'assets/images/MuitoFelizSelected.png',
+                            height: MediaQuery.of(context).size.width / 10,
+                            width: MediaQuery.of(context).size.width / 10,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 18 , top: 5),
-                      child: Text(_textoEmogis[3], style: _estiloEmogis(35),),
-                    )
-                  ],
-                ),
-                ///Emogi Muito Feliz
-                Column(
-                  children: [
-                    InkWell(
-
-                      onTap: () {
-                        setState(() {
-                          _changeIcons(RespostaCodigo.MUITO_FELIZ.index);
-                          _registrar(RespostaCodigo.MUITO_FELIZ.index, usuarioLogado);
-
-                        });
-
-                        //Navigator.of(context).pop();
-                      },
-                      child: Padding(
+                      Padding(
                         padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width / 20),
-                        child: Image.asset(
-                          _pressedIconMuitoFeliz == true ? 'assets/images/Muito_Feliz.png' : 'assets/images/MuitoFelizSelected.png',
-                          height: MediaQuery.of(context).size.width / 10,
-                          width: MediaQuery.of(context).size.width / 10,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 20 , top: 5),
-                      child: Text(_textoEmogis[4] , style: _estiloEmogis(35)),
-                    )
-                  ],
-                ),
-              ],
+                            left: MediaQuery.of(context).size.width / 20 , top: 5),
+                        child: Text(_textoEmogis[4] , style: _estiloEmogis(35)),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
             ///FIM EMOGIS
 
@@ -641,6 +500,44 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
   }
 
+  InkWell _inkWellTema(int tipoSentimento, int imagemTema, int textoTema) {
+    return InkWell(
+      onTap: () async {
+        setState(() {
+          _changeTemaSentimento(tipoSentimento);
+
+          //_showDialogBuilder(context);
+
+        });
+//                click(index, context, usuarioLogado?.data);
+
+      },
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Image.asset(
+            images[imagemTema],
+            width: 50,
+            height: 50,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6),
+            child: Text(
+              textos[textoTema],
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          )
+        ],
+      ),
+    );
+
+  }
   TextStyle _estiloEmogis(var numero){
 
     return TextStyle(fontSize: MediaQuery.of(context).size.width / numero);
@@ -767,25 +664,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
     print("PerguntaTipo: $_perguntaTipo");
     print("Indice Sentimento: $indexSentimento");
-    //print("Usuario "+usuarioLogado);
-    /**
-        Indice Felicidade:
 
-        MUITO_TRISTE = 0,
-        TRISTE = 1,
-        NORMAL = 2,
-        FELIZ = 3,
-        MUITO_FELIZ = 4
-
-        Indice Tipod eResposta/Dimenção:
-
-        FAMILIA = 0,
-        SAUDE = 1,
-        ESCOLA = 2,
-        PROFESSORES= 3,
-        ESTUDOS = 4,
-        COLEGAS = 5
-     */
     if(_perguntaTipo == -1) {
       if(!mounted) return;
       Utils.showDefaultSnackbar(context, "Selecione um Tema!!!");

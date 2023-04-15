@@ -19,6 +19,7 @@ import 'package:uuid/uuid.dart';
 
 
   static String URL_WEB_SERVICE = "http://192.168.0.6:5000/api/";
+
   //String URL_WEB_SERVICE = "http://avaliacoes-backend.herokuapp.com/";
   static const String IMG_KEY = 'IMAGE_KEY';
 
