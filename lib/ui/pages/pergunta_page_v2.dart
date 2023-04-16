@@ -70,12 +70,10 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
     ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
 
     return Scaffold(
-        appBar: AppBarUsuario(usuarioLogado, context),
-
-
+        appBar: AppBarUsuario(usuarioLogado,  ", como se sente?", context),
         body:
-
-            Container(
+          Container(
+              color: Colors.grey.withOpacity(0.2),
         child:
         Column(
           mainAxisAlignment: MainAxisAlignment.center,

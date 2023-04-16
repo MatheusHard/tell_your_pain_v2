@@ -16,7 +16,7 @@ class UsuarioApi{
 
   BuildContext? _context;
 
-  UsuarioApi(BuildContext context){
+   UsuarioApi(BuildContext context){
     _context = context;
   }
   final URL_API_USUARIO = "usuario";
@@ -55,7 +55,7 @@ class UsuarioApi{
   }
 
 //Login App sem Banco
-loginUsuario(Map login) async{
+  loginUsuario(Map login) async{
 
 
 

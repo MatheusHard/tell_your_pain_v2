@@ -54,47 +54,52 @@ class _MainPageState extends State<MainPage> {
 
     ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
 
-    return GridView.builder(
-      itemCount: textos.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: MediaQuery.of(context).size.width /
-            (MediaQuery.of(context).size.height / 2.6),
-      ),
-      itemBuilder: (BuildContext context, int index) {
-        return Card(
-          child: InkWell(
-            onTap: () async {
-              //testeEnvio();
-              click(index, context, usuarioLogado?.data);
+    return Container(
+      color: Colors.grey.withOpacity(0.2),
 
-            },
-            child: Column(
-              children: <Widget>[
-                const SizedBox(
-                  height: 20,
-                ),
-                Image.asset(
-                  images[index],
-                  width: 40,
-                  height: 40,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(6),
-                  child: Text(
-                    textos[index],
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
+      child: GridView.builder(
+
+        itemCount: textos.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: MediaQuery.of(context).size.width /
+              (MediaQuery.of(context).size.height / 2.6),
+        ),
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+            child: InkWell(
+              onTap: () async {
+                //testeEnvio();
+                click(index, context, usuarioLogado?.data);
+
+              },
+              child: Column(
+                children: <Widget>[
+                  const SizedBox(
+                    height: 20,
                   ),
-                )
-              ],
+                  Image.asset(
+                    images[index],
+                    width: 40,
+                    height: 40,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(6),
+                    child: Text(
+                      textos[index],
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

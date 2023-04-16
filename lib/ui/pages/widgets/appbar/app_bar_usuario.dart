@@ -7,7 +7,7 @@ import '../../utils/core/app_gradients.dart';
 import '../../utils/core/app_text_styles.dart';
 
 class AppBarUsuario extends PreferredSize {
-  AppBarUsuario(ScreenArgumentsUsuario? args, BuildContext context, {Key? key}):super(key: key,
+  AppBarUsuario(ScreenArgumentsUsuario? args, String texto, BuildContext context, {Key? key}):super(key: key,
 
     preferredSize: const Size.fromHeight(200),
 
@@ -49,7 +49,7 @@ class AppBarUsuario extends PreferredSize {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('''Olá ${args?.data.nome} , como se sente?''' , style: AppTextStyles.titleCartaoVacina,),
+                Text('''Olá ${args?.data.nome} $texto''' , style: AppTextStyles.titleAppBarUsuario(25, context),),
 
               ],),
           )

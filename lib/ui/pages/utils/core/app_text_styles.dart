@@ -28,11 +28,15 @@ class AppTextStyles {
     fontSize: 25,
     fontWeight: FontWeight.w400,
   );
-  static final TextStyle titleCartaoVacina = GoogleFonts.notoSans(
+  static TextStyle titleAppBarUsuario(int numero, BuildContext context) {
+
+    return GoogleFonts.notoSans(
     color: AppColors.white,
-    fontSize: 25,
+    fontSize:  MediaQuery.of(context).size.width / numero,
     fontWeight: FontWeight.w400,
-  );
+  ) ;
+
+}
 
   static final TextStyle titleBold = GoogleFonts.notoSans(
     color: AppColors.white,

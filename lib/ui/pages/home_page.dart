@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
+import 'package:tell_your_pain_v2/ui/pages/widgets/appbar/app_bar_usuario.dart';
 
 import 'main_page.dart';
 
@@ -6,10 +8,12 @@ class HomePage extends StatelessWidget {
   var _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('HAppy'),
-      ),
+
+      appBar: AppBarUsuario(usuarioLogado,  "", context),
+
       backgroundColor: const Color(0xFFF0F0F0),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
