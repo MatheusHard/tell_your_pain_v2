@@ -1,5 +1,5 @@
 
- enum PerguntaTipo {
+ enum Dimensao {
 
       FAMILIA,
       SAUDE,

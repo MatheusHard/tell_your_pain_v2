@@ -6,7 +6,7 @@ class UsuarioDataModel{
   static const String nome = "nome";
   static const String cpf = "cpf";
   static const String email = "email";
-  static const String senha = "senha";
+  static const String senhaHash = "senhaHash";
   static const String turmaId = 'turmaId';
   static const String escolaId = "escolaId";
   static const String foto = 'foto';
@@ -18,7 +18,7 @@ class UsuarioDataModel{
   static String criarTabela() {
 
     return '''CREATE TABLE $TABELA ($id TEXT PRIMARY KEY, $nome TEXT, $cpf TEXT, $email TEXT,
-                                    $senha  TEXT, $turmaId TEXT, $escolaId TEXT, $foto TEXT,
+                                    $senhaHash  TEXT, $turmaId TEXT, $escolaId TEXT, $foto TEXT,
                                     $telefone TEXT, $dataNascimento TEXT);
            ''';
   }

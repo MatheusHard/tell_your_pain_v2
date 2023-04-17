@@ -17,7 +17,7 @@ class RespostaApi{
     _context = context;
   }
   final URL_API_RESPOSTA = "resposta";
-  //final URL_LOGIN = "/login";
+  final URL_INSERIR_RESPOSTAS = "/InserirRespostas";
 
 
   //Get All Users
@@ -50,7 +50,7 @@ class RespostaApi{
   }
 
 //Login
-Future<int> enviarRespostas(List respostas) async{
+ enviarRespostas(List respostas) async{
 
   var respostaRepository =  RespostaRepository(await DBHelper.instance.database);
 
@@ -63,7 +63,7 @@ Future<int> enviarRespostas(List respostas) async{
 
   List lista = await _atualizarLista(jsonEncode(listaAEnviar));
 
-    Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_RESPOSTA''');
+    Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_RESPOSTA$URL_INSERIR_RESPOSTAS''');
     http.Response response = await http.post(
         url,
         headers: {
@@ -88,7 +88,6 @@ Future<int> enviarRespostas(List respostas) async{
     }else{
       Utils.showDefaultSnackbar(_context!, response.body);
     }
-    return 1;
   }
 
   Future<List> _atualizarLista(String listaAux) async{

@@ -101,7 +101,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                // color: _pressedFamilia ? Colors.transparent : Colors.grey.withOpacity(0.5),
 
                 child:
-                _inkWellTema(PerguntaTipo.FAMILIA.index, 0, 0),
+                _inkWellTema(Dimensao.FAMILIA.index, 0, 0),
 
               ),
 
@@ -123,7 +123,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                 height: MediaQuery.of(context).size.width / 3.1,
 
 
-                child: _inkWellTema(PerguntaTipo.SAUDE.index, 1, 1),
+                child: _inkWellTema(Dimensao.SAUDE.index, 1, 1),
 
             ),
 
@@ -154,7 +154,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                   height: MediaQuery.of(context).size.width / 3.1,
 
 
-                  child: _inkWellTema(PerguntaTipo.ESCOLA.index, 2, 2),
+                  child: _inkWellTema(Dimensao.ESCOLA.index, 2, 2),
 
                 ),
                 const Padding(padding: EdgeInsets.all(4.0)),
@@ -175,7 +175,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                   height: MediaQuery.of(context).size.width / 3.1,
 
 
-                  child: _inkWellTema(PerguntaTipo.PROFESSORES.index, 3, 3),
+                  child: _inkWellTema(Dimensao.PROFESSORES.index, 3, 3),
 
                 ),
               ],
@@ -205,7 +205,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                   height: MediaQuery.of(context).size.width / 3.1,
 
 
-                  child: _inkWellTema(PerguntaTipo.ESTUDOS.index, 4, 4),
+                  child: _inkWellTema(Dimensao.ESTUDOS.index, 4, 4),
 
                 ),
                 const Padding(padding: EdgeInsets.all(4.0)),
@@ -226,7 +226,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                   height: MediaQuery.of(context).size.width / 3.1,
 
 
-                  child: _inkWellTema(PerguntaTipo.COLEGAS.index, 5, 5),
+                  child: _inkWellTema(Dimensao.COLEGAS.index, 5, 5),
 
                 ),
               ],
@@ -480,20 +480,20 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
     return TextStyle(fontSize: MediaQuery.of(context).size.width / numero);
   }
-  Future<void>  _enviarRespostasApi() async{
+    _enviarRespostasApi() async{
 
   var lista = [];
 
-    Future<int> res = RespostaApi(context).enviarRespostas(lista);
+    RespostaApi(context).enviarRespostas(lista);
 
-    if(await res == 0){
+   /* if(await res == 0){
       Utils.showDefaultSnackbar(context, "Sem dados à enviar");
       Navigator.of(context).pop();
     }else if(await res == 1){
 
       Utils.showDefaultSnackbar(context, "Dados enviados");
       Navigator.of(context).pop();
-    }
+    }*/
 
 
 }
@@ -610,11 +610,11 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
     }
     var meuEnderecoIp = await Utils.getIpDevice();
 
-    Resposta resposta = Resposta(id: Utils.generateGuide(), turmaId: usuarioLogado.data.turmaId,
-                                alunoId: usuarioLogado.data.id, statusEnvio: StatusEnvio.A_ENVIAR.index,
-                                erros: "", respostaCodigo: indexSentimento, dataCadastro: Utils.getDataHoraDotNet(),
-                                latitude: "2541.332", longitude: "65584,33221", enderecoIp: meuEnderecoIp,
-                                perguntaTipo: _perguntaTipo);
+    Resposta resposta = Resposta(id: Utils.generateGuide(), escolaId:  Utils.generateGuide(), poloId: Utils.generateGuide(),
+                                usuarioId: usuarioLogado.data.id, statusEnvio: StatusEnvio.A_ENVIAR.index,
+                                erros: "", respostaCodigo: indexSentimento, dataResposta: Utils.getDataHoraDotNet(),
+                                geoReferenciamento: "145214;522442" , enderecoIp: meuEnderecoIp,
+                                dimensaoId: _perguntaTipo);
 
       int res = await respostaRepository.add(resposta).catchError((error){
         Utils.showDefaultSnackbar(context, '''Sentimento não salvo -> [ ${error.toString().substring(0,35)} ]...''');
@@ -649,123 +649,5 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
       return 1;
   }
 
-  /*Future<void> _showDialogBuilder(BuildContext context) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        var height = MediaQuery.of(context).size.height;
-        var width = MediaQuery.of(context).size.width;
 
-        return AlertDialog(
-          contentPadding: EdgeInsets.zero,
-          insetPadding:  EdgeInsets.only(left: 8.0, right: 8.0, top: width / 2 , bottom: 10),
-
-
-          title: const Text('Basic dialog title'),
-          content:  Container(
-            width: width +20 ,
-            height: height - 100 ,
-            child: Row(
-              children: <Widget>[
-                InkWell(
-                  onTap: () {
-                    _registrar(0);
-                    Navigator.of(context).pop();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 0),
-                    child: Image.asset(
-                      'assets/images/Triste.png',
-                      height: MediaQuery.of(context).size.width / 10,
-                      width: MediaQuery.of(context).size.width / 10,
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    _registrar(1);
-                    Navigator.of(context).pop();
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width / 16),
-                    child: Image.asset(
-                      'assets/images/Chateado.png',
-                      height: MediaQuery.of(context).size.width / 10,
-                      width: MediaQuery.of(context).size.width / 10,
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    _registrar(2);
-                    Navigator.of(context).pop();
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width / 16),
-                    child: Image.asset(
-                      'assets/images/Normal.png',
-                      height: MediaQuery.of(context).size.width / 10,
-                      width: MediaQuery.of(context).size.width / 10,
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    _registrar(3);
-                    Navigator.of(context).pop();
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width / 16),
-                    child: Image.asset(
-                      'assets/images/Feliz.png',
-                      height: MediaQuery.of(context).size.width / 10,
-                      width: MediaQuery.of(context).size.width / 10,
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    _registrar(4);
-                    Navigator.of(context).pop();
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width / 16),
-                    child: Image.asset(
-                      'assets/images/Muito_Feliz.png',
-                      height: MediaQuery.of(context).size.width / 10,
-                      width: MediaQuery.of(context).size.width / 10,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Disable'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Enable'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }*/
 }

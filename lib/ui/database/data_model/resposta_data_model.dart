@@ -3,25 +3,25 @@ class RespostaDataModel{
 
   static const String TABELA = "tabelaResposta";
   static const String id = "id";
-  static const String dataCadastro = "dataCadastro";
-  static const String latitude = "latitude";
-  static const String longitude = "longitude";
+  static const String dataResposta = "dataResposta";
+  static const String geoReferenciamento = "geoReferenciamento";
   static const String enderecoIp = "enderecoIp";
-  static const String turmaId = "turmaId";
-  static const String alunoId = "alunoId";
+  static const String escolaId = "escolaId";
+  static const String usuarioId = "usuarioId";
+  static const String poloId = "poloId";
   static const String statusEnvio = "statusEnvio";
   static const String erros = "erros";
   static const String respostaCodigo = "respostaCodigo";
-  static const String perguntaTipo = "perguntaTipo";
+  static const String dimensaoId = "dimensaoId";
 
 
   static String queryCriarTabela = "";
 
   static String criarTabela() {
 
-    return '''CREATE TABLE $TABELA ($id TEXT PRIMARY KEY, $dataCadastro TEXT, $latitude TEXT, $longitude TEXT, $enderecoIp TEXT,
-                                    $turmaId TEXT, $alunoId TEXT, $statusEnvio INTEGER, $erros TEXT, $respostaCodigo INTEGER,
-                                    $perguntaTipo INTEGER);
+    return '''CREATE TABLE $TABELA ($id TEXT PRIMARY KEY, $dataResposta TEXT, $geoReferenciamento TEXT, $enderecoIp TEXT,
+                                    $escolaId TEXT, $usuarioId TEXT, $statusEnvio INTEGER, $erros TEXT, $respostaCodigo INTEGER,
+                                    $dimensaoId INTEGER, $poloId TEXT);
            ''';
   }
 

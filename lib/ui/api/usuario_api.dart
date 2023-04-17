@@ -20,7 +20,7 @@ class UsuarioApi{
     _context = context;
   }
   final URL_API_USUARIO = "usuario";
-  final URL_API_LOGIN = "login";
+  final URL_API_AUTH = "auth";
 
   final URL_LOGIN = "/login";
 
@@ -53,9 +53,32 @@ class UsuarioApi{
 
     }
   }
+//Login DB interno
+  loginUsuario2(Map<String, dynamic> user) async{
 
+
+
+      //Usuario Repositorio:
+      var usuarioRepository = UsuarioRepository(await DBHelper.instance.database);
+
+      Usuario usuario = Usuario.fromMap(user);
+
+      int deleteALl = await usuarioRepository.deleteAll();
+
+      // if(deleteALl == 1) {
+      int resultAdd = await usuarioRepository.add(usuario);
+
+      if (resultAdd >= 1) {
+        Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
+      } else {
+        Utils.showDefaultSnackbar(_context!, "response.body");
+      }
+
+
+
+  }
 //Login App sem Banco
-  loginUsuario(Map login) async{
+  loginUsuario3(Map login) async{
 
 
 
@@ -92,14 +115,14 @@ class UsuarioApi{
 
 
   //Login
-  loginUsuario2(Map login) async{
+  loginUsuario(Map login) async{
 
     var id;
     var respostaToken = await getToken(login);
 
     if(respostaToken['status'] == 200){
       Map<String, dynamic> decodedToken = JwtDecoder.decode(respostaToken['token']);
-      id = decodedToken['sub'];
+      id = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
 
       Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_USUARIO/$id''');
       http.Response response = await http.get(url);
@@ -134,11 +157,29 @@ class UsuarioApi{
     var user = {
       "email": "luiz@gmail.com",
       "senha": "40bd001563085fc35165329ea1ff5c5ecbdbbeef",
-      "token": ""
+      "token": "",
+      "foto": "string",
+      "nome": "string",
+      "dataNascimento": "2023-04-16T14:50:12.626Z",
+      "telefone": "string",
+      "escolaId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "turmaId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "tipoUsuarioId": 0,
+      "cpf": "string",
+      "nomeResponsavel": "string",
+      "cpfResponsavel": "string",
+      "telefoneResponsavel": "string",
+      "dataCadastro": "2023-04-16T14:50:12.626Z",
+      "dataAlteracao": "2023-04-16T14:50:12.626Z",
+      "rua": "string",
+      "numeroCasa": "string",
+      "complemento": "string",
+      "cidadeId": 0,
+      "bairroId": 0
     };
 
 
-    Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_LOGIN''');
+    Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_AUTH$URL_LOGIN''');
     http.Response response = await http.post(
         url,
         headers: {

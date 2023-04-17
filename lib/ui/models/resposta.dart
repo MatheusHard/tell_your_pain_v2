@@ -3,52 +3,52 @@
 class Resposta {
 
   String id;
-  String turmaId;
-  String alunoId;
+  String escolaId;
+  String usuarioId;
+  String poloId;
   int statusEnvio;
   String erros;
   int  respostaCodigo;
-  String dataCadastro;
-  String latitude;
-  String longitude;
+  String dataResposta;
+  String geoReferenciamento;
   String enderecoIp;
-  int perguntaTipo;
+  int dimensaoId;
 
 
   Resposta({
-    required this.id, required this.turmaId, required this.alunoId, required this.statusEnvio,
-    required this.erros, required this.respostaCodigo, required this.dataCadastro,
-    required this.latitude, required this.longitude, required this.enderecoIp, required this.perguntaTipo});
+    required this.id, required this.escolaId, required this.usuarioId, required this.statusEnvio,
+    required this.erros, required this.respostaCodigo, required this.dataResposta, required this.poloId,
+    required this.geoReferenciamento, required this.enderecoIp, required this.dimensaoId});
 
   factory Resposta.fromMap(Map<String, dynamic> json) => Resposta(
 
       id: json['id']  ?? '',
-      turmaId: json['turmaId'] ?? '',
-      alunoId: json['alunoId'],
+      escolaId: json['escolaId'] ?? '',
+      usuarioId: json['usuarioId'],
       statusEnvio: json['statusEnvio'],
       erros:  json['erros'],
       respostaCodigo: json['respostaCodigo'],
-      dataCadastro: json['dataCadastro'],
-      latitude: json['latitude'],
-      longitude: json['longitude'],
+      dataResposta: json['dataResposta'],
+      geoReferenciamento: json['geoReferenciamento'],
       enderecoIp: json['enderecoIp'],
-      perguntaTipo: json['perguntaTipo']
+      dimensaoId : json['dimensaoId'],
+      poloId: json['poloId']
 
   );
 
   Map<String, dynamic> toMap(){
     return {
       'id': id,
-      'turmaId': turmaId,
-      'alunoId': alunoId,
+      'escolaId': escolaId,
+      'usuarioId': usuarioId,
       'statusEnvio': statusEnvio,
       'erros':  erros,
       'respostaCodigo': respostaCodigo,
-      'dataCadastro': dataCadastro,
-      'latitude': latitude,
-      'longitude': longitude,
+      'dataResposta': dataResposta,
+      'geoReferenciamento': geoReferenciamento,
       'enderecoIp': enderecoIp,
-      'perguntaTipo': perguntaTipo
+      'dimensaoId': dimensaoId,
+      'poloId': poloId
     };
   }
 }
