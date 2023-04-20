@@ -135,7 +135,7 @@ class UsuarioApi{
 
       int deleteALl = await usuarioRepository.deleteAll();
 
-      // if(deleteALl == 1) {
+            // if(deleteALl == 1) {
       int resultAdd = await usuarioRepository.add(usuario);
       if (resultAdd == 1) Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
       //  }
@@ -153,31 +153,6 @@ class UsuarioApi{
    var retorno ;
 
     String? token;
-
-    var user = {
-      "email": "luiz@gmail.com",
-      "senha": "40bd001563085fc35165329ea1ff5c5ecbdbbeef",
-      "token": "",
-      "foto": "string",
-      "nome": "string",
-      "dataNascimento": "2023-04-16T14:50:12.626Z",
-      "telefone": "string",
-      "escolaId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "turmaId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "tipoUsuarioId": 0,
-      "cpf": "string",
-      "nomeResponsavel": "string",
-      "cpfResponsavel": "string",
-      "telefoneResponsavel": "string",
-      "dataCadastro": "2023-04-16T14:50:12.626Z",
-      "dataAlteracao": "2023-04-16T14:50:12.626Z",
-      "rua": "string",
-      "numeroCasa": "string",
-      "complemento": "string",
-      "cidadeId": 0,
-      "bairroId": 0
-    };
-
 
     Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_AUTH$URL_LOGIN''');
     http.Response response = await http.post(

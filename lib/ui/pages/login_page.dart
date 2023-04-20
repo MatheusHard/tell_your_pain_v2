@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tell_your_pain_v2/ui/api/usuario_api.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 
+import '../api/escola_api.dart';
+
 class LoginPage extends StatefulWidget {
   static String tag = 'login_page';
   @override
@@ -85,31 +87,12 @@ class _LoginPageState extends State<LoginPage> {
           minWidth: 200.0,
           height: 42.0,
           onPressed: () {
+
                 if(_formKey.currentState!.validate()) {
-                  var user = {
-                    "Email": _email,
-                    "Nome": "Luiz Silva",
-                    "Senha": Utils.toSha1(_senha),
-                    "Cpf": "05698754521",
-                    "Telefone": "05698754521",
-                    "Foto": "fgff/ggh"
-                  };
-                  UsuarioApi(context).loginUsuario(user);
+
+                  UsuarioApi(context).loginUsuario(_user(_email, Utils.toSha1(_senha)));
                 }
-            /*FirebaseAuth.instance
-                .signInWithEmailAndPassword(
-              email: _email,
-              password: _senha,
-            )
-                .then((user) {
-              Navigator.of(context).pop();
-              Navigator.of(context).pushReplacementNamed('/pages/home_page');
-            }).catchError((e) {
-              Utils.showDefaultSnackbar(context, 'Email ou Senha Inválido');
 
-
-
-            });*/
           },
           color: Colors.blueAccent,
           child: const Text(
@@ -162,6 +145,34 @@ class _LoginPageState extends State<LoginPage> {
     );
 
 
+
+  }
+
+  _user(String email, String senha){
+
+    return {
+      "email": email,
+      "senha": senha,
+      "token": "",
+      "foto": "string",
+      "nome": "string",
+      "dataNascimento": "2023-04-16T14:50:12.626Z",
+      "telefone": "string",
+      "escolaId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "turmaId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "tipoUsuarioId": 0,
+      "cpf": "string",
+      "nomeResponsavel": "string",
+      "cpfResponsavel": "string",
+      "telefoneResponsavel": "string",
+      "dataCadastro": "2023-04-16T14:50:12.626Z",
+      "dataAlteracao": "2023-04-16T14:50:12.626Z",
+      "rua": "string",
+      "numeroCasa": "string",
+      "complemento": "string",
+      "cidadeId": 0,
+      "bairroId": 0
+    };
   }
 
 }

@@ -4,6 +4,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tell_your_pain_v2/ui/database/data_model/usuario_data_model.dart';
 
+import 'data_model/escola_data_model.dart';
 import 'data_model/resposta_data_model.dart';
 
 class DBHelper{
@@ -29,7 +30,7 @@ class DBHelper{
 
     await db.execute(UsuarioDataModel.criarTabela());
     await db.execute(RespostaDataModel.criarTabela());
-
+    await db.execute(EscolaDataModel.criarTabela());
   }
 
   Future close() async {

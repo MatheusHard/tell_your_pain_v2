@@ -6,7 +6,7 @@ class Usuario {
   String nome;
   String cpf;
   String email;
-  String senhaHash;
+  //String senhaHash;
   String dataNascimento;
   String escolaId;
   String turmaId;
@@ -15,7 +15,7 @@ class Usuario {
 
   Usuario({
     required this.id, required this.nome, required this.cpf, required this.email,
-    required this.senhaHash, required this.dataNascimento, required this.escolaId,
+     required this.dataNascimento, required this.escolaId,
     required this.turmaId, required this.foto, required this.telefone});
 
   factory Usuario.fromMap(Map<String, dynamic> json) => Usuario(
@@ -24,7 +24,7 @@ class Usuario {
       nome: json['nome'] ?? '',
       cpf: json['cpf'],
       email: json['email'],
-      senhaHash:  (json['senhaHash']),
+     // senhaHash:  (json['senhaHash']),
       dataNascimento: json['dataNascimento'],
       escolaId: json['escolaId'],
       turmaId: json['turmaId'],
@@ -39,7 +39,7 @@ class Usuario {
       'nome': nome,
       'cpf': cpf,
       'email': email,
-      'senhaHash':  senhaHash,
+     // 'senhaHash':  senhaHash,
       'dataNascimento': dataNascimento,
       'escolaId': escolaId,
       'turmaId': turmaId,

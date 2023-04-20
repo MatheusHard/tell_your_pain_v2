@@ -84,6 +84,7 @@ class RespostaApi{
           respostaRepository.updateStatus(item['statusEnvio'], item['erros'], item['id']);
         }
       }
+      Utils.showDefaultSnackbar(_context!, "Respostas Enviadas");
 
     }else{
       Utils.showDefaultSnackbar(_context!, response.body);

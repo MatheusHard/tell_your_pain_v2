@@ -13,14 +13,12 @@ class UsuarioRepository  implements IUsuarioRepository{
 
   @override
   Future<List>getAll() async {
-    //var db = await DBHelper.instance.database;
     var usuarios = await _db.query(UsuarioDataModel.getTabela(), orderBy: UsuarioDataModel.nome);
     return usuarios.toList();
   }
 
   @override
   Future<int> add(Usuario usuario) async {
-    //var _db = await DBHelper.instance.database;
     return await _db.insert(UsuarioDataModel.getTabela(), usuario.toMap());
   }
 

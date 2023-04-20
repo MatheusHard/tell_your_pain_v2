@@ -33,6 +33,7 @@ class AvaliacaoPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
+
       body: Center(
         child: Column(
           children: <Widget>[

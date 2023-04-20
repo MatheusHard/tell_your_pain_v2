@@ -486,16 +486,6 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
     RespostaApi(context).enviarRespostas(lista);
 
-   /* if(await res == 0){
-      Utils.showDefaultSnackbar(context, "Sem dados à enviar");
-      Navigator.of(context).pop();
-    }else if(await res == 1){
-
-      Utils.showDefaultSnackbar(context, "Dados enviados");
-      Navigator.of(context).pop();
-    }*/
-
-
 }
   _changeTemaSentimento(int numero){
 
@@ -598,6 +588,8 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
   }
   void _registrar(int indexSentimento, var usuarioLogado) async {
 
+    var geoLocalizacao = await Utils.getGeolocalizacao();
+
     var respostaRepository =  RespostaRepository(await DBHelper.instance.database);
 
     print("PerguntaTipo: $_perguntaTipo");
@@ -610,10 +602,10 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
     }
     var meuEnderecoIp = await Utils.getIpDevice();
 
-    Resposta resposta = Resposta(id: Utils.generateGuide(), escolaId:  Utils.generateGuide(), poloId: Utils.generateGuide(),
+    Resposta resposta = Resposta(id: Utils.generateGuide(), escolaId:  usuarioLogado.data.escolaId,
                                 usuarioId: usuarioLogado.data.id, statusEnvio: StatusEnvio.A_ENVIAR.index,
                                 erros: "", respostaCodigo: indexSentimento, dataResposta: Utils.getDataHoraDotNet(),
-                                geoReferenciamento: "145214;522442" , enderecoIp: meuEnderecoIp,
+                                geoReferenciamento: '''${geoLocalizacao.latitude};${geoLocalizacao.longitude}''' , enderecoIp: meuEnderecoIp,
                                 dimensaoId: _perguntaTipo);
 
       int res = await respostaRepository.add(resposta).catchError((error){

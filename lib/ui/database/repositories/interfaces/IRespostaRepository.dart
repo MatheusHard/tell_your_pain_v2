@@ -7,7 +7,7 @@ abstract class IRespostaRepository {
   Future<int> add(Resposta resposta);
   Future<int> deleteAll();
   Future<List> getAllAEnviar(int status);
-  Future<int> updateStatus(int status, String erros, String id );
+  Future<int> updateStatus(int status, String erros, String id);
 
 
 }

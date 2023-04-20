@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
     ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
 
       appBar: AppBarUsuario(usuarioLogado,  "", context),
 

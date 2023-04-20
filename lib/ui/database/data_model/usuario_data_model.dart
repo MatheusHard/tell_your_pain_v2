@@ -18,7 +18,7 @@ class UsuarioDataModel{
   static String criarTabela() {
 
     return '''CREATE TABLE $TABELA ($id TEXT PRIMARY KEY, $nome TEXT, $cpf TEXT, $email TEXT,
-                                    $senhaHash  TEXT, $turmaId TEXT, $escolaId TEXT, $foto TEXT,
+                                    $turmaId TEXT, $escolaId TEXT, $foto TEXT,
                                     $telefone TEXT, $dataNascimento TEXT);
            ''';
   }
