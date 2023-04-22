@@ -42,6 +42,25 @@ class RespostaRepository  implements IRespostaRepository{
   return res;
   }
 
+  @override
+  Future<List> getCountSentimentoByDimensao(int dimensao) async{
+    var lista = await _db.rawQuery('''SELECT count(${RespostaDataModel.respostaCodigo}) as total, r.${RespostaDataModel.respostaCodigo}  
+                                     FROM ${RespostaDataModel.getTabela()} r
+                                     WHERE r.${RespostaDataModel.dimensaoId} =  $dimensao
+                                     GROUP BY r.${RespostaDataModel.respostaCodigo}''');
+    return lista.toList();
+  }
+
+  @override
+  Future<List> getRespostaByDimensao(int dimensao) async {
+    // SELECT r.RespostaCodigo FROM RESPOSTAS r Where r.DimensaoId = 0
+    var lista = await _db.rawQuery('''SELECT r.${RespostaDataModel.respostaCodigo} 
+                                     FROM ${RespostaDataModel.getTabela()} r
+                                     WHERE r.${RespostaDataModel.dimensaoId} =  $dimensao
+                                     ''');
+    return lista.toList();
+  }
+
 
 
 }

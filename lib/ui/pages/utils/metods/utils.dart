@@ -31,6 +31,26 @@ import 'package:uuid/uuid.dart';
     return CPFValidator.isValid(cpf);
   }
 
+  static List listaDimensoes(){
+    return   [
+      {"id": 0, "dimensao":"Família"},
+      {"id": 1, "dimensao": "Saúde"},
+      {"id": 2, "dimensao": "Escola"},
+      {"id": 3, "dimensao": "Professores"},
+      {"id": 4, "dimensao": "Estudos"},
+      {"id": 5, "dimensao": "Colegas"}
+    ];
+  }
+  static List listaUrlEmojis(){
+    return [
+      'assets/images/Triste.png',
+      'assets/images/Chateado.png',
+      'assets/images/Normal.png',
+      'assets/images/Feliz.png',
+      'assets/images/Muito_Feliz.png'
+    ];
+
+  }
   static saveSession(String key, value) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString(key, json.encode(value));

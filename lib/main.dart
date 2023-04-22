@@ -18,6 +18,7 @@ import 'package:tell_your_pain_v2/ui/pages/login_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/pergunta_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/pergunta_page_v2.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
+import 'package:tell_your_pain_v2/ui/pages/widgets/charts/bar_chart.dart';
 
 
 void main() async{
@@ -40,16 +41,17 @@ var respRepo =  RespostaRepository(await DBHelper.instance.database);
                                              email: 'burumungu@gmail.com', escolaId: '2012-kkjj-kjnjkk', turmaId: '2541'));
 */
 
-  List lista = await respRepo.getAll();
+
+  List lista = await respRepo.getCountSentimentoByDimensao(0);
   //List lista = await respRepo.getAllAEnviar(1);
 
   for (var u in lista) {
     print("--------------DONO---------------------");
-    print('''Id: ${u['id']}''');
-    print('''alunoId: ${u['alunoId']}''');
-    print('''dataCadastro: ${u['dataCadastro']}''');
-    print('''statusEnvio: ${u['statusEnvio']}''');
-    print('''enderecoIp: ${u['enderecoIp']}''');
+
+    print('''Total: ${u['total']}''');
+    print('''respostaCodigo: ${u['respostaCodigo']}''');
+
+
 
     print("-----------------------------------------");
 
@@ -57,7 +59,7 @@ var respRepo =  RespostaRepository(await DBHelper.instance.database);
 
   runApp(
       MaterialApp(
-        title: 'HAppy',
+        title: 'Happy',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -70,6 +72,7 @@ var respRepo =  RespostaRepository(await DBHelper.instance.database);
           '/avaliacao_page': (BuildContext context) =>  AvaliacaoPage(),
           '/cadastro_page': (BuildContext context) =>  CadastroPage(),
           '/chat_page': (BuildContext context) =>  ChatScreen(),
+          '/bar_chart': (BuildContext context) => BarChart()
 
 
         },initialRoute: '/login_page',

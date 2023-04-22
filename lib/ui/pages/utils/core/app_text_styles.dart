@@ -36,6 +36,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
   ) ;
 
+
 }
 
   static final TextStyle titleBold = GoogleFonts.notoSans(

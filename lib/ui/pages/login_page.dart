@@ -92,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   UsuarioApi(context).loginUsuario(_user(_email, Utils.toSha1(_senha)));
                 }
+           // Navigator.pushNamed(context, '/bar_chart', arguments: null);
 
           },
           color: Colors.blueAccent,
