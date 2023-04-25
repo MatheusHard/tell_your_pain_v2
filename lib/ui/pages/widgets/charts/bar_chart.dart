@@ -105,7 +105,7 @@ String urlEmoji = "";
                               const SizedBox( width: 10),
                               //urlEmoji == "" ? Image.asset(urlEmoji, height: width / 20, width: width / 20,): Container()
                               mediaTotal > 0 && !mediaTotal.isNaN ?
-                              Image.asset(_respostaEmoji(mediaTotal), height: width / 20, width: width / 20,):
+                              Image.asset(Utils.respostaEmoji(mediaTotal), height: width / 20, width: width / 20,):
                               Container()
                             ]
                       ),
@@ -253,7 +253,7 @@ String urlEmoji = "";
     }
     var mediaFomatada = (media / cont).toStringAsFixed(1);
     mediaTotal = double.parse(mediaFomatada);
-    urlEmoji =  _respostaEmoji(mediaTotal);
+    urlEmoji =  Utils.respostaEmoji(mediaTotal);
     print("media"+media.toString());
     print("conunt"+cont.toString());
     print("meditotal"+mediaTotal.toString());

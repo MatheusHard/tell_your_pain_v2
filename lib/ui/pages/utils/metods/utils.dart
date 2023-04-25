@@ -31,6 +31,18 @@ import 'package:uuid/uuid.dart';
     return CPFValidator.isValid(cpf);
   }
 
+  static String _respostaEmoji(double value){
+    String url = "";
+    var lista = Utils.listaUrlEmojis();
+
+    if(value >= 0 && value < 1) url = lista[0];
+    if(value >= 1 && value < 2) url = lista[1];
+    if(value >= 2 && value < 3) url = lista[2];
+    if(value >= 3 && value < 4) url = lista[3];
+    if(value >= 4) url = lista[4];
+
+    return url;
+  }
   static List listaDimensoes(){
     return   [
       {"id": 0, "dimensao":"Família"},
@@ -40,6 +52,18 @@ import 'package:uuid/uuid.dart';
       {"id": 4, "dimensao": "Estudos"},
       {"id": 5, "dimensao": "Colegas"}
     ];
+  }
+  static String respostaEmoji(double value){
+    String url = "";
+    var lista = listaUrlEmojis();
+
+    if(value >= 1 && value < 2) url = lista[0];
+    if(value >= 2 && value < 3) url = lista[1];
+    if(value >= 3 && value < 4) url = lista[2];
+    if(value >= 4 && value < 5) url = lista[3];
+    if(value >= 5) url = lista[4];
+
+    return url;
   }
   static List listaUrlEmojis(){
     return [
