@@ -549,35 +549,35 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
   _changeIcons(int numero){
 
     switch(numero){
-      case 0:
+      case 1:
         _pressedIconMuitoFeliz = true;
         _pressedIconFeliz = true;
         _pressedIconNormal = true;
         _pressedIconTriste = true;
         _pressedIconMuitoTriste = !_pressedIconMuitoTriste;
         break;
-      case 1:
+      case 2:
         _pressedIconMuitoFeliz = true;
         _pressedIconFeliz = true;
         _pressedIconNormal = true;
         _pressedIconTriste = !_pressedIconTriste;
         _pressedIconMuitoTriste = true;
         break;
-      case 2:
+      case 3:
         _pressedIconMuitoFeliz = true;
         _pressedIconFeliz = true;
         _pressedIconNormal = !_pressedIconNormal;
         _pressedIconTriste = true;
         _pressedIconMuitoTriste = true;
         break;
-      case 3:
+      case 4:
         _pressedIconMuitoFeliz = true;
         _pressedIconFeliz = !_pressedIconFeliz;
         _pressedIconNormal = true;
         _pressedIconTriste = true;
         _pressedIconMuitoTriste = true;
         break;
-      case 4:
+      case 5:
          _pressedIconMuitoFeliz = !_pressedIconMuitoFeliz;
          _pressedIconFeliz = true;
          _pressedIconNormal = true;
@@ -602,11 +602,12 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
     }
     var meuEnderecoIp = await Utils.getIpDevice();
 
+    ///TODO get PoloId
     Resposta resposta = Resposta(id: Utils.generateGuide(), escolaId:  usuarioLogado.data.escolaId,
                                 usuarioId: usuarioLogado.data.id, statusEnvio: StatusEnvio.A_ENVIAR.index,
                                 erros: "", respostaCodigo: indexSentimento, dataResposta: Utils.getDataHoraDotNet(),
                                 geoReferenciamento: '''${geoLocalizacao.latitude};${geoLocalizacao.longitude}''' , enderecoIp: meuEnderecoIp,
-                                dimensaoId: _perguntaTipo);
+                                dimensaoId: _perguntaTipo, poloId: "0972d59d-8fb4-4142-a10c-f6c9defabf34");
 
       int res = await respostaRepository.add(resposta).catchError((error){
         Utils.showDefaultSnackbar(context, '''Sentimento não salvo -> [ ${error.toString().substring(0,35)} ]...''');

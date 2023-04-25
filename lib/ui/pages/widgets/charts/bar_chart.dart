@@ -2,6 +2,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart' as charts;
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:tell_your_pain_v2/ui/database/db_helper.dart';
 import 'package:tell_your_pain_v2/ui/database/repositories/RespostaRepository.dart';
 import 'package:tell_your_pain_v2/ui/enums/perguntaTipo.dart';
@@ -28,6 +29,7 @@ class _BarChartState extends State<BarChart> {
   double mediaTotal = 0;
 
   final _respostas = [
+    'Out',
     'Muito triste',
     'Triste',
     'Normal',
@@ -35,6 +37,7 @@ class _BarChartState extends State<BarChart> {
     'Muito feliz',
   ];
   final colorsColumn = [
+    Colors.transparent,
     Colors.red,
     Colors.orange,
     Colors.blue,
@@ -44,6 +47,7 @@ class _BarChartState extends State<BarChart> {
   ];
 
 final listaDimencoes = Utils.listaDimensoes();
+ late charts.TooltipBehavior _tooltip;
 
 String urlEmoji = "";
 
@@ -51,6 +55,7 @@ String urlEmoji = "";
   void initState() {
     _getByDimensao(selectedDimensao);
     _getRespostas(selectedDimensao);
+    _tooltip = charts.TooltipBehavior(enable: true);
 
     super.initState();
   }
@@ -58,9 +63,8 @@ String urlEmoji = "";
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-        body: _cardTitulo(chartData)
-    );
+    return _cardTitulo(chartData);
+
   }
 
 
@@ -134,14 +138,28 @@ String urlEmoji = "";
 
             Expanded(
               child: charts.SfCartesianChart(
-                  primaryXAxis: charts.CategoryAxis(),
+                 // primaryXAxis: charts.CategoryAxis(),
+                primaryXAxis: CategoryAxis(
+                  majorGridLines: const MajorGridLines(width: 0),
+                ),
+                primaryYAxis: NumericAxis(
+                    labelFormat: '{value}',
+                    title: AxisTitle(text: 'Respostas'),
+                    majorGridLines: const MajorGridLines(width: 0),
+                    majorTickLines: const MajorTickLines(size: 0)),
                 palette: const <Color>[
                   Colors.teal,
                   Colors.orange,
                   Colors.brown
                 ],
+                  tooltipBehavior: _tooltip,
+
                   series: <charts.ChartSeries>[
                     charts.StackedColumnSeries<ChartData, String>(
+                        dataLabelSettings: DataLabelSettings(
+                            textStyle: AppTextStyles.titleAppBarUsuario(35, context),
+                            isVisible: true, labelAlignment: ChartDataLabelAlignment.middle
+                        ),
                           dataSource: chartData,
                           xValueMapper: (ChartData data, _) => data.x,
                           yValueMapper: (ChartData data, _) => data.y,
@@ -185,19 +203,19 @@ String urlEmoji = "";
   int _respostaCodigo(int value){
     int retorno = 0;
     switch(value){
-      case 0:
+      case 1:
         retorno = RespostaCodigo.MUITO_TRISTE.index;
         break;
-      case 1:
+      case 2:
         retorno = RespostaCodigo.TRISTE.index;
         break;
-      case 2:
+      case 3:
         retorno = RespostaCodigo.NORMAL.index;
         break;
-      case 3:
+      case 4:
         retorno = RespostaCodigo.FELIZ.index;
         break;
-      case 4:
+      case 5:
         retorno = RespostaCodigo.MUITO_FELIZ.index;
         break;
     }
@@ -212,7 +230,7 @@ String urlEmoji = "";
         if(value >= 1 && value < 2) url = lista[1];
         if(value >= 2 && value < 3) url = lista[2];
         if(value >= 3 && value < 4) url = lista[3];
-        if(value >= 4 && value < 5) url = lista[4];
+        if(value >= 4) url = lista[4];
 
     return url;
   }
@@ -229,7 +247,7 @@ String urlEmoji = "";
     media = 0;
     for(var item in _listaRepostasByDimensao){
       var total  =  item['respostaCodigo'];
-      media += total +1;
+      media += total;
 
       cont ++;
     }

@@ -38,7 +38,7 @@ class _MainPageState extends State<MainPage> {
     } else if (index == 1) {
       Navigator.of(context).pushNamed('/avaliacao_page', arguments: ScreenArgumentsUsuario(usuarioLogado));
     } else if (index == 2) {
-      Navigator.of(context).pushNamed('/chat_page', arguments: ScreenArgumentsUsuario(usuarioLogado));
+      Navigator.of(context).pushNamed('/charts_page', arguments: ScreenArgumentsUsuario(usuarioLogado));
     } else if (index == 3) {
       //FirebaseAuth.instance.signOut().then((user) {
         exit(0);

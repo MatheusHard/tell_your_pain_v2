@@ -53,10 +53,22 @@ class RespostaRepository  implements IRespostaRepository{
 
   @override
   Future<List> getRespostaByDimensao(int dimensao) async {
-    // SELECT r.RespostaCodigo FROM RESPOSTAS r Where r.DimensaoId = 0
     var lista = await _db.rawQuery('''SELECT r.${RespostaDataModel.respostaCodigo} 
                                      FROM ${RespostaDataModel.getTabela()} r
                                      WHERE r.${RespostaDataModel.dimensaoId} =  $dimensao
+                                     ''');
+    return lista.toList();
+  }
+
+  @override
+  Future<List> getCountDistinctByUsuarioId(String id) async {
+
+    var lista = await _db.rawQuery('''SELECT avg(r.${RespostaDataModel.respostaCodigo}) as media,
+                                             count(r.${RespostaDataModel.respostaCodigo}) as count,
+                                             r.${RespostaDataModel.dimensaoId} 
+                                      FROM ${RespostaDataModel.getTabela()} r
+                                      WHERE r.${RespostaDataModel.usuarioId} =  '$id'
+                                      GROUP BY r.${RespostaDataModel.dimensaoId}
                                      ''');
     return lista.toList();
   }

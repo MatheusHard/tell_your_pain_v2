@@ -19,6 +19,7 @@ import 'package:tell_your_pain_v2/ui/pages/pergunta_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/pergunta_page_v2.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/bar_chart.dart';
+import 'package:tell_your_pain_v2/ui/pages/widgets/charts/charts.dart';
 
 
 void main() async{
@@ -42,14 +43,16 @@ var respRepo =  RespostaRepository(await DBHelper.instance.database);
 */
 
 
-  List lista = await respRepo.getCountSentimentoByDimensao(0);
+  List lista = await respRepo.getAll();
   //List lista = await respRepo.getAllAEnviar(1);
 
   for (var u in lista) {
-    print("--------------DONO---------------------");
+    print("--------------Resposta---------------------");
 
-    print('''Total: ${u['total']}''');
+    print('''UsuarioId: ${u['usuarioId']}''');
     print('''respostaCodigo: ${u['respostaCodigo']}''');
+    print('''Dimensao: ${u['dimensaoId']}''');
+
 
 
 
@@ -72,7 +75,8 @@ var respRepo =  RespostaRepository(await DBHelper.instance.database);
           '/avaliacao_page': (BuildContext context) =>  AvaliacaoPage(),
           '/cadastro_page': (BuildContext context) =>  CadastroPage(),
           '/chat_page': (BuildContext context) =>  ChatScreen(),
-          '/bar_chart': (BuildContext context) => BarChart()
+          '/bar_chart': (BuildContext context) => BarChart(),
+          '/charts_page' : (BuildContext context) => ChartsPage()
 
 
         },initialRoute: '/login_page',

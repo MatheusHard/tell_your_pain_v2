@@ -4,6 +4,7 @@ import '../../../models/resposta.dart';
 abstract class IRespostaRepository {
 
   Future<List> getAll();
+  Future<List> getCountDistinctByUsuarioId(String id);
   Future<int> add(Resposta resposta);
   Future<int> deleteAll();
   Future<List> getCountSentimentoByDimensao(int dimensao);

@@ -4,6 +4,7 @@ import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuar
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/appbar/app_bar_usuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/bar_chart.dart';
+import 'package:tell_your_pain_v2/ui/pages/widgets/charts/charts.dart';
 
 import 'main_page.dart';
 
@@ -86,7 +87,7 @@ class _HomePageState extends State<HomePage> {
 
     MainPage(),
     const Center(child: Text("HISTORICO")),
-    BarChart()
+    ChartsPage()
   ];
 
 

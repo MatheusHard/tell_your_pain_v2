@@ -12,12 +12,13 @@ class Resposta {
   String geoReferenciamento;
   String enderecoIp;
   int dimensaoId;
+  String poloId;
 
 
   Resposta({
     required this.id, required this.escolaId, required this.usuarioId, required this.statusEnvio,
     required this.erros, required this.respostaCodigo, required this.dataResposta,
-    required this.geoReferenciamento, required this.enderecoIp, required this.dimensaoId});
+    required this.geoReferenciamento, required this.enderecoIp, required this.dimensaoId, required this.poloId});
 
   factory Resposta.fromMap(Map<String, dynamic> json) => Resposta(
 
@@ -30,7 +31,8 @@ class Resposta {
       dataResposta: json['dataResposta'],
       geoReferenciamento: json['geoReferenciamento'],
       enderecoIp: json['enderecoIp'],
-      dimensaoId : json['dimensaoId']
+      dimensaoId : json['dimensaoId'],
+      poloId: json['poloId']
 
   );
 
@@ -45,7 +47,8 @@ class Resposta {
       'dataResposta': dataResposta,
       'geoReferenciamento': geoReferenciamento,
       'enderecoIp': enderecoIp,
-      'dimensaoId': dimensaoId
+      'dimensaoId': dimensaoId,
+      'poloId' :poloId
 
     };
   }
