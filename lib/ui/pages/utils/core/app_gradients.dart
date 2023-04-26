@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
 
+import 'app_colors.dart';
+
 class AppGradients {
 
   static const boxPetGradient = LinearGradient(
@@ -13,6 +15,16 @@ class AppGradients {
         Colors.transparent,
         Colors.black38
       ]);
+
+  static  LinearGradient buttonSentimento =  const LinearGradient(
+    //  begin: Alignment.topCenter,
+     // end: Alignment.bottomCenter,
+
+      colors: [
+        Color(0xFF6363DB),
+        Color(0xFF6363DB),
+      ]);
+
 
   static const petFemea =  LinearGradient(
       begin: Alignment.topCenter,

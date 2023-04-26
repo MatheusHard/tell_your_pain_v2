@@ -3,8 +3,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tell_your_pain_v2/ui/database/db_helper.dart';
+import 'package:tell_your_pain_v2/ui/database/repositories/RespostaRepository.dart';
 import 'package:tell_your_pain_v2/ui/models/usuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
+import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
+import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
+import 'package:tell_your_pain_v2/ui/pages/utils/core/app_text_styles.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 
 import '../api/resposta_api.dart';
@@ -16,6 +21,10 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
+
+  List _mediaGeral = [];
+  double mediaGeral = 0;
+  double media = 0;
 
 
   var textos = [
@@ -52,95 +61,184 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
 
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+
+
     ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
 
-    return Container(
-      color: Colors.grey.withOpacity(0.2),
+    _getMediaGeral(usuarioLogado?.data.id);
 
-      child: GridView.builder(
-
-        itemCount: textos.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 2.6),
-        ),
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: InkWell(
-              onTap: () async {
-                //testeEnvio();
-                click(index, context, usuarioLogado?.data);
-
-              },
-              child: Column(
-                children: <Widget>[
+    return Padding(
+      padding: const EdgeInsets.only( left:8.0, right: 8.0),
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              color: AppColors.white,
+              //height: width + 20,
+              width: width,
+              child:Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children:
+                      [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Utils.getIconSemaforo(mediaGeral),
+                            Text('''$mediaGeral ''', style: TextStyle(color: Utils.getColorSemaforo(mediaGeral)),),
+                          ],
+                        ),
+                        Text('''$mediaGeral ''',
+                          style: AppTextStyles.titleCardBlack(10, context),),
+                        const SizedBox( width: 10),
+                        mediaGeral > 0 && !mediaGeral.isNaN ?
+                        Image.asset(_getUrl(mediaGeral), height: width / 10, width: width / 10,):
+                        Container()
+                      ]
+                  ),
                   const SizedBox(
+                    width: 20,
                     height: 20,
                   ),
-                  Image.asset(
-                    images[index],
-                    width: 40,
-                    height: 40,
+                  Text("média dos ultimos relatórios", style: AppTextStyles.titleCardBlack(28, context),),
+                  const SizedBox(
+                    width: 20,
+                    height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(6),
-                    child: Text(
-                      textos[index],
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  )
+                  botao(width, usuarioLogado)
                 ],
-              ),
+              ) /*GridView.builder(
+
+                itemCount: textos.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: MediaQuery.of(context).size.width /
+                      (MediaQuery.of(context).size.height / 2.6),
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: InkWell(
+                      onTap: () async {
+                        //testeEnvio();
+                        click(index, context, usuarioLogado?.data);
+
+                      },
+                      child: Column(
+                        children: <Widget>[
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Image.asset(
+                            images[index],
+                            width: 40,
+                            height: 40,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Text(
+                              textos[index],
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),*/
             ),
-          );
-        },
+          ),
+          Expanded(
+            child: Container(
+              color: AppColors.levelButtonTextFacil,
+              width: width,
+
+              child: Text("dddd"),
+            ),
+          )
+        ],
       ),
     );
   }
 
-  Future<void>  testeEnvio() async {
 
-    //RespostaApi(context).getAll();
+   botao(var width, var usuarioLogado) {
 
-    var lista = [
-      {
-        "codigo": 1,
-        "perguntaId": "c1bf252f-2b6b-4adb-848a-bd50b8963c32",
-        "alunoId": "0f8fad5b-d9cb-469f-a165-70867728950e",
-        "id": "0d8d15be-6396-4541-a1a2-9323f66d0db7",
-        "dataCadastro": "0001-01-01T00:00:00",
-        "ativo": false,
-        "latitude": "ddds",
-        "longitude": "15224",
-        "enderecoIp": "192.66.5.3",
-        "erros": "",
-        "respostaCodigo": 0
-      },
-      {
-        "codigo": 1,
-        "perguntaId": "2427adad-4f64-40c4-b4d5-313a1044619f",
-        "alunoId": "0f8fad5b-d9cb-469f-a165-70867728950e",
-        "id": "dddf4386-054d-4b27-bf1e-f7c174f034e5",
-        "dataCadastro": "0001-01-01T00:00:00",
-        "ativo": false,
-        "latitude": "ddds",
-        "longitude": "15224",
-        "enderecoIp": "192.66.5.3",
-        "erros": "",
-        "respostaCodigo": 0
+    return GestureDetector(
+
+       onTap: () {
+         Navigator.pushNamed(context,'/pergunta_page', arguments: ScreenArgumentsUsuario(usuarioLogado.data));
+
+       },
+       child: Padding(
+         padding: EdgeInsets.only(left: width / 5, right: width / 5),
+         child: Container(
+
+           height: 60,
+           decoration: BoxDecoration(
+               gradient: AppGradients.buttonSentimento,
+               borderRadius: const BorderRadius.all(
+                 Radius.circular(25.0),
+               ),
+               boxShadow: [
+                 BoxShadow(
+                   color: Colors.pink.withOpacity(0.2),
+                   spreadRadius: 4,
+                   blurRadius: 10,
+                   offset: const Offset(0, 3),
+                 )
+
+               ]
+
+           ),
+
+           child: Center(
+             child: Text(
+                        'Como está se sentindo hoje?', textAlign: TextAlign.left,
+                        style:AppTextStyles.textoSentimentoNegritoWhite(28, context)
+             ),
+           ),
+         ),
+       ),
+     );
+   }
+
+  void _getMediaGeral(String id) async {
+
+    _mediaGeral = [];
+    var respostaRepository =  RespostaRepository(await DBHelper.instance.database);
+    List lista = await respostaRepository.getCountDistinctByUsuarioId(id);
+
+    _mediaGeral = lista;
+    setState(() {
+      _mediaGeral;
+      double cont = 0;
+      mediaGeral = 0;
+      media = 0;
+
+      for(var item in _mediaGeral){
+        var total = item['media'];
+        media += total;
+        cont ++;
       }
-    ];
-    Future<int> res = RespostaApi(context).enviarRespostas(lista);
+      var mediaFomatada = (media / cont).toStringAsFixed(1);
+      mediaGeral  = double.parse(mediaFomatada);
 
-    if(await res == 0){
-      Utils.showDefaultSnackbar(context, "Sem dados à enviar");
-    }
+    });
 
   }
+
+  _getUrl(var media){
+   return Utils.respostaEmoji(media);
   }
+  }
+
 

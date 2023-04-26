@@ -17,6 +17,7 @@ import 'package:tell_your_pain_v2/ui/pages/home_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/login_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/pergunta_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/pergunta_page_v2.dart';
+import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/bar_chart.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/charts.dart';
@@ -46,6 +47,7 @@ var respRepo =  RespostaRepository(await DBHelper.instance.database);
   List lista = await respRepo.getAll();
   //List lista = await respRepo.getAllAEnviar(1);
 
+
   for (var u in lista) {
     print("--------------Resposta---------------------");
 
@@ -64,12 +66,11 @@ var respRepo =  RespostaRepository(await DBHelper.instance.database);
       MaterialApp(
         title: 'Happy',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        /*theme: ThemeData(
+          primarySwatch: AppColors.gray_opacity,
+        ),*/
         routes: {
           '/home_page': (BuildContext context) => HomePage(),
-          //'/pergunta_page': (BuildContext context) => PerguntaPage(),
           '/pergunta_page': (BuildContext context) => PerguntaPage2(),
           '/login_page': (BuildContext context) =>  LoginPage(),
           '/avaliacao_page': (BuildContext context) =>  AvaliacaoPage(),

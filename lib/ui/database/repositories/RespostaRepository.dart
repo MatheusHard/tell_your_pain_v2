@@ -73,6 +73,15 @@ class RespostaRepository  implements IRespostaRepository{
     return lista.toList();
   }
 
+  @override
+  Future<List> getMediaGeralRespostaByUsuarioId(String id) async {
+    var res = await _db.rawQuery('''SELECT avg(r.${RespostaDataModel.respostaCodigo}) as mediaGeral
+                                      FROM ${RespostaDataModel.getTabela()} r
+                                      WHERE r.${RespostaDataModel.usuarioId} =  '$id'
+                                     ''');
+    return res.toList();
+  }
+
 
 
 }

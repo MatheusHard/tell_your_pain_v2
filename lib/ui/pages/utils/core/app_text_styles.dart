@@ -23,11 +23,23 @@ class AppTextStyles {
     fontSize: 30,
     fontWeight: FontWeight.w400,
   );
+
   static final TextStyle titleCardVacina = GoogleFonts.notoSans(
     color: AppColors.black,
     fontSize: 25,
     fontWeight: FontWeight.w400,
   );
+
+  static TextStyle textoSentimentoNegritoWhite(int tamanho, BuildContext context){
+
+    return TextStyle(
+      fontFamily: "Netflix",
+      fontWeight: FontWeight.w600,
+      fontSize:  MediaQuery.of(context).size.width / tamanho,
+      letterSpacing: 0.0,
+      color: Colors.white,
+    );
+  }
   static TextStyle titleAppBarUsuario(int numero, BuildContext context) {
 
     return GoogleFonts.notoSans(
@@ -36,9 +48,16 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
   ) ;
 
-
 }
+  static TextStyle titleCardBlack(int numero, BuildContext context) {
 
+    return GoogleFonts.notoSans(
+      color: AppColors.black,
+      fontSize:  MediaQuery.of(context).size.width / numero,
+      fontWeight: FontWeight.w600,
+    ) ;
+
+  }
   static final TextStyle titleBold = GoogleFonts.notoSans(
     color: AppColors.white,
     fontSize: 30,

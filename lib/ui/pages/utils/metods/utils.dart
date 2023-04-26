@@ -65,6 +65,33 @@ import 'package:uuid/uuid.dart';
 
     return url;
   }
+
+  static Icon getIconSemaforo(double value){
+    var cor;
+    var icon;
+
+
+    if(value >= 1 && value < 2) {cor = Colors.red; icon = Icons.arrow_drop_down;}
+    if(value >= 2 && value < 3) {cor = Colors.orange; icon = Icons.arrow_drop_down;}
+    if(value >= 3 && value < 4) {cor = Colors.yellow; icon = Icons.arrow_right;}
+    if(value >= 4 && value < 5) {cor = Colors.green; icon = Icons.arrow_drop_up;}
+    if(value >= 5) {cor = Colors.greenAccent; icon = Icons.arrow_drop_up;}
+
+    return Icon(icon, size: 25, color: cor);
+
+  }
+  static Color? getColorSemaforo(double value){
+    var cor;
+
+    if(value >= 1 && value < 2) {cor = Colors.red;}
+    if(value >= 2 && value < 3) {cor = Colors.orange;}
+    if(value >= 3 && value < 4) {cor = Colors.yellow;}
+    if(value >= 4 && value < 5) {cor = Colors.green; }
+    if(value >= 5) {cor = Colors.greenAccent; }
+
+    return  cor;
+
+  }
   static List listaUrlEmojis(){
     return [
       'assets/images/Triste.png',

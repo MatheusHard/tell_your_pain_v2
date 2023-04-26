@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
+import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/appbar/app_bar_usuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/bar_chart.dart';
@@ -18,6 +19,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+
     ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
 
     return Scaffold(
@@ -25,11 +30,11 @@ class _HomePageState extends State<HomePage> {
 
       appBar: AppBarUsuario(usuarioLogado,  "", context),
 
-      backgroundColor: const Color(0xFFF0F0F0),
+      backgroundColor: AppColors.red,
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-            gradient: AppGradients.petMacho
-        ),
+        margin: const EdgeInsets.only(left: 8.0, right: 8.0),
+
+       color: Colors.transparent,
         child: CurvedNavigationBar(
 
           //type: BottomNavigationBarType.fixed,
@@ -39,38 +44,21 @@ class _HomePageState extends State<HomePage> {
             });
           },
           items:  [
-            _curvedButton( 'assets/images/icones_home/home.png', "Home", 60),
+            /*_curvedButton( 'assets/images/icones_home/home.png', "Home", 60),
             _curvedButton('assets/images/icones_home/historico.png', "Histórico", 60),
-            _curvedButton( 'assets/images/icones_home/user.png', "Perfil", 60),
+            _curvedButton( 'assets/images/icones_home/user.png', "Perfil", 60),*/
+            Icon(Icons.account_circle_rounded, size: width / 16, color: Colors.grey,),
+            Icon(Icons.ondemand_video_rounded, size: width / 16, color: Colors.grey,),
+            Icon(Icons.insert_chart_outlined_rounded, size: width / 16, color: Colors.grey,),
           ],
-          color: Colors.transparent,
-          backgroundColor: Colors.transparent,
-
-          buttonBackgroundColor:  Colors.transparent,
+          color: AppColors.white,
+          buttonBackgroundColor: AppColors.white,
+          backgroundColor:AppColors.levelButtonTextFacil,
           animationCurve: Curves.easeInCubic,
-          animationDuration: const Duration(milliseconds: 600),
-          /*BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/images/icones_home/home.png',
-                  width: 40,
-                  height: 40,
-                ),
-                label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/images/icones_home/historico.png',
-                  width: 40,
-                  height: 40,
-                ),
-                label: 'Histórico'),
-            BottomNavigationBarItem(
-                icon: Image.asset(
+          animationDuration: const Duration(milliseconds: 400),
 
-                  'assets/images/icones_home/user.png',
-                  width: 40,
-                  height: 40,
-                ),
-                label:'Perfil'),*/
+          index: 0,
+          height: 50,
 
         ),
       ),
@@ -86,8 +74,8 @@ class _HomePageState extends State<HomePage> {
   final tabs = [
 
     MainPage(),
-    const Center(child: Text("HISTORICO")),
-    ChartsPage()
+    Padding( padding:  const EdgeInsets.only( left:8.0, right: 8.0), child: Container(  color: AppColors.levelButtonTextFacil,)),
+    const ChartsPage()
   ];
 
 

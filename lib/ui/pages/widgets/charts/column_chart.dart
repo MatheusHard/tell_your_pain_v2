@@ -133,9 +133,6 @@ class _ColumnChartState extends State<ColumnChart> {
       var mediaFomatada = (media / cont).toStringAsFixed(1);
       mediaGeral  = double.parse(mediaFomatada);
       urlEmoji =  Utils.respostaEmoji(mediaGeral);
-      print("media"+media.toString());
-      print("count"+cont.toString());
-      print("mediaGeral"+mediaGeral.toString());
 
     });
   }
