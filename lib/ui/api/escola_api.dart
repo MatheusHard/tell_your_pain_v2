@@ -49,19 +49,25 @@ class EscolaApi{
     }
   }
 
-///Get Escola
-Future<Escola> getById(String id) async{
+///Get by Id
+Future<Escola?> getById(String id) async{
 
     Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_ESCOLA/$id''');
     http.Response response = await http.get(url);
+    Escola? escola;
 
-    //Usuario Repositorio:
+    ///Escola Repository:
     var escolaRepository = EscolaRepository(await DBHelper.instance.database);
 
-    Escola escola = Escola.fromMap(jsonDecode(response.body));
-
-    int resultAdd = await escolaRepository.add(escola);
-
+    if(response.statusCode == 200) {
+     escola = Escola.fromMap(jsonDecode(response.body));
+      ///Deletar escolas:
+      int deleteALl = await escolaRepository.deleteAll();
+     ///Add escola do ALuno:
+      int resultAdd = await escolaRepository.add(escola);
+    }else{
+      escola = null;
+    }
     return escola;
 
   }

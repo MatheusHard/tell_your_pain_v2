@@ -13,6 +13,7 @@ class RespostaDataModel{
   static const String erros = "erros";
   static const String respostaCodigo = "respostaCodigo";
   static const String dimensaoId = "dimensaoId";
+  static const String turmaId = "turmaId";
 
 
   static String queryCriarTabela = "";
@@ -21,7 +22,7 @@ class RespostaDataModel{
 
     return '''CREATE TABLE $TABELA ($id TEXT PRIMARY KEY, $dataResposta TEXT, $geoReferenciamento TEXT, $enderecoIp TEXT,
                                     $escolaId TEXT, $usuarioId TEXT, $statusEnvio INTEGER, $erros TEXT, $respostaCodigo INTEGER,
-                                    $dimensaoId INTEGER, $poloId TEXT);
+                                    $dimensaoId INTEGER, $poloId TEXT, $turmaId TEXT);
            ''';
   }
 

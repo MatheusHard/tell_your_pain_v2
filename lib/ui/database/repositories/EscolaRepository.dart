@@ -32,16 +32,13 @@ class EscolaRepository  implements IEscolaRepository {
 
   @override
   Future<Escola?>getById(String id) async {
-    var res = await _db.rawQuery('''SELECT ${EscolaDataModel.getAtributos()} FROM ${EscolaDataModel.getTabela()} e 
-                                    WHERE e.${EscolaDataModel.id} = '$id''');
+    var res = await _db.rawQuery('''SELECT * FROM ${EscolaDataModel.getTabela()} e 
+                                    WHERE e.${EscolaDataModel.id} = '$id' ''');
     if(res.isNotEmpty) {
       return Escola.fromMap(res.first);
     }else {
       return null;
 
-    }  }
-
-
-
-
+    }
+  }
 }

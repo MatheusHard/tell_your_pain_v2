@@ -4,7 +4,7 @@ import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuar
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/appbar/app_bar_usuario.dart';
-import 'package:tell_your_pain_v2/ui/pages/widgets/charts/bar_chart.dart';
+import 'package:tell_your_pain_v2/ui/pages/widgets/charts/column_chart.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/charts.dart';
 
 import 'main_page.dart';
@@ -25,51 +25,62 @@ class _HomePageState extends State<HomePage> {
 
     ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
 
-    return Scaffold(
-     // extendBodyBehindAppBar: true,
+    return WillPopScope(
+      onWillPop: ()  async {
+        print("Preciosou voltar");
+        _moveToLogin(context);
+        return true;
 
-      appBar: AppBarUsuario(usuarioLogado,  "", context),
+      },
+      child: Scaffold(
+       // extendBodyBehindAppBar: true,
 
-      backgroundColor: AppColors.red,
-      bottomNavigationBar: Container(
-        margin: const EdgeInsets.only(left: 8.0, right: 8.0),
+        appBar: AppBarUsuario(usuarioLogado,  "", context),
 
-       color: Colors.transparent,
-        child: CurvedNavigationBar(
+        backgroundColor: AppColors.red,
+        bottomNavigationBar: Container(
+          margin: const EdgeInsets.only(left: 8.0, right: 8.0),
 
-          //type: BottomNavigationBarType.fixed,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          items:  [
-            /*_curvedButton( 'assets/images/icones_home/home.png', "Home", 60),
-            _curvedButton('assets/images/icones_home/historico.png', "Histórico", 60),
-            _curvedButton( 'assets/images/icones_home/user.png', "Perfil", 60),*/
-            Icon(Icons.account_circle_rounded, size: width / 16, color: Colors.grey,),
-            Icon(Icons.ondemand_video_rounded, size: width / 16, color: Colors.grey,),
-            Icon(Icons.insert_chart_outlined_rounded, size: width / 16, color: Colors.grey,),
-          ],
-          color: AppColors.white,
-          buttonBackgroundColor: AppColors.white,
-          backgroundColor:AppColors.levelButtonTextFacil,
-          animationCurve: Curves.easeInCubic,
-          animationDuration: const Duration(milliseconds: 400),
+         color: Colors.transparent,
+          child: CurvedNavigationBar(
 
-          index: 0,
-          height: 50,
+            //type: BottomNavigationBarType.fixed,
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            items:  [
+              /*_curvedButton( 'assets/images/icones_home/home.png', "Home", 60),
+              _curvedButton('assets/images/icones_home/historico.png', "Histórico", 60),
+              _curvedButton( 'assets/images/icones_home/user.png', "Perfil", 60),*/
+              Icon(Icons.account_circle_rounded, size: width / 16, color: Colors.grey,),
+              Icon(Icons.ondemand_video_rounded, size: width / 16, color: Colors.grey,),
+              Icon(Icons.insert_chart_outlined_rounded, size: width / 16, color: Colors.grey,),
+            ],
+            color: AppColors.white,
+            buttonBackgroundColor: AppColors.white,
+            backgroundColor:AppColors.levelButtonTextFacil,
+            animationCurve: Curves.easeInCubic,
+            animationDuration: const Duration(milliseconds: 400),
 
+            index: 0,
+            height: 50,
+
+          ),
         ),
+        // body: getBody(),
+        body: tabs[_currentIndex],
       ),
-      // body: getBody(),
-      body: tabs[_currentIndex],
     );
   }
 
   getBody() {
     return (_currentIndex == 0) ? MainPage() : Container();
   }
+  void _moveToLogin(BuildContext context) =>
+      Navigator.pushNamed(
+          context, '/login_page', arguments: null);
 
   final tabs = [
 

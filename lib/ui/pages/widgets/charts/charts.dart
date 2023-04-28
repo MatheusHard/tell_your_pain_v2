@@ -1,9 +1,12 @@
 
 import 'package:flutter/material.dart';
-import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
+import 'package:tell_your_pain_v2/ui/pages/widgets/charts/bar_chart.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/column_chart.dart';
 
-import 'bar_chart.dart';
+import '../../screen_arguments/ScreenArgumentsUsuario.dart';
+import '../../utils/core/app_colors.dart';
+
+
 
 class ChartsPage extends StatefulWidget {
   const ChartsPage({Key? key}) : super(key: key);
@@ -13,8 +16,12 @@ class ChartsPage extends StatefulWidget {
 }
 
 class _ChartsPageState extends State<ChartsPage> {
+
+
   @override
   Widget build(BuildContext context) {
+    ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
+
     return Scaffold(
       backgroundColor: AppColors.red,
       body: Padding(
@@ -22,9 +29,9 @@ class _ChartsPageState extends State<ChartsPage> {
         child: Container(
           color: AppColors.levelButtonTextFacil,
           child: ListView(
-            children: const [
-              BarChart(),
-              ColumnChart()
+            children:  [
+              BarChart(usuarioLogado),
+              const ColumnChart()
             ],
           ),
         ),

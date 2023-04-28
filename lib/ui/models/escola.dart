@@ -11,10 +11,11 @@ class Escola {
   String  telefone;
   String dataCadastro;
   String dataAlteracao;
+  String poloId;
 
   Escola({ required this.id, required this.nome, required this.cnpj, required this.cidadeId,
     required this.bairroId, required this.rua, required this.telefone, required this.dataCadastro,
-    required this.dataAlteracao});
+    required this.dataAlteracao, required this.poloId});
 
   factory Escola.fromMap(Map<String, dynamic> json) => Escola(
 
@@ -26,7 +27,8 @@ class Escola {
       rua: json['rua'],
       telefone: json['telefone'],
       dataCadastro: json['dataCadastro'],
-      dataAlteracao: json['dataAlteracao']
+      dataAlteracao: json['dataAlteracao'],
+      poloId: json['poloId']
 
   );
 
@@ -40,7 +42,8 @@ class Escola {
       'rua': rua,
       'telefone': telefone,
       'dataCadastro': dataCadastro,
-      'dataAlteracao': dataAlteracao
+      'dataAlteracao': dataAlteracao,
+      'poloId': poloId
 
     };
   }

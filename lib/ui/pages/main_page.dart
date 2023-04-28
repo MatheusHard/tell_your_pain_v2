@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tell_your_pain_v2/ui/database/db_helper.dart';
 import 'package:tell_your_pain_v2/ui/database/repositories/RespostaRepository.dart';
 import 'package:tell_your_pain_v2/ui/models/usuario.dart';
+import 'package:tell_your_pain_v2/ui/pages/pergunta_page_v2.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
@@ -21,11 +22,9 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
-
   List _mediaGeral = [];
   double mediaGeral = 0;
   double media = 0;
-
 
   var textos = [
     "Como se Sente",
@@ -161,7 +160,42 @@ class _MainPageState extends State<MainPage> {
               color: AppColors.levelButtonTextFacil,
               width: width,
 
-              child: Text("dddd"),
+              child: Container(
+
+                decoration: BoxDecoration(
+                  gradient: AppGradients.redColor,
+
+                  boxShadow: [
+                  BoxShadow(
+                  color: Colors.white.withOpacity(0.5),
+                  spreadRadius: 4,
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
+                  )
+
+              ],),
+                //color: Colors.white,
+                margin: EdgeInsets.all(width / 13),
+                child: ListView(
+
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.network('https://picsum.photos/250?image=9', fit: BoxFit.fill,),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.network('https://portal.ifsuldeminas.edu.br/images/mat%C3%A9rias_2020/Outubro/Programa_Sa%C3%BAde_em_A%C3%A7%C3%A3o/Capa-videos_Saude-em-Acao_00-GERAL.png', fit: BoxFit.fill,),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.network('https://ichef.bbci.co.uk/news/800/cpsprodpb/13FD/production/_99171150_peppapigpa.jpg', fit: BoxFit.fill,),
+                    ),
+
+                  ],
+                ),
+              ),
             ),
           )
         ],
@@ -170,13 +204,15 @@ class _MainPageState extends State<MainPage> {
   }
 
 
-   botao(var width, var usuarioLogado) {
+   botao(var width, ScreenArgumentsUsuario? usuarioLogado) {
 
     return GestureDetector(
 
        onTap: () {
-         Navigator.pushNamed(context,'/pergunta_page', arguments: ScreenArgumentsUsuario(usuarioLogado.data));
-
+        // Navigator.pushNamed(context,'/pergunta_page', arguments: ScreenArgumentsUsuario(usuarioLogado.data));
+         Navigator.push(
+           context,
+           MaterialPageRoute(builder: (context) => PerguntaPage2(usuarioLogado)));
        },
        child: Padding(
          padding: EdgeInsets.only(left: width / 5, right: width / 5),

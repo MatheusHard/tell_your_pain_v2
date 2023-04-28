@@ -25,6 +25,12 @@ class AppGradients {
         Color(0xFF6363DB),
       ]);
 
+  static  LinearGradient redColor =  const LinearGradient(
+      colors: [
+        AppColors.red,
+        AppColors.red,
+      ]);
+
 
   static const petFemea =  LinearGradient(
       begin: Alignment.topCenter,

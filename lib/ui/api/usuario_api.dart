@@ -4,8 +4,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:tell_your_pain_v2/ui/api/escola_api.dart';
 import 'package:tell_your_pain_v2/ui/database/db_helper.dart';
 import 'package:tell_your_pain_v2/ui/database/repositories/UsuarioRepository.dart';
+import 'package:tell_your_pain_v2/ui/models/escola.dart';
 import 'dart:convert';
 
 import '../models/usuario.dart';
@@ -69,7 +71,7 @@ class UsuarioApi{
       int resultAdd = await usuarioRepository.add(usuario);
 
       if (resultAdd >= 1) {
-        Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
+        Navigator.popAndPushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
       } else {
         Utils.showDefaultSnackbar(_context!, "response.body");
       }
@@ -121,25 +123,25 @@ class UsuarioApi{
     var respostaToken = await getToken(login);
 
     if(respostaToken['status'] == 200){
+
       Map<String, dynamic> decodedToken = JwtDecoder.decode(respostaToken['token']);
       id = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
 
       Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_USUARIO/$id''');
       http.Response response = await http.get(url);
-      print(response.body);
+      print('''RESPONSE USUARIO: ${response.body}''');
 
-      //Usuario Repositorio:
+      ///Usuario Repositorio:
       var usuarioRepository = UsuarioRepository(await DBHelper.instance.database);
 
       Usuario usuario = Usuario.fromMap(jsonDecode(response.body));
-
+      ///Setar Escola
+      await EscolaApi(_context!).getById(usuario.escolaId);
+      ///Deletar Usuarios:
       int deleteALl = await usuarioRepository.deleteAll();
-
-            // if(deleteALl == 1) {
+      ///Add Usuarios:
       int resultAdd = await usuarioRepository.add(usuario);
       if (resultAdd == 1) Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
-      //  }
-      //Utils.saveSession("usuarioLogado", usuario);
 
     }else{
       Utils.showDefaultSnackbar(_context!, '''Codigo: ${respostaToken['status']} -> ${respostaToken['token']}''');

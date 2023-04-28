@@ -11,13 +11,15 @@ class EscolaDataModel{
   static const String telefone = "telefone";
   static const String dataCadastro = "dataCadastro";
   static const String dataAlteracao = "dataAlteracao";
+  static const String poloId = "poloId";
+
 
   static String queryCriarTabela = "";
 
   static String criarTabela() {
 
     return '''CREATE TABLE $TABELA ($id TEXT PRIMARY KEY, $nome TEXT, $cnpj TEXT, $cidadeId INTEGER, $bairroId INTEGER,
-                                    $rua TEXT, $telefone TEXT, $dataCadastro TEXT, $dataAlteracao TEXT);
+                                    $rua TEXT, $telefone TEXT, $dataCadastro TEXT, $dataAlteracao TEXT, $poloId TEXT);
                                     ''';
   }
 

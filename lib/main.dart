@@ -19,7 +19,7 @@ import 'package:tell_your_pain_v2/ui/pages/pergunta_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/pergunta_page_v2.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
-import 'package:tell_your_pain_v2/ui/pages/widgets/charts/bar_chart.dart';
+import 'package:tell_your_pain_v2/ui/pages/widgets/charts/column_chart.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/charts.dart';
 
 
@@ -49,11 +49,13 @@ var respRepo =  RespostaRepository(await DBHelper.instance.database);
 
 
   for (var u in lista) {
-    print("--------------Resposta---------------------");
+    print("--------------Respostas---------------------");
 
     print('''UsuarioId: ${u['usuarioId']}''');
     print('''respostaCodigo: ${u['respostaCodigo']}''');
     print('''Dimensao: ${u['dimensaoId']}''');
+    print('''Polo: ${u['poloId']}''');
+    print('''Escola: ${u['escolaId']}''');
 
 
 
@@ -71,13 +73,12 @@ var respRepo =  RespostaRepository(await DBHelper.instance.database);
         ),*/
         routes: {
           '/home_page': (BuildContext context) => HomePage(),
-          '/pergunta_page': (BuildContext context) => PerguntaPage2(),
+          '/pergunta_page': (BuildContext context) => const PerguntaPage2(null),
           '/login_page': (BuildContext context) =>  LoginPage(),
           '/avaliacao_page': (BuildContext context) =>  AvaliacaoPage(),
           '/cadastro_page': (BuildContext context) =>  CadastroPage(),
           '/chat_page': (BuildContext context) =>  ChatScreen(),
-          '/bar_chart': (BuildContext context) => BarChart(),
-          '/charts_page' : (BuildContext context) => ChartsPage()
+          '/charts_page' : (BuildContext context) => const ChartsPage()
 
 
         },initialRoute: '/login_page',

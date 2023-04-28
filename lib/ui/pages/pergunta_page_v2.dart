@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:tell_your_pain_v2/ui/database/repositories/EscolaRepository.dart';
+import 'package:tell_your_pain_v2/ui/models/escola.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/appbar/app_bar_usuario.dart';
@@ -14,13 +16,17 @@ import '../models/resposta.dart';
 import '../models/usuario.dart';
 
 class PerguntaPage2 extends StatefulWidget {
-  const PerguntaPage2({Key? key}) : super(key: key);
+  final ScreenArgumentsUsuario? usuarioLogado;
+
+  const PerguntaPage2(this.usuarioLogado, {Key? key}) : super(key: key);
 
   @override
   State<PerguntaPage2> createState() => _PerguntaPage2State();
 }
 
 class _PerguntaPage2State extends State<PerguntaPage2> {
+
+  ScreenArgumentsUsuario? usuarioLogado;
 
   bool _pressedIconMuitoFeliz = true;
   bool _pressedIconFeliz = true;
@@ -63,11 +69,22 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
     'Muito feliz',
   ];
 
+  late Escola? escola;
+
+  @override
+  void initState() {
+    usuarioLogado = widget.usuarioLogado;
+    ///Get Escola do Aluno:
+    _getEscola(usuarioLogado?.data.escolaId);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+
     var width = MediaQuery.of(context).size.width;
-    ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
+    //ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
+    //_getEscola(usuarioLogado?.data.escolaId);
 
     return Scaffold(
         appBar: AppBarUsuario(usuarioLogado,  ", como se sente?", context),
@@ -602,12 +619,11 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
     }
     var meuEnderecoIp = await Utils.getIpDevice();
 
-    ///TODO get PoloId
     Resposta resposta = Resposta(id: Utils.generateGuide(), escolaId:  usuarioLogado.data.escolaId,
                                 usuarioId: usuarioLogado.data.id, statusEnvio: StatusEnvio.A_ENVIAR.index,
                                 erros: "", respostaCodigo: indexSentimento, dataResposta: Utils.getDataHoraDotNet(),
                                 geoReferenciamento: '''${geoLocalizacao.latitude};${geoLocalizacao.longitude}''' , enderecoIp: meuEnderecoIp,
-                                dimensaoId: _perguntaTipo, poloId: "0972d59d-8fb4-4142-a10c-f6c9defabf34");
+                                dimensaoId: _perguntaTipo, poloId: escola!.poloId, turmaId: usuarioLogado.data.turmaId);
 
       int res = await respostaRepository.add(resposta).catchError((error){
         Utils.showDefaultSnackbar(context, '''Sentimento não salvo -> [ ${error.toString().substring(0,35)} ]...''');
@@ -641,6 +657,18 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
       return 1;
   }
+
+  void _getEscola(escolaId) async {
+
+    var escolaRepository =  EscolaRepository(await DBHelper.instance.database);
+    escola = await escolaRepository.getById(escolaId);
+    setState(() {
+      escola;
+      print(escola);
+
+    });
+  }
+
 
 
 }
