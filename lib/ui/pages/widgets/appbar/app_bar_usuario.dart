@@ -30,6 +30,15 @@ class AppBarUsuario extends PreferredSize {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
 
+         /* IconButton(
+            icon: Icon(Icons.menu),
+            // call toggle from SlideDrawer to alternate between open and close
+            // when pressed menu button
+            onPressed: () {
+              ///SlideDrawer.of(context)?.toggle()
+              print('menuBar');
+            },
+          ),*/
         ///Foto:
         ClipRRect(
           borderRadius: BorderRadius.circular(50),

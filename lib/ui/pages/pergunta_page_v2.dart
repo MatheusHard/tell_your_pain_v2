@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:tell_your_pain_v2/ui/database/repositories/EscolaRepository.dart';
 import 'package:tell_your_pain_v2/ui/models/escola.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
+import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
+import 'package:tell_your_pain_v2/ui/pages/utils/core/app_text_styles.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/appbar/app_bar_usuario.dart';
 
@@ -87,7 +89,8 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
     //_getEscola(usuarioLogado?.data.escolaId);
 
     return Scaffold(
-        appBar: AppBarUsuario(usuarioLogado,  ", como se sente?", context),
+        //appBar: AppBarUsuario(usuarioLogado,  ", como se sente?", context),
+        appBar: _appBar(width, usuarioLogado, "como se sente?"),
         body:
           Container(
               color: Colors.grey.withOpacity(0.2),
@@ -455,6 +458,67 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
   }
 
+  _appBar(double width, ScreenArgumentsUsuario? usuarioLogado, String texto){
+
+    return AppBar(
+      toolbarHeight: 70,
+      elevation: 0.0,
+      flexibleSpace: Container(
+        height: width / 3.5,
+        decoration:  const BoxDecoration(
+          gradient: AppGradients.petMacho,
+          color: Colors.orange,
+          boxShadow:  [
+            BoxShadow(blurRadius: 50.0)
+          ],
+
+        ),
+      ),
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+
+          children: [
+            SizedBox(width: width /10,),
+            ///Foto:
+            ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child:  Image.asset(
+                ///TODO Imagem do usuario
+                'assets/images/usuario.png',
+                height: MediaQuery.of(context).size.width / 10,
+                //   width: MediaQuery.of(context).size.width / 10,
+              ),
+            ),
+            const SizedBox(
+              width: 25,
+            ),
+            ///NOme
+            SizedBox(
+              height: (MediaQuery.of(context).size.width / 10) - 17,
+              // width: MediaQuery.of(context).size.width / 10,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('''Olá ${usuarioLogado?.data.nome}, $texto''' , style: AppTextStyles.titleAppBarUsuario(25, context),),
+
+                ],),
+            )
+
+          ],
+        ),
+        _sizedBox(10)
+      ],
+      //leadingWidth: 220,
+
+    );
+  }
+  _sizedBox(double width){
+    return SizedBox(
+      width: width,
+    );
+  }
   InkWell _inkWellTema(int tipoSentimento, int imagemTema, int textoTema) {
     return InkWell(
       onTap: () async {
