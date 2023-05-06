@@ -321,6 +321,12 @@ import 'package:uuid/uuid.dart';
 
   }
 
+  static SizedBox sizedBox(double largura, double altura) {
+    return SizedBox(
+      width: largura,
+      height: altura,
+    );
+  }
   static Image imageFromBase64String(String bytes){
     return Image.memory(
 

@@ -15,6 +15,7 @@ import 'package:tell_your_pain_v2/ui/pages/cadastro_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/chat_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/home_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/login_page.dart';
+import 'package:tell_your_pain_v2/ui/pages/perfil_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/pergunta_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/pergunta_page_v2.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
@@ -78,7 +79,8 @@ var respRepo =  RespostaRepository(await DBHelper.instance.database);
           '/avaliacao_page': (BuildContext context) =>  AvaliacaoPage(),
           '/cadastro_page': (BuildContext context) =>  CadastroPage(),
           '/chat_page': (BuildContext context) =>  ChatScreen(),
-          '/charts_page' : (BuildContext context) => const ChartsPage()
+          '/charts_page' : (BuildContext context) => const ChartsPage(),
+          '/perfil_page': (BuildContext context) => const PerfilPage(null)
 
 
         },initialRoute: '/login_page',

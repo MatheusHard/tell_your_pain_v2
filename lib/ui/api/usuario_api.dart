@@ -10,6 +10,7 @@ import 'package:tell_your_pain_v2/ui/database/repositories/UsuarioRepository.dar
 import 'package:tell_your_pain_v2/ui/models/escola.dart';
 import 'dart:convert';
 
+import '../database/repositories/EscolaRepository.dart';
 import '../models/usuario.dart';
 import '../pages/screen_arguments/ScreenArgumentsUsuario.dart';
 import '../pages/utils/metods/utils.dart';
@@ -131,21 +132,38 @@ class UsuarioApi{
       http.Response response = await http.get(url);
       print('''RESPONSE USUARIO: ${response.body}''');
 
-      ///Usuario Repositorio:
+      ///Usuario CRUD:
       var usuarioRepository = UsuarioRepository(await DBHelper.instance.database);
 
-      Usuario usuario = Usuario.fromMap(jsonDecode(response.body));
-      ///Setar Escola
-      await EscolaApi(_context!).getById(usuario.escolaId);
-      ///Deletar Usuarios:
-      int deleteALl = await usuarioRepository.deleteAll();
-      ///Add Usuarios:
+      var usuarioDecode = jsonDecode(response.body);
+
+      ///Check Escola exists do Response:
+      if(usuarioDecode['escola'] == null) {
+        Utils.showDefaultSnackbar(_context!, '''Aluno pode está sem Matricula!!!''');
+        return;
+      }
+
+      ///Check Turma exists do Response:
+      if(usuarioDecode['turma'] == null) {
+        Utils.showDefaultSnackbar(_context!, '''Aluno pode está sem Turma!!!''');
+        return;
+      }
+
+      ///CRUD Usuario:
+      Usuario usuario = Usuario.fromMap(usuarioDecode);
+      int deleteALlUsuarios = await usuarioRepository.deleteAll();
       int resultAdd = await usuarioRepository.add(usuario);
+
+      ///CRUD Escola:
+      var escolaRepository = EscolaRepository(await DBHelper.instance.database);
+      Escola? escola = usuario.escola;
+      int deleteALlEscolas = await escolaRepository.deleteAll();
+      await escolaRepository.add(escola!);
+
       if (resultAdd == 1) Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
 
     }else{
       Utils.showDefaultSnackbar(_context!, '''Codigo: ${respostaToken['status']} -> ${respostaToken['token']}''');
-
     }
 
   }
@@ -155,7 +173,6 @@ class UsuarioApi{
    var retorno ;
 
     String? token;
-
     Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_AUTH$URL_LOGIN''');
     http.Response response = await http.post(
         url,

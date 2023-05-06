@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:tell_your_pain_v2/ui/pages/perfil_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
@@ -35,37 +36,32 @@ class _HomePageState extends State<HomePage> {
         print("Preciosou voltar");
         _moveToLogin(context);
         return true;
-
       },
       child: Scaffold(
         key: key,
-
         //drawerEnableOpenDragGesture: false,
-
-          // extendBodyBehindAppBar: true,
+        // extendBodyBehindAppBar: true,
         appBar: _appBar(width, usuarioLogado),
         //appBar: AppBarUsuario(usuarioLogado,  "", context),
         drawer:
-        //Drawer(),
          Drawer(
           child: SingleChildScrollView(
             child: Column(
               children: [
+                ///Header Drawer
                 MeuHeadDrawer(usuarioLogado),
-                MeuDrawerList(),
+                ///Body Drawer
+                _meuDrawerList(usuarioLogado),
               ],
             ),
           )
-
         ),
 
         backgroundColor: AppColors.red,
         bottomNavigationBar: Container(
           margin: const EdgeInsets.only(left: 8.0, right: 8.0),
-
-         color: Colors.transparent,
+          color: Colors.transparent,
           child: CurvedNavigationBar(
-
             onTap: (index) {
               setState(() {
                 _currentIndex = index;
@@ -81,10 +77,8 @@ class _HomePageState extends State<HomePage> {
             backgroundColor:AppColors.levelButtonTextFacil,
             animationCurve: Curves.easeInCubic,
             animationDuration: const Duration(milliseconds: 400),
-
             index: 0,
             height: 50,
-
           ),
         ),
         // body: getBody(),
@@ -106,7 +100,6 @@ class _HomePageState extends State<HomePage> {
     Padding( padding:  const EdgeInsets.only( left:8.0, right: 8.0), child: Container(  color: AppColors.levelButtonTextFacil,)),
     const ChartsPage()
   ];
-
 
   _appBar(double width, ScreenArgumentsUsuario? usuarioLogado){
 
@@ -144,7 +137,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               width: 25,
             ),
-            ///NOme
+            ///Nome
             SizedBox(
               height: (MediaQuery.of(context).size.width / 10) - 17,
               // width: MediaQuery.of(context).size.width / 10,
@@ -152,7 +145,6 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('''Olá ${usuarioLogado?.data.nome}''' , style: AppTextStyles.titleAppBarUsuario(25, context),),
-
                 ],),
             )
 
@@ -168,29 +160,28 @@ class _HomePageState extends State<HomePage> {
           children:  [
             _sizedBox(10),
             const Icon(Icons.menu, color: Colors.white),
-
           ],
         ),
       ),
     );
   }
   ///MenuDrawer:
-  MeuDrawerList(){
+  _meuDrawerList(ScreenArgumentsUsuario? usuario){
     return Container(
       padding: const EdgeInsets.only(top: 15),
       child: Column(
         children: [
-          menuItem(0, "DashBoard", Icons.dashboard_outlined, currentPage == DrawerSections.dashboard ? true : false),
-          menuItem(1, "Perfil", Icons.person, currentPage == DrawerSections.perfil ? true : false),
+          menuItem(0, "DashBoard", Icons.dashboard_outlined, currentPage == DrawerSections.dashboard ? true : false, usuario),
+          menuItem(1, "Perfil", Icons.person, currentPage == DrawerSections.perfil ? true : false, usuario),
           const Divider(),
-          menuItem(2, "Sair", Icons.exit_to_app, currentPage == DrawerSections.exit ? true : false),
+          menuItem(2, "Sair", Icons.exit_to_app, currentPage == DrawerSections.exit ? true : false, usuario),
 
         ],
       ),
     );
   }
   ///Menu Item:
-  menuItem(int id, String title, IconData icon, bool selected){
+  menuItem(int id, String title, IconData icon, bool selected, ScreenArgumentsUsuario? usuario){
     return Material(
       color: selected ? Colors.grey[300]: Colors.transparent,
       child: InkWell(
@@ -204,6 +195,9 @@ class _HomePageState extends State<HomePage> {
                 break;
               case 1:
                 currentPage = DrawerSections.perfil;
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PerfilPage(usuario)));
                 break;
               case 2:
                 currentPage = DrawerSections.exit;

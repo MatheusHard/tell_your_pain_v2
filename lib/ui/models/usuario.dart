@@ -1,5 +1,9 @@
 
 
+import 'package:tell_your_pain_v2/ui/models/turma.dart';
+
+import 'escola.dart';
+
 class Usuario {
 
   String id;
@@ -12,11 +16,13 @@ class Usuario {
   String turmaId;
   String foto;
   String telefone;
+  Escola? escola;
+  Turma? turma;
 
   Usuario({
     required this.id, required this.nome, required this.cpf, required this.email,
-     required this.dataNascimento, required this.escolaId,
-    required this.turmaId, required this.foto, required this.telefone});
+    required this.dataNascimento, required this.escolaId,
+    required this.turmaId, required this.foto, required this.telefone, required this.escola, required this.turma });
 
   factory Usuario.fromMap(Map<String, dynamic> json) => Usuario(
 
@@ -29,7 +35,9 @@ class Usuario {
       escolaId: json['escolaId'],
       turmaId: json['turmaId'],
       foto: json['foto'],
-      telefone: json['telefone']
+      telefone: json['telefone'],
+      escola: Escola.fromMap(json['escola']),
+      turma: Turma.fromMap(json['turma'])
 
   );
 
