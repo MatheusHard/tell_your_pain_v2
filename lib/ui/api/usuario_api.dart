@@ -7,6 +7,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:tell_your_pain_v2/ui/api/escola_api.dart';
 import 'package:tell_your_pain_v2/ui/database/db_helper.dart';
 import 'package:tell_your_pain_v2/ui/database/repositories/UsuarioRepository.dart';
+import 'package:tell_your_pain_v2/ui/enums/tipo_usuario.dart';
 import 'package:tell_your_pain_v2/ui/models/escola.dart';
 import 'dart:convert';
 
@@ -160,8 +161,9 @@ class UsuarioApi{
       int deleteALlEscolas = await escolaRepository.deleteAll();
       await escolaRepository.add(escola!);
 
-      if (resultAdd == 1) Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
-
+      if (resultAdd == 1 && usuario.tipoUsuarioId == TipoUsuario.ALUNO.index) {
+           Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
+      }
     }else{
       Utils.showDefaultSnackbar(_context!, '''Codigo: ${respostaToken['status']} -> ${respostaToken['token']}''');
     }

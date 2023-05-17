@@ -11,9 +11,9 @@ import 'package:tell_your_pain_v2/ui/pages/widgets/appbar/app_bar_usuario.dart';
 import '../api/resposta_api.dart';
 import '../database/db_helper.dart';
 import '../database/repositories/RespostaRepository.dart';
-import '../enums/perguntaTipo.dart';
-import '../enums/respostraCodigo.dart';
-import '../enums/statusEnvio.dart';
+import '../enums/pergunta_tipo.dart';
+import '../enums/resposta_codigo.dart';
+import '../enums/status_envio.dart';
 import '../models/resposta.dart';
 import '../models/usuario.dart';
 

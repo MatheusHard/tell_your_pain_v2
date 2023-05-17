@@ -1,5 +1,6 @@
 
 
+import 'package:tell_your_pain_v2/ui/enums/tipo_usuario.dart';
 import 'package:tell_your_pain_v2/ui/models/turma.dart';
 
 import 'escola.dart';
@@ -18,10 +19,11 @@ class Usuario {
   String telefone;
   Escola? escola;
   Turma? turma;
+  int tipoUsuarioId;
 
   Usuario({
     required this.id, required this.nome, required this.cpf, required this.email,
-    required this.dataNascimento, required this.escolaId,
+    required this.dataNascimento, required this.escolaId, required this.tipoUsuarioId,
     required this.turmaId, required this.foto, required this.telefone, required this.escola, required this.turma });
 
   factory Usuario.fromMap(Map<String, dynamic> json) => Usuario(
@@ -36,6 +38,7 @@ class Usuario {
       turmaId: json['turmaId'],
       foto: json['foto'],
       telefone: json['telefone'],
+      tipoUsuarioId: json['tipoUsuarioId'],
       escola: Escola.fromMap(json['escola']),
       turma: Turma.fromMap(json['turma'])
 

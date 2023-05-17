@@ -12,6 +12,7 @@ import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_text_styles.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../api/resposta_api.dart';
 
@@ -39,7 +40,11 @@ class _MainPageState extends State<MainPage> {
     'assets/images/icones_home/chat.png',
     'assets/images/icones_home/deslogar.png'
   ];
+  List<String> items = <String>[
+    YoutubePlayer.convertUrlToId("https://www.youtube.com/watch?v=GQyWIur03aw")!,
+    YoutubePlayer.convertUrlToId("https://www.youtube.com/watch?v=x0ZNQ0YXyfE")!
 
+  ];
   click(int index, context, usuarioLogado) {
     if (index == 0) {
       Navigator.of(context).pushNamed('/pergunta_page', arguments: ScreenArgumentsUsuario(usuarioLogado));
@@ -176,7 +181,79 @@ class _MainPageState extends State<MainPage> {
               ],),
                 //color: Colors.white,
                 margin: EdgeInsets.all(width / 13),
-                child: ListView(
+                child:
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: items.length,
+                    itemBuilder: (BuildContext context, int index) {
+
+                      ///Video:
+                      final _ytController = YoutubePlayerController(
+                        initialVideoId: items[index],
+                        flags: const YoutubePlayerFlags(
+                          mute: false,
+                          autoPlay: true,
+                          disableDragSeek: false,
+                          loop: false,
+                          isLive: false,
+                          forceHD: false,
+                          enableCaption: true,
+                        ),
+                      );
+                      bool _isPlaying = false;
+
+                      return Container(
+                        color: Colors.blue,
+                        margin: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(15),
+                        alignment: Alignment.center,
+                        child: YoutubePlayer(
+
+                          controller: _ytController
+                          ..addListener(() {
+                              if (_ytController.value.isPlaying) {
+                                setState(() {
+                                 _isPlaying = true;
+                              });
+                                } else {
+                                  _isPlaying = false;
+                                }
+                              }),
+
+                              topActions: [
+                                const SizedBox(width: 8.0),
+                                Expanded(
+                                  child: Text(
+                                    _ytController.metadata.title,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18.0,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.settings,
+                                    color: Colors.white,
+                                    size: 25.0,
+                                  ),
+                                  onPressed: () {
+                                    print('Settings Tapped!');
+                                  },
+                                ),
+                              ],
+                              showVideoProgressIndicator: true,
+                              progressIndicatorColor: Colors.lightBlueAccent,
+                              bottomActions: [
+                                      CurrentPosition(),
+                                      ProgressBar(isExpanded: true),
+                                      FullScreenButton(),
+                              ],
+                          ));
+                    }),
+                /*ListView(
 
                   scrollDirection: Axis.horizontal,
                   children: [
@@ -194,7 +271,7 @@ class _MainPageState extends State<MainPage> {
                     ),
 
                   ],
-                ),
+                ),*/
               ),
             ),
           )

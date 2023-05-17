@@ -1,0 +1,11 @@
+enum TipoUsuario
+{
+  _,
+  ADMINISTRADOR,
+  COORDENADOR,
+  SUPERVISOR,
+  PROFESSOR,
+  RESPONSAVEL,
+  ALUNO
+
+}
