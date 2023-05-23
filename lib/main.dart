@@ -21,6 +21,7 @@ import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/column_chart.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/charts.dart';
+import 'package:tell_your_pain_v2/ui/pages/you_tube_page.dart';
 
 
 void main() async{
@@ -79,7 +80,9 @@ var respRepo =  RespostaRepository(await DBHelper.instance.database);
           '/cadastro_page': (BuildContext context) =>  CadastroPage(),
           '/chat_page': (BuildContext context) =>  ChatScreen(),
           '/charts_page' : (BuildContext context) => const ChartsPage(),
-          '/perfil_page': (BuildContext context) => const PerfilPage(null)
+          '/perfil_page': (BuildContext context) => const PerfilPage(null),
+         // '/youtube_page': (BuildContext context) => const YouTubePage(null)
+
 
 
         },initialRoute: '/login_page',

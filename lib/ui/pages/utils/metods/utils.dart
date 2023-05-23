@@ -92,6 +92,28 @@ import 'package:uuid/uuid.dart';
     return  cor;
 
   }
+  static String prettyDuration(Duration duration) {
+    var seconds = (duration.inMilliseconds % (60 * 1000)) / 1000;
+    return '${duration.inMinutes}:${seconds.toStringAsFixed(0)}';
+  }
+  static String? getYoutubeThumbnail(String videoUrl) {
+    final Uri? uri = Uri.tryParse(videoUrl);
+    if (uri == null) {
+      return null;
+    }
+
+    return 'https://img.youtube.com/vi/${uri.queryParameters['v']}/0.jpg';
+  }
+  static List textoEmogis(){
+    return [
+      'Péssimo',
+      'Ruim',
+      'Normal',
+      'Bom',
+      'Ótimo',
+    ];
+    }
+
   static List listaUrlEmojis(){
     return [
       'assets/images/Triste.png',

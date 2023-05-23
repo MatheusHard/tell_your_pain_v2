@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/bar_chart.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/column_chart.dart';
 
-import '../../screen_arguments/ScreenArgumentsUsuario.dart';
+import '../../screen_arguments/screen_arguments_usuario.dart';
 import '../../utils/core/app_colors.dart';
 
 

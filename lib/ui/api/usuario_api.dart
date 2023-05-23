@@ -13,7 +13,7 @@ import 'dart:convert';
 
 import '../database/repositories/EscolaRepository.dart';
 import '../models/usuario.dart';
-import '../pages/screen_arguments/ScreenArgumentsUsuario.dart';
+import '../pages/screen_arguments/screen_arguments_usuario.dart';
 import '../pages/utils/metods/utils.dart';
 
 class UsuarioApi{

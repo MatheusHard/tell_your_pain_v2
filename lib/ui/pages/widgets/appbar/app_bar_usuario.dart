@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
 
+import '../../screen_arguments/screen_arguments_usuario.dart';
 import '../../utils/core/app_gradients.dart';
 import '../../utils/core/app_text_styles.dart';
 

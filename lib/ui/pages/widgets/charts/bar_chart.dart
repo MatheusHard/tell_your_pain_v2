@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:collection/collection.dart';
-import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_text_styles.dart';
 
 import '../../../database/db_helper.dart';
 import '../../../database/repositories/RespostaRepository.dart';
+import '../../screen_arguments/screen_arguments_usuario.dart';
 import '../../utils/metods/utils.dart';
 
 class BarChart extends StatefulWidget {

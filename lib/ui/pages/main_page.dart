@@ -7,11 +7,13 @@ import 'package:tell_your_pain_v2/ui/database/db_helper.dart';
 import 'package:tell_your_pain_v2/ui/database/repositories/RespostaRepository.dart';
 import 'package:tell_your_pain_v2/ui/models/usuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/pergunta_page_v2.dart';
-import 'package:tell_your_pain_v2/ui/pages/screen_arguments/ScreenArgumentsUsuario.dart';
+import 'package:tell_your_pain_v2/ui/pages/screen_arguments/screen_arguments_usuario.dart';
+import 'package:tell_your_pain_v2/ui/pages/screen_arguments/screen_arguments_you_tube.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_text_styles.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
+import 'package:tell_your_pain_v2/ui/pages/you_tube_page.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../api/resposta_api.dart';
@@ -26,6 +28,8 @@ class _MainPageState extends State<MainPage> {
   List _mediaGeral = [];
   double mediaGeral = 0;
   double media = 0;
+  ScreenArgumentsYouTube? youTubeArguments;
+
 
   var textos = [
     "Como se Sente",
@@ -45,6 +49,8 @@ class _MainPageState extends State<MainPage> {
     YoutubePlayer.convertUrlToId("https://www.youtube.com/watch?v=x0ZNQ0YXyfE")!
 
   ];
+  var data = {};
+
   click(int index, context, usuarioLogado) {
     if (index == 0) {
       Navigator.of(context).pushNamed('/pergunta_page', arguments: ScreenArgumentsUsuario(usuarioLogado));
@@ -60,6 +66,7 @@ class _MainPageState extends State<MainPage> {
   }
   @override
   void initState (){
+    //data['url'] = "https://www.youtube.com/watch?v=GQyWIur03aw";
     super.initState();
   }
   @override
@@ -68,6 +75,7 @@ class _MainPageState extends State<MainPage> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
+    var url = "https://www.youtube.com/watch?v=hkT8AUqZaqA";
 
     ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
 
@@ -115,172 +123,58 @@ class _MainPageState extends State<MainPage> {
                   ),
                   botao(width, usuarioLogado)
                 ],
-              ) /*GridView.builder(
-
-                itemCount: textos.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: MediaQuery.of(context).size.width /
-                      (MediaQuery.of(context).size.height / 2.6),
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: InkWell(
-                      onTap: () async {
-                        //testeEnvio();
-                        click(index, context, usuarioLogado?.data);
-
-                      },
-                      child: Column(
-                        children: <Widget>[
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Image.asset(
-                            images[index],
-                            width: 40,
-                            height: 40,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Text(
-                              textos[index],
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),*/
+              )
             ),
           ),
-          Expanded(
-            child: Container(
-              color: AppColors.levelButtonTextFacil,
-              width: width,
-
-              child: Container(
-
-                decoration: BoxDecoration(
-                  gradient: AppGradients.redColor,
-
-                  boxShadow: [
-                  BoxShadow(
-                  color: Colors.white.withOpacity(0.5),
-                  spreadRadius: 4,
-                  blurRadius: 10,
-                  offset: const Offset(0, 3),
-                  )
-
-              ],),
-                //color: Colors.white,
-                margin: EdgeInsets.all(width / 13),
-                child:
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: items.length,
-                    itemBuilder: (BuildContext context, int index) {
-
-                      ///Video:
-                      final _ytController = YoutubePlayerController(
-                        initialVideoId: items[index],
-                        flags: const YoutubePlayerFlags(
-                          mute: false,
-                          autoPlay: true,
-                          disableDragSeek: false,
-                          loop: false,
-                          isLive: false,
-                          forceHD: false,
-                          enableCaption: true,
-                        ),
-                      );
-                      bool _isPlaying = false;
-
-                      return Container(
-                        color: Colors.blue,
-                        margin: const EdgeInsets.all(10),
-                        padding: const EdgeInsets.all(15),
-                        alignment: Alignment.center,
-                        child: YoutubePlayer(
-
-                          controller: _ytController
-                          ..addListener(() {
-                              if (_ytController.value.isPlaying) {
-                                setState(() {
-                                 _isPlaying = true;
-                              });
-                                } else {
-                                  _isPlaying = false;
-                                }
-                              }),
-
-                              topActions: [
-                                const SizedBox(width: 8.0),
-                                Expanded(
-                                  child: Text(
-                                    _ytController.metadata.title,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18.0,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.settings,
-                                    color: Colors.white,
-                                    size: 25.0,
-                                  ),
-                                  onPressed: () {
-                                    print('Settings Tapped!');
-                                  },
-                                ),
-                              ],
-                              showVideoProgressIndicator: true,
-                              progressIndicatorColor: Colors.lightBlueAccent,
-                              bottomActions: [
-                                      CurrentPosition(),
-                                      ProgressBar(isExpanded: true),
-                                      FullScreenButton(),
-                              ],
-                          ));
-                    }),
-                /*ListView(
-
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.network('https://picsum.photos/250?image=9', fit: BoxFit.fill,),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.network('https://portal.ifsuldeminas.edu.br/images/mat%C3%A9rias_2020/Outubro/Programa_Sa%C3%BAde_em_A%C3%A7%C3%A3o/Capa-videos_Saude-em-Acao_00-GERAL.png', fit: BoxFit.fill,),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.network('https://ichef.bbci.co.uk/news/800/cpsprodpb/13FD/production/_99171150_peppapigpa.jpg', fit: BoxFit.fill,),
-                    ),
-
-                  ],
-                ),*/
-              ),
-            ),
-          )
+          ///Imagem pra tela do YouTube:
+          _getTumbnail(usuarioLogado!, width, url)
         ],
       ),
     );
   }
 
+  _getTumbnail(ScreenArgumentsUsuario usuarioLogado, var width, var url){
 
+
+   return Expanded(
+        child: Container(
+          color: AppColors.levelButtonTextFacil,
+          width: width,
+
+           child: GestureDetector(
+           onTap: (){
+            Navigator.push(
+                 context,
+                 MaterialPageRoute(builder: (context) => YouTubePage(usuarioLogado!, url)));
+             },
+          child: Container(
+
+          decoration: BoxDecoration(
+          gradient: AppGradients.redColor,
+
+          boxShadow: [
+              BoxShadow(
+              color: Colors.white.withOpacity(0.5),
+              spreadRadius: 4,
+              blurRadius: 10,
+              offset: const Offset(0, 3),
+              )
+
+          ],),
+          //color: Colors.white,
+              margin: EdgeInsets.all(width / 13),
+              child:
+          Image.network(
+
+              Utils.getYoutubeThumbnail(url)!
+              )
+              ),
+          ),
+          ),
+        );
+
+
+  }
    botao(var width, ScreenArgumentsUsuario? usuarioLogado) {
 
     return GestureDetector(
