@@ -68,31 +68,46 @@ class _YouTubePageState extends State<YouTubePage> {
                   builder: (context, player){
                     return Scaffold(
                       appBar: _appBar(width, usuarioLogado, "como se sente?"),
-                    body: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                    Container(
-                        decoration: BoxDecoration(
+                    body: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                                    Container(
+                                        decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(.5),
+                                            spreadRadius: 4,
+                                            blurRadius: 10,
+                                            offset: const Offset(0, 3),
+                                          )
 
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.white.withOpacity(0.5),
-                              spreadRadius: 4,
-                              blurRadius: 10,
-                              offset: const Offset(0, 3),
-                            )
+                                        ],),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(15),
+                                          child: player
+                                      ),
+                                    ),
+                        
+                               Utils.sizedBox(5, 5),
+                               Text('''Titulo: ${_controller.metadata.title}''', style: AppTextStyles.titleCardBlack(28, context),),
+                               Row(
+                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 children: [
+                                   Text('''Autor: ${_controller.metadata.author}''',
+                                       style: AppTextStyles.titleCardBlack(35, context),),
+                                   Text('''Duração: ${Utils.prettyDuration(_controller.metadata.duration)}''',
+                                        style: AppTextStyles.titleCardBlack(35, context),),
+                                 ],
+                               )
 
-                          ],),
-                    padding: const EdgeInsets.all(8.0),
-                         child: player
+
+                            ],
+
+                        ),
                     ),
-                           Text('''Titulo ${_controller.metadata.title}'''),
-                           Text('''Autor ${_controller.metadata.author}'''),
-                           Text('''Duração ${Utils.prettyDuration(_controller.metadata.duration)}'''),
 
-                        ],
-
-                    ),
                     );
                   });
   }
