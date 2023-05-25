@@ -58,6 +58,15 @@ class AppTextStyles {
     ) ;
 
   }
+  static TextStyle subTitleCardBlack(int numero, BuildContext context) {
+
+    return GoogleFonts.notoSans(
+      color: AppColors.black,
+      fontSize:  MediaQuery.of(context).size.width / numero,
+      fontWeight: FontWeight.normal,
+    ) ;
+
+  }
   static final TextStyle titleBold = GoogleFonts.notoSans(
     color: AppColors.white,
     fontSize: 30,

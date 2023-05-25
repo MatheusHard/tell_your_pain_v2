@@ -104,7 +104,7 @@ import 'package:uuid/uuid.dart';
 
     return 'https://img.youtube.com/vi/${uri.queryParameters['v']}/0.jpg';
   }
-  static List textoEmogis(){
+  static List textoEmogisYouTube(){
     return [
       'Péssimo',
       'Ruim',

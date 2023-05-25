@@ -258,21 +258,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
             ///INICIO EMOGIS
             ///Emogi Muito Triste
-            /*Container(
-              height: MediaQuery.of(context).size.width / 6,
-              //width: MediaQuery.of(context).size.width / 10,
-              decoration:  BoxDecoration(
-                  color:   Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow:const [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 4,
-                      offset: Offset(4, 8), // Shadow position
-                    )]
-              ),
-
-              child:*/ Row(
+            Row(
                 children: [
                   Column(
                     children: [

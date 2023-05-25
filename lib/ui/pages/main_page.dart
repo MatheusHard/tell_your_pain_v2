@@ -75,7 +75,7 @@ class _MainPageState extends State<MainPage> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
-    var url = "https://www.youtube.com/watch?v=hkT8AUqZaqA";
+    var url = "https://www.youtube.com/watch?v=jti8kuM73dA";
 
     ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
 
