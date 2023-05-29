@@ -49,10 +49,37 @@ class AppTextStyles {
   ) ;
 
 }
+  static TextStyle subTitleCardWhite(int numero, BuildContext context) {
+
+    return GoogleFonts.notoSans(
+      color: AppColors.white,
+      fontSize:  MediaQuery.of(context).size.width / numero,
+      fontWeight: FontWeight.normal,
+    ) ;
+
+  }
+  static TextStyle subTitleGeneric(int numero, var width, Color color, FontWeight fontWeight) {
+
+    return GoogleFonts.notoSans(
+      color: color,
+      fontSize:  width / numero,
+      fontWeight: fontWeight,
+    ) ;
+
+  }
   static TextStyle titleCardBlack(int numero, BuildContext context) {
 
     return GoogleFonts.notoSans(
       color: AppColors.black,
+      fontSize:  MediaQuery.of(context).size.width / numero,
+      fontWeight: FontWeight.w600,
+    ) ;
+
+  }
+  static TextStyle titleCardWhite(int numero, BuildContext context) {
+
+    return GoogleFonts.notoSans(
+      color: AppColors.white,
       fontSize:  MediaQuery.of(context).size.width / numero,
       fontWeight: FontWeight.w600,
     ) ;

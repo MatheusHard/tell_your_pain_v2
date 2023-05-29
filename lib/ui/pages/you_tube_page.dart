@@ -4,6 +4,7 @@ import 'package:tell_your_pain_v2/ui/pages/screen_arguments/screen_arguments_usu
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/screen_arguments_you_tube.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_text_styles.dart';
+import 'package:tell_your_pain_v2/ui/pages/utils/core/core.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -27,31 +28,39 @@ class _YouTubePageState extends State<YouTubePage> {
   bool _pressedIconNormal = true;
   bool _pressedIconTriste = true;
   bool _pressedIconMuitoTriste = true;
+  ///
   bool _isPlaying = false;
+  late PlayerState _playerState;
+  bool _isPlayerReady = false;
 
   final _textoEmogis = Utils.textoEmogisYouTube();
 
   late YoutubeMetaData _videoMetaData;
 
 
-  void runYoutubePlayer(){
+  void runYoutubePlayer() {
     _controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(widget.url)!,
-      flags: const YoutubePlayerFlags(
-        enableCaption: false,
-        isLive: false,
-        autoPlay: true
-      )
+        initialVideoId: YoutubePlayer.convertUrlToId(widget.url)!,
+        flags: const YoutubePlayerFlags(
+            enableCaption: false,
+            isLive: false,
+            loop: false,
+            autoPlay: true
+        )
 
-    )..addListener(() {
-      if(mounted){
+    )
+      ..addListener(listener);
+      _playerState = PlayerState.unknown;
+      _videoMetaData = const YoutubeMetaData();
+   }
+
+    void listener() {
+      if (mounted && !_controller.value.isFullScreen) {
         setState(() {
-
+          _playerState = _controller.value.playerState;
+          _videoMetaData = _controller.metadata;
         });
       }
-      _videoMetaData = const YoutubeMetaData();
-
-    });
   }
 
   @override
@@ -80,24 +89,26 @@ class _YouTubePageState extends State<YouTubePage> {
 
     return YoutubePlayerBuilder(
                   player: YoutubePlayer(
+                    onReady: () {
+                      _isPlayerReady = true;
+                    },
+                    onEnded: (data) {
+                      Utils.showDefaultSnackbar(context, 'O que achou do Video?');
+
+                      _isPlaying = true;
+                    },
                     showVideoProgressIndicator: true,
-                                  onEnded: (data) {
-                                    print("onEnded");
-                                     _controller.pause();
-
-                              },
-
-                              controller: _controller
+                    controller: _controller
                               ..addListener(() {
                                 if (_controller.value.isPlaying) {
                                   setState(() {
                                     print("Tocando");
-                                    _isPlaying = true;
+                                   // _isPlaying = true;
                                   });
                                   } else {
                                   setState(() {
                                     print("Parou");
-                                    _isPlaying = false;
+                                   // _isPlaying = false;
                                   });
 
                                   }
@@ -154,121 +165,137 @@ class _YouTubePageState extends State<YouTubePage> {
             style: AppTextStyles.subTitleCardBlack(35, context),),
         ),
 
+        Utils.sizedBox(10, 5),
+
         ///Locais dos votos:
-        Padding(
-          padding: EdgeInsets.only(top:  width / 20, left:  width / 15, right: width / 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        _isPlaying ? Container(
+          decoration: BoxDecoration(
+            gradient: AppGradients.petMacho,
+            borderRadius: BorderRadius.circular(20),
+              boxShadow:const [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 4,
+                  offset: Offset(4, 8), // Shadow position
+                )]
+          ),
+          child: Column(
             children: [
-              ///Emogi Muito Triste
-              Column(
-                children: [
-                  InkWell(
+              Utils.sizedBox(20, 5),
 
-                    onTap: () {
-                      setState(() {
-                        _changeIcons(RespostaCodigo.MUITO_TRISTE.index);
-                        _registrar(RespostaCodigo.MUITO_TRISTE.index, usuarioLogado);
-
-                      });
-                    },
-                    child: Image.asset(
-                      _pressedIconMuitoTriste ? 'assets/images/Triste.png' : 'assets/images/TristeSelected.png',
-                      height: MediaQuery.of(context).size.width / 10,
-                      width: MediaQuery.of(context).size.width / 10,
+              Center(
+                child: Text('''O que achou do Video?''',
+                  style: AppTextStyles.titleCardWhite(27, context),),
+                ),
+              Padding(
+                padding: EdgeInsets.only(top:  width / 20, left:  width / 15, right: width / 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ///Emogi Muito Triste
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _changeIcons(RespostaCodigo.MUITO_TRISTE.index);
+                              _registrar(RespostaCodigo.MUITO_TRISTE.index, usuarioLogado);
+                            });
+                          },
+                          child: Image.asset(
+                            _pressedIconMuitoTriste ? 'assets/images/Triste.png' : 'assets/images/TristeSelected.png',
+                            height: MediaQuery.of(context).size.width / 10,
+                            width: MediaQuery.of(context).size.width / 10,
+                          ),
+                        ),
+                        Text( _textoEmogis[0], style: AppTextStyles.subTitleGeneric(35, width, AppColors.white, FontWeight.normal))
+                      ],
                     ),
-                  ),
-                  Text( _textoEmogis[0], style: _estiloEmogis(35),)
-
-                ],
-              ),
-              ///Emogi Triste
-              Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        _changeIcons(RespostaCodigo.TRISTE.index);
-                        _registrar(RespostaCodigo.TRISTE.index, usuarioLogado);
-
-                      });
-                    },
-                    child: Image.asset(
-                      _pressedIconTriste ? 'assets/images/Chateado.png': 'assets/images/ChateadoSelected.png',
-                      height: MediaQuery.of(context).size.width / 10,
-                      width: MediaQuery.of(context).size.width / 10,
+                    ///Emogi Triste
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _changeIcons(RespostaCodigo.TRISTE.index);
+                              _registrar(RespostaCodigo.TRISTE.index, usuarioLogado);
+                            });
+                          },
+                          child: Image.asset(
+                            _pressedIconTriste ? 'assets/images/Chateado.png': 'assets/images/ChateadoSelected.png',
+                            height: MediaQuery.of(context).size.width / 10,
+                            width: MediaQuery.of(context).size.width / 10,
+                          ),
+                        ),
+                        Text(_textoEmogis[1], style: AppTextStyles.subTitleGeneric(35, width, AppColors.white, FontWeight.normal))
+                      ],
                     ),
-                  ),
-                  Text(_textoEmogis[1], style: _estiloEmogis(35),)
-                ],
-              ),
-              ///Emogi Normal
-              Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        _changeIcons(RespostaCodigo.NORMAL.index);
-                        _registrar(RespostaCodigo.NORMAL.index, usuarioLogado);
-
-                      });
-                    },
-                    child: Image.asset(
-                      _pressedIconNormal ? 'assets/images/Normal.png': 'assets/images/NormalSelected.png',
-                      height: MediaQuery.of(context).size.width / 10,
-                      width: MediaQuery.of(context).size.width / 10,
+                    ///Emogi Normal
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _changeIcons(RespostaCodigo.NORMAL.index);
+                              _registrar(RespostaCodigo.NORMAL.index, usuarioLogado);
+                            });
+                          },
+                          child: Image.asset(
+                            _pressedIconNormal ? 'assets/images/Normal.png': 'assets/images/NormalSelected.png',
+                            height: MediaQuery.of(context).size.width / 10,
+                            width: MediaQuery.of(context).size.width / 10,
+                          ),
+                        ),
+                        Text(_textoEmogis[2], style: AppTextStyles.subTitleGeneric(35, width, AppColors.white, FontWeight.normal))
+                      ],
                     ),
-                  ),
-                  Text(_textoEmogis[2], style: _estiloEmogis(35),)
-                ],
-              ),
-              ///Emogi Feliz
-              Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        _changeIcons(RespostaCodigo.FELIZ.index);
-                        _registrar(RespostaCodigo.FELIZ.index, usuarioLogado);
-
-                      });
-                      // Navigator.of(context).pop();
-                    },
-                    child: Image.asset(
-                      _pressedIconFeliz == true ? 'assets/images/Feliz.png': 'assets/images/FelizSelected.png',
-                      height: MediaQuery.of(context).size.width / 10,
-                      width: MediaQuery.of(context).size.width / 10,
+                    ///Emogi Feliz
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _changeIcons(RespostaCodigo.FELIZ.index);
+                              _registrar(RespostaCodigo.FELIZ.index, usuarioLogado);
+                            });
+                            // Navigator.of(context).pop();
+                          },
+                          child: Image.asset(
+                            _pressedIconFeliz == true ? 'assets/images/Feliz.png': 'assets/images/FelizSelected.png',
+                            height: MediaQuery.of(context).size.width / 10,
+                            width: MediaQuery.of(context).size.width / 10,
+                          ),
+                        ),
+                        Text(_textoEmogis[3], style: AppTextStyles.subTitleGeneric(35, width, AppColors.white, FontWeight.normal))
+                      ],
                     ),
-                  ),
-                  Text(_textoEmogis[3], style: _estiloEmogis(35),)
-                ],
-              ),
-              ///Emogi Muito Feliz
-              Column(
-                children: [
-                  InkWell(
+                    ///Emogi Muito Feliz
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _changeIcons(RespostaCodigo.MUITO_FELIZ.index);
+                              _registrar(RespostaCodigo.MUITO_FELIZ.index, usuarioLogado);
+                            });
 
-                    onTap: () {
-                      setState(() {
-                        _changeIcons(RespostaCodigo.MUITO_FELIZ.index);
-                        _registrar(RespostaCodigo.MUITO_FELIZ.index, usuarioLogado);
-
-                      });
-
-                      //Navigator.of(context).pop();
-                    },
-                    child: Image.asset(
-                      _pressedIconMuitoFeliz == true ? 'assets/images/Muito_Feliz.png' : 'assets/images/MuitoFelizSelected.png',
-                      height: MediaQuery.of(context).size.width / 10,
-                      width: MediaQuery.of(context).size.width / 10,
+                            //Navigator.of(context).pop();
+                          },
+                          child: Image.asset(
+                            _pressedIconMuitoFeliz == true ? 'assets/images/Muito_Feliz.png' : 'assets/images/MuitoFelizSelected.png',
+                            height: MediaQuery.of(context).size.width / 10,
+                            width: MediaQuery.of(context).size.width / 10,
+                          ),
+                        ),
+                        Text(_textoEmogis[4] ,style: AppTextStyles.subTitleGeneric(35, width, AppColors.white, FontWeight.normal))
+                      ],
                     ),
-                  ),
-                  Text(_textoEmogis[4] , style: _estiloEmogis(35))
-                ],
+                  ],
+                ),
               ),
             ],
           ),
-        )
+        ) : Container()
       ],
     );
   }
