@@ -75,7 +75,8 @@ class _MainPageState extends State<MainPage> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
-    var url = "https://www.youtube.com/watch?v=jti8kuM73dA";
+    //var url = "https://www.youtube.com/watch?v=jti8kuM73dA";
+    var url = "https://www.youtube.com/watch?v=A1TsgLqaybk";
 
     ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
 
@@ -245,7 +246,9 @@ class _MainPageState extends State<MainPage> {
 
   _getUrl(var media){
    return Utils.respostaEmoji(media);
-  }
+    }
+
+
   }
 
 

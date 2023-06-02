@@ -87,7 +87,13 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
     //ScreenArgumentsUsuario? usuarioLogado = ModalRoute.of(context)?.settings.arguments as ScreenArgumentsUsuario?;
     //_getEscola(usuarioLogado?.data.escolaId);
 
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: ()  async {
+          print("Precionou voltar pra HomePage");
+          _enviarRespostasApi();
+          return true;
+        },
+        child: Scaffold(
         //appBar: AppBarUsuario(usuarioLogado,  ", como se sente?", context),
         appBar: _appBar(width, usuarioLogado, "como se sente?"),
         body:
@@ -412,23 +418,6 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
           /*  ),*/
             ///FIM EMOGIS
 
-            ///Botão confirmar
-            Padding(
-              padding: const EdgeInsets.only(left: 0, right: 0, top: 15),
-              child: ElevatedButton(
-
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green),
-                    padding: MaterialStateProperty.all( EdgeInsets.only(left: width / 5, right: width / 5)),
-                    textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 20))),
-
-                onPressed:(){
-                  _enviarRespostasApi();
-                } ,
-                child: const Text("CONFIRMAR"),
-
-              ),
-            )
           ]
 
         )
@@ -437,6 +426,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
 
 
+     )
     );
 
 
@@ -444,6 +434,9 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
   }
 
   _appBar(double width, ScreenArgumentsUsuario? usuarioLogado, String texto){
+
+    var splitNome = usuarioLogado?.data.nome.split(' ');
+    var nome =  splitNome[0] ?? '';
 
     return AppBar(
       toolbarHeight: 70,
@@ -486,7 +479,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('''Olá ${usuarioLogado?.data.nome}, $texto''' , style: AppTextStyles.titleAppBarUsuario(25, context),),
+                  Flexible(child: Text('''Olá $nome, $texto''' , style: AppTextStyles.titleAppBarUsuario(25, context),)),
 
                 ],),
             )
@@ -546,13 +539,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
     return TextStyle(fontSize: MediaQuery.of(context).size.width / numero);
   }
-    _enviarRespostasApi() async{
 
-  var lista = [];
-
-    RespostaApi(context).enviarRespostas(lista);
-
-}
   _changeTemaSentimento(int numero){
 
     switch(numero){
@@ -681,7 +668,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
    if(res > 0){
      if(!mounted) return;
-     Utils.showDefaultSnackbar(context, "Sentimento salvo");
+     //Utils.showDefaultSnackbar(context, "Sentimento salvo");
    }
 
 
@@ -717,7 +704,13 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
 
     });
   }
+  ///Enviar respostas ao sair da Page:
+  _enviarRespostasApi() async{
 
+    var lista = [];
+    if(await Utils.isConnected()) RespostaApi(context).enviarRespostas(lista);
+
+  }
 
 
 }

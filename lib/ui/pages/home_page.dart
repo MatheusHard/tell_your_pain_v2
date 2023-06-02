@@ -5,11 +5,13 @@ import 'package:tell_your_pain_v2/ui/pages/screen_arguments/screen_arguments_usu
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_text_styles.dart';
+import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/appbar/app_bar_usuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/column_chart.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/charts/charts.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/drawer/header_drawer.dart';
 
+import '../api/resposta_api.dart';
 import '../enums/drawer_sections.dart';
 import 'main_page.dart';
 
@@ -23,6 +25,11 @@ class _HomePageState extends State<HomePage> {
   var currentPage = DrawerSections.dashboard;
   final GlobalKey<ScaffoldState> key = GlobalKey(); // Create a key
 
+  @override
+  void initState() {
+    _enviarRespostasApi();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -222,6 +229,12 @@ class _HomePageState extends State<HomePage> {
     return SizedBox(
       width: width,
     );
+  }
+  _enviarRespostasApi() async{
+
+    var lista = [];
+    if(await Utils.isConnected()) RespostaApi(context).enviarRespostas(lista);
+
   }
 }
 

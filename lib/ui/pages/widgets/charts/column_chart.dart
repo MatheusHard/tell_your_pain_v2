@@ -239,6 +239,8 @@ String urlEmoji = "";
    _listaRepostasByDimensao = [];
   var respostaRepository =  RespostaRepository(await DBHelper.instance.database);
   List lista = await respostaRepository.getRespostaByDimensao(dimensao['id']);
+
+
    _listaRepostasByDimensao = lista;
   setState(() {
     _listaRepostasByDimensao;
@@ -254,14 +256,15 @@ String urlEmoji = "";
     var mediaFomatada = (media / cont).toStringAsFixed(1);
     mediaTotal = double.parse(mediaFomatada);
     urlEmoji =  Utils.respostaEmoji(mediaTotal);
-    print("media"+media.toString());
-    print("conunt"+cont.toString());
-    print("meditotal"+mediaTotal.toString());
+    print("media "+media.toString());
+    print("count "+cont.toString());
+    print("mediatotal "+mediaTotal.toString());
 
   });
   }
 }
 _selectedItemDimensao(var data) {
+
   return data;
 }
   class ChartData {
