@@ -36,26 +36,29 @@ class RespostaRepository  implements IRespostaRepository{
   }
 
   @override
-  Future<int> updateStatus(int status, String erros, String id ) async {
+  Future<int> updateStatus(int status, String erros, String usuarioId) async {
     int res =  await _db.rawUpdate('''UPDATE ${RespostaDataModel.getTabela()} SET ${RespostaDataModel.statusEnvio} = ? , ${RespostaDataModel.erros} = ?  
-    WHERE ${RespostaDataModel.id} = ? ''', [status, erros, id]);
+    WHERE ${RespostaDataModel.id} = ? ''', [status, erros, usuarioId]);
   return res;
   }
 
   @override
-  Future<List> getCountSentimentoByDimensao(int dimensao) async{
+  Future<List> getCountSentimentoByDimensao(int dimensao, String usuarioId) async{
     var lista = await _db.rawQuery('''SELECT count(${RespostaDataModel.respostaCodigo}) as total, r.${RespostaDataModel.respostaCodigo}  
                                      FROM ${RespostaDataModel.getTabela()} r
                                      WHERE r.${RespostaDataModel.dimensaoId} =  $dimensao
+                                     AND r.${RespostaDataModel.usuarioId} =  '$usuarioId'
                                      GROUP BY r.${RespostaDataModel.respostaCodigo}''');
     return lista.toList();
   }
 
   @override
-  Future<List> getRespostaByDimensao(int dimensao) async {
+  Future<List> getRespostaByDimensao(int dimensao, String usuarioId) async {
     var lista = await _db.rawQuery('''SELECT r.${RespostaDataModel.respostaCodigo} 
                                      FROM ${RespostaDataModel.getTabela()} r
                                      WHERE r.${RespostaDataModel.dimensaoId} =  $dimensao
+                                     AND r.${RespostaDataModel.usuarioId} =  '$usuarioId'
+
                                      ''');
     return lista.toList();
   }

@@ -10,9 +10,13 @@ import 'package:tell_your_pain_v2/ui/enums/resposta_codigo.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_text_styles.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 
+import '../../screen_arguments/screen_arguments_usuario.dart';
+
 
 class ColumnChart extends StatefulWidget {
-  const ColumnChart({Key? key}) : super(key: key);
+  final ScreenArgumentsUsuario? usuarioLogado;
+
+  const ColumnChart(this.usuarioLogado, {Key? key}) : super(key: key);
 
   @override
   State<ColumnChart> createState() => _ColumnChartState();
@@ -23,6 +27,8 @@ class _ColumnChartState extends State<ColumnChart> {
   var selectedDimensao =  {"id": 0, "dimensao":"Família"};
   late List _listaRepostasColunas = [];
   late List _listaRepostasByDimensao = [];
+  ScreenArgumentsUsuario? usuarioLogado;
+
 
   late List<ChartData> chartData = [ ];
   double media = 0;
@@ -53,8 +59,10 @@ String urlEmoji = "";
 
   @override
   void initState() {
-    _getByDimensao(selectedDimensao);
-    _getRespostas(selectedDimensao);
+    usuarioLogado = widget.usuarioLogado;
+
+    _getByDimensao(selectedDimensao, usuarioLogado!);
+    _getRespostas(selectedDimensao, usuarioLogado!);
     _tooltip = charts.TooltipBehavior(enable: true);
 
     super.initState();
@@ -127,8 +135,8 @@ String urlEmoji = "";
                           hintText: 'escolha o tipo'
                       ),
                       onChanged: (newDimensao) {
-                        _getRespostas(newDimensao);
-                        _getByDimensao(newDimensao);
+                        _getRespostas(newDimensao, usuarioLogado!);
+                        _getByDimensao(newDimensao, usuarioLogado!);
                         _selectedItemDimensao(newDimensao);
                       },
                       selectedItem: _selectedItemDimensao(selectedDimensao),
@@ -176,12 +184,12 @@ String urlEmoji = "";
     );
   }
 
-  void _getRespostas(var dimensao) async {
+  void _getRespostas(var dimensao, ScreenArgumentsUsuario usuarioLogado) async {
 
     _listaRepostasColunas = [];
     chartData = [];
     var respostaRepository =  RespostaRepository(await DBHelper.instance.database);
-    List lista = await respostaRepository.getCountSentimentoByDimensao(dimensao['id']);
+    List lista = await respostaRepository.getCountSentimentoByDimensao(dimensao['id'], usuarioLogado.data.id);
     _listaRepostasColunas = lista;
     setState(() {
       _listaRepostasColunas;
@@ -234,11 +242,11 @@ String urlEmoji = "";
 
     return url;
   }
-  void _getByDimensao(var dimensao) async {
+  void _getByDimensao(var dimensao, ScreenArgumentsUsuario usuarioLogado) async {
 
    _listaRepostasByDimensao = [];
   var respostaRepository =  RespostaRepository(await DBHelper.instance.database);
-  List lista = await respostaRepository.getRespostaByDimensao(dimensao['id']);
+  List lista = await respostaRepository.getRespostaByDimensao(dimensao['id'],  usuarioLogado.data.id);
 
 
    _listaRepostasByDimensao = lista;

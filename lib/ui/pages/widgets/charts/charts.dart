@@ -31,7 +31,7 @@ class _ChartsPageState extends State<ChartsPage> {
           child: ListView(
             children:  [
               BarChart(usuarioLogado),
-              const ColumnChart()
+              ColumnChart(usuarioLogado)
             ],
           ),
         ),
