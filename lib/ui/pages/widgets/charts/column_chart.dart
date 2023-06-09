@@ -151,6 +151,7 @@ String urlEmoji = "";
                   majorGridLines: const MajorGridLines(width: 0),
                 ),
                 primaryYAxis: NumericAxis(
+                    interval: 1,
                     labelFormat: '{value}',
                     title: AxisTitle(text: 'Respostas'),
                     majorGridLines: const MajorGridLines(width: 0),

@@ -62,6 +62,8 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
     'assets/images/amigos.png',
 
   ];
+  String muitoTriste =  'assets/images/Triste.png';
+
   final _textoEmogis = [
     'Muito triste',
     'Triste',
@@ -281,7 +283,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 10 ),
                           child:
                           Image.asset(
-                            _pressedIconMuitoTriste ? 'assets/images/Triste.png' : 'assets/images/TristeSelected.png',
+                            _pressedIconMuitoTriste ? muitoTriste : 'assets/images/TristeSelected.png',
                             height: MediaQuery.of(context).size.width / 10,
                             width: MediaQuery.of(context).size.width / 10,
                           ),
@@ -664,9 +666,12 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
       int res = await respostaRepository.add(resposta).catchError((error){
         Utils.showDefaultSnackbar(context, '''Sentimento não salvo -> [ ${error.toString().substring(0,35)} ]...''');
       });
+      setState(() {
+         zerarBooleansSelected();
+      });
 
 
-   if(res > 0){
+    if(res > 0){
      if(!mounted) return;
      //Utils.showDefaultSnackbar(context, "Sentimento salvo");
    }
