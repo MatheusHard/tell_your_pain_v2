@@ -4,6 +4,7 @@ import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 
 import '../api/escola_api.dart';
+import '../enums/tipo_usuario.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login_page';
@@ -187,8 +188,8 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children:  [
             _isLoading
-                   ? const SizedBox(width: 25, height: 25, child: CircularProgressIndicator())
-                   : const Icon(Icons.account_circle_rounded, color: Colors.white, size: 25),
+                ? const SizedBox(width: 25, height: 25, child: CircularProgressIndicator())
+                : const Icon(Icons.account_circle_rounded, color: Colors.white, size: 25),
 
             const SizedBox(
               width: 15,
@@ -296,7 +297,7 @@ class _LoginPageState extends State<LoginPage> {
 
     setState(() {
       _isLoading = true;
-      UsuarioApi(context).loginUsuario(_user(_email, Utils.toSha1(_senha)));
+      UsuarioApi(context).loginUsuario(_login(_email, Utils.toSha1(_senha)));
     });
 //    await Future.delayed(const Duration(seconds: 3));
 
@@ -311,30 +312,13 @@ class _LoginPageState extends State<LoginPage> {
       height: height,
     );
   }
-  _user(String email, String senha){
+  _login(String email, String senha){
 
     return {
       "email": email,
       "senha": senha,
-      "token": "",
-      "foto": "string",
-      "nome": "string",
-      "dataNascimento": "2023-04-16T14:50:12.626Z",
-      "telefone": "string",
-      "escolaId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "turmaId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "tipoUsuarioId": 0,
-      "cpf": "string",
-      "nomeResponsavel": "string",
-      "cpfResponsavel": "string",
-      "telefoneResponsavel": "string",
-      "dataCadastro": "2023-04-16T14:50:12.626Z",
-      "dataAlteracao": "2023-04-16T14:50:12.626Z",
-      "rua": "string",
-      "numeroCasa": "string",
-      "complemento": "string",
-      "cidadeId": 0,
-      "bairroId": 0
+      "tipoUsuario": TipoUsuario.Aluno.index,
+
     };
   }
 

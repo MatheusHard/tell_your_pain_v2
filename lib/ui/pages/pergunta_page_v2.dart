@@ -78,7 +78,7 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
   void initState() {
     usuarioLogado = widget.usuarioLogado;
     ///Get Escola do Aluno:
-    _getEscola(usuarioLogado?.data.escolaId);
+    //_getEscola(usuarioLogado?.data.escolaId);
     super.initState();
   }
 

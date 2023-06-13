@@ -1,11 +1,11 @@
 enum TipoUsuario
 {
-  _,
-  ADMINISTRADOR,
-  COORDENADOR,
-  SUPERVISOR,
-  PROFESSOR,
-  RESPONSAVEL,
-  ALUNO
+  Aluno,
+  Professor,
+  Coordenador,
+  Responsavel,
+  Psicologo,
+  Diretor,
+  Administrador
 
 }

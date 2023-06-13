@@ -12,6 +12,7 @@ import 'package:tell_your_pain_v2/ui/models/escola.dart';
 import 'dart:convert';
 
 import '../database/repositories/EscolaRepository.dart';
+import '../models/endereco.dart';
 import '../models/usuario.dart';
 import '../pages/screen_arguments/screen_arguments_usuario.dart';
 import '../pages/utils/metods/utils.dart';
@@ -20,10 +21,10 @@ class UsuarioApi{
 
   BuildContext? _context;
 
-   UsuarioApi(BuildContext context){
+  UsuarioApi(BuildContext context){
     _context = context;
   }
-  final URL_API_USUARIO = "usuario";
+  final URL_API_USUARIO = "aluno/aluno";
   final URL_API_AUTH = "auth";
 
   final URL_LOGIN = "/login";
@@ -62,21 +63,21 @@ class UsuarioApi{
 
 
 
-      //Usuario Repositorio:
-      var usuarioRepository = UsuarioRepository(await DBHelper.instance.database);
+    //Usuario Repositorio:
+    var usuarioRepository = UsuarioRepository(await DBHelper.instance.database);
 
-      Usuario usuario = Usuario.fromMap(user);
+    Usuario usuario = Usuario.fromMap(user);
 
-      int deleteALl = await usuarioRepository.deleteAll();
+    int deleteALl = await usuarioRepository.deleteAll();
 
-      // if(deleteALl == 1) {
-      int resultAdd = await usuarioRepository.add(usuario);
+    // if(deleteALl == 1) {
+    int resultAdd = await usuarioRepository.add(usuario);
 
-      if (resultAdd >= 1) {
-        Navigator.popAndPushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
-      } else {
-        Utils.showDefaultSnackbar(_context!, "response.body");
-      }
+    if (resultAdd >= 1) {
+      Navigator.popAndPushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
+    } else {
+      Utils.showDefaultSnackbar(_context!, "response.body");
+    }
 
 
 
@@ -88,12 +89,12 @@ class UsuarioApi{
 
     Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_USUARIO$URL_LOGIN''');
     http.Response response = await http.post(
-      url,
-      headers: {
-       //"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-        "Content-type": "application/json; charset=UTF-8"
-       },
-      body:  jsonEncode(login)
+        url,
+        headers: {
+          //"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+          "Content-type": "application/json; charset=UTF-8"
+        },
+        body:  jsonEncode(login)
 
     );
 
@@ -103,11 +104,11 @@ class UsuarioApi{
 
       Usuario usuario = Usuario.fromMap(jsonDecode(response.body));
 
-       int deleteALl = await usuarioRepository.deleteAll();
+      int deleteALl = await usuarioRepository.deleteAll();
 
-       // if(deleteALl == 1) {
-          int resultAdd = await usuarioRepository.add(usuario);
-          if (resultAdd == 1) Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
+      // if(deleteALl == 1) {
+      int resultAdd = await usuarioRepository.add(usuario);
+      if (resultAdd == 1) Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
       //  }
       //Utils.saveSession("usuarioLogado", usuario);
 
@@ -121,15 +122,15 @@ class UsuarioApi{
   //Login
   loginUsuario(Map login) async{
 
-    var id;
+
     var respostaToken = await getToken(login);
 
     if(respostaToken['status'] == 200){
 
       Map<String, dynamic> decodedToken = JwtDecoder.decode(respostaToken['token']);
-      id = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+      var id = decodedToken['id'];
 
-      Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_USUARIO/$id''');
+      Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_USUARIO/?id=$id''');
       http.Response response = await http.get(url);
       print('''RESPONSE USUARIO: ${response.body}''');
 
@@ -138,31 +139,19 @@ class UsuarioApi{
 
       var usuarioDecode = jsonDecode(response.body);
 
-      ///Check Escola exists do Response:
-      if(usuarioDecode['escola'] == null) {
-        Utils.showDefaultSnackbar(_context!, '''Aluno pode está sem Matricula!!!''');
-        return;
-      }
-
-      ///Check Turma exists do Response:
-      if(usuarioDecode['turma'] == null) {
-        Utils.showDefaultSnackbar(_context!, '''Aluno pode está sem Turma!!!''');
-        return;
-      }
-
       ///CRUD Usuario:
       Usuario usuario = Usuario.fromMap(usuarioDecode);
       int deleteALlUsuarios = await usuarioRepository.deleteAll();
       int resultAdd = await usuarioRepository.add(usuario);
 
       ///CRUD Escola:
-      var escolaRepository = EscolaRepository(await DBHelper.instance.database);
+    /*  var escolaRepository = EscolaRepository(await DBHelper.instance.database);
       Escola? escola = usuario.escola;
       int deleteALlEscolas = await escolaRepository.deleteAll();
-      await escolaRepository.add(escola!);
+      await escolaRepository.add(escola!);*/
 
-      if (resultAdd == 1 && usuario.tipoUsuarioId == TipoUsuario.ALUNO.index) {
-           Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
+      if (resultAdd == 1 && login['tipoUsuario'] == TipoUsuario.Aluno.index) {
+        Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
       }
     }else{
       Utils.showDefaultSnackbar(_context!, '''Codigo: ${respostaToken['status']} -> ${respostaToken['token']}''');
@@ -172,7 +161,7 @@ class UsuarioApi{
 
   Future<dynamic> getToken(Map user) async{
 
-   var retorno ;
+    var retorno ;
 
     String? token;
     Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_AUTH$URL_LOGIN''');
@@ -185,8 +174,8 @@ class UsuarioApi{
 
     );
 
-      token = response.body;
-      retorno = {"token": token, "status": response.statusCode};
+    token = response.body;
+    retorno = {"token": token, "status": response.statusCode};
 
     return retorno;
 

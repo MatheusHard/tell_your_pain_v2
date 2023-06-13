@@ -52,10 +52,10 @@ class _ColumnChartState extends State<ColumnChart> {
 
   ];
 
-final listaDimencoes = Utils.listaDimensoes();
- late charts.TooltipBehavior _tooltip;
+  final listaDimencoes = Utils.listaDimensoes();
+  late charts.TooltipBehavior _tooltip;
 
-String urlEmoji = "";
+  String urlEmoji = "";
 
   @override
   void initState() {
@@ -76,111 +76,114 @@ String urlEmoji = "";
   }
 
 
-   _cardTitulo(List<ChartData> chartData){
-     var width = MediaQuery.of(context).size.width;
+  _cardTitulo(List<ChartData> chartData){
+    var width = MediaQuery.of(context).size.width;
 
     return Container(
       height: 400,
       padding: const EdgeInsets.all(20),
       child: Card(
-        child: Column(
-          children: [
-            Row(
-              children:[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      width: 30,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.teal,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 4,
-                            offset: Offset(4, 8), // Shadow position
+          child: Column(
+              children: [
+                Row(
+                    children:[
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                              width: 30,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.teal,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 4,
+                                    offset: Offset(4, 8), // Shadow position
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children:
+                                  [
+                                    Text('''Media: ${ mediaTotal ?? 0}''',
+                                      style: AppTextStyles.titleAppBarUsuario(35, context),),
+                                    const SizedBox( width: 10),
+                                    //urlEmoji == "" ? Image.asset(urlEmoji, height: width / 20, width: width / 20,): Container()
+                                    mediaTotal > 0 && !mediaTotal.isNaN ?
+                                    Image.asset(Utils.respostaEmoji(mediaTotal), height: width / 20, width: width / 20,):
+                                    Container()
+                                  ]
+                              ),
+                            ),
+                          )
+
+                      ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      Expanded(
+                        child: DropdownSearch<dynamic>(
+                          mode: Mode.MENU,
+                          items: listaDimencoes.map((rc) => rc).toList(),
+                          itemAsString: (dynamic rc) => rc['dimensao'].toString(),
+                          showSearchBox: true,
+                          dropdownSearchDecoration: const InputDecoration(
+                              labelText: 'Tema',
+                              hintText: 'escolha o tipo'
                           ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                          children:
-                            [
-                              Text('''Media: ${ mediaTotal ?? 0}''',
-                                    style: AppTextStyles.titleAppBarUsuario(35, context),),
-                              const SizedBox( width: 10),
-                              //urlEmoji == "" ? Image.asset(urlEmoji, height: width / 20, width: width / 20,): Container()
-                              mediaTotal > 0 && !mediaTotal.isNaN ?
-                              Image.asset(Utils.respostaEmoji(mediaTotal), height: width / 20, width: width / 20,):
-                              Container()
-                            ]
-                      ),
-                    ),
-                  )
-
-                ),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  Expanded(
-                    child: DropdownSearch<dynamic>(
-                      mode: Mode.MENU,
-                      items: listaDimencoes.map((rc) => rc).toList(),
-                      itemAsString: (dynamic rc) => rc['dimensao'].toString(),
-                      showSearchBox: true,
-                      dropdownSearchDecoration: const InputDecoration(
-                          labelText: 'Tema',
-                          hintText: 'escolha o tipo'
-                      ),
-                      onChanged: (newDimensao) {
-                        _getRespostas(newDimensao, usuarioLogado!);
-                        _getByDimensao(newDimensao, usuarioLogado!);
-                        _selectedItemDimensao(newDimensao);
-                      },
-                      selectedItem: _selectedItemDimensao(selectedDimensao),
-                    ),
-                  ),]
-            ),
-
-            Expanded(
-              child: charts.SfCartesianChart(
-                 // primaryXAxis: charts.CategoryAxis(),
-                primaryXAxis: CategoryAxis(
-                  majorGridLines: const MajorGridLines(width: 0),
-                ),
-                primaryYAxis: NumericAxis(
-                    interval: 1,
-                    labelFormat: '{value}',
-                    title: AxisTitle(text: 'Respostas'),
-                    majorGridLines: const MajorGridLines(width: 0),
-                    majorTickLines: const MajorTickLines(size: 0)),
-                palette: const <Color>[
-                  Colors.teal,
-                  Colors.orange,
-                  Colors.brown
-                ],
-                  tooltipBehavior: _tooltip,
-
-                  series: <charts.ChartSeries>[
-                    charts.StackedColumnSeries<ChartData, String>(
-                        dataLabelSettings: DataLabelSettings(
-                            textStyle: AppTextStyles.titleAppBarUsuario(35, context),
-                            isVisible: true, labelAlignment: ChartDataLabelAlignment.middle
+                          onChanged: (newDimensao) {
+                            _getRespostas(newDimensao, usuarioLogado!);
+                            _getByDimensao(newDimensao, usuarioLogado!);
+                            _selectedItemDimensao(newDimensao);
+                          },
+                          selectedItem: _selectedItemDimensao(selectedDimensao),
                         ),
+                      ),]
+                ),
+
+                Expanded(
+                  child: charts.SfCartesianChart(
+                    // primaryXAxis: charts.CategoryAxis(),
+
+                    primaryXAxis: CategoryAxis(
+                      majorGridLines: const MajorGridLines(width: 0),
+                    ),
+                    primaryYAxis: NumericAxis(
+                        interval: 1,
+                        labelFormat: '{value}',
+                        title: AxisTitle(text: 'Respostas'),
+                        majorGridLines: const MajorGridLines(width: 0),
+                        majorTickLines: const MajorTickLines(size: 0)),
+                    palette: const <Color>[
+                      Colors.teal,
+                      Colors.orange,
+                      Colors.brown
+                    ],
+                    tooltipBehavior: _tooltip,
+
+                    series: <charts.ChartSeries>[
+                      charts.StackedColumnSeries<ChartData, String>(
+                        //animationDelay: 100,
+                          animationDuration: 2000,
+                          dataLabelSettings: DataLabelSettings(
+                              textStyle: AppTextStyles.titleAppBarUsuario(35, context),
+                              isVisible: true, labelAlignment: ChartDataLabelAlignment.middle
+                          ),
                           dataSource: chartData,
                           xValueMapper: (ChartData data, _) => data.x,
                           yValueMapper: (ChartData data, _) => data.y,
-                        // Map color for each data points from the data source
-                        pointColorMapper: (ChartData data, _) => data.color
+                          // Map color for each data points from the data source
+                          pointColorMapper: (ChartData data, _) => data.color
 
-              ),
-          ],
-        ),
-            ),
-      ]
-      )
+                      ),
+                    ],
+                  ),
+                ),
+              ]
+          )
       ),
     );
   }
@@ -235,52 +238,52 @@ String urlEmoji = "";
     String url = "";
     var lista = Utils.listaUrlEmojis();
 
-        if(value >= 0 && value < 1) url = lista[0];
-        if(value >= 1 && value < 2) url = lista[1];
-        if(value >= 2 && value < 3) url = lista[2];
-        if(value >= 3 && value < 4) url = lista[3];
-        if(value >= 4) url = lista[4];
+    if(value >= 0 && value < 1) url = lista[0];
+    if(value >= 1 && value < 2) url = lista[1];
+    if(value >= 2 && value < 3) url = lista[2];
+    if(value >= 3 && value < 4) url = lista[3];
+    if(value >= 4) url = lista[4];
 
     return url;
   }
   void _getByDimensao(var dimensao, ScreenArgumentsUsuario usuarioLogado) async {
 
-   _listaRepostasByDimensao = [];
-  var respostaRepository =  RespostaRepository(await DBHelper.instance.database);
-  List lista = await respostaRepository.getRespostaByDimensao(dimensao['id'],  usuarioLogado.data.id);
+    _listaRepostasByDimensao = [];
+    var respostaRepository =  RespostaRepository(await DBHelper.instance.database);
+    List lista = await respostaRepository.getRespostaByDimensao(dimensao['id'],  usuarioLogado.data.id);
 
 
-   _listaRepostasByDimensao = lista;
-  setState(() {
-    _listaRepostasByDimensao;
-    double cont = 0;
-    mediaTotal = 0;
-    media = 0;
-    for(var item in _listaRepostasByDimensao){
-      var total  =  item['respostaCodigo'];
-      media += total;
+    _listaRepostasByDimensao = lista;
+    setState(() {
+      _listaRepostasByDimensao;
+      double cont = 0;
+      mediaTotal = 0;
+      media = 0;
+      for(var item in _listaRepostasByDimensao){
+        var total  =  item['respostaCodigo'];
+        media += total;
 
-      cont ++;
-    }
-    var mediaFomatada = (media / cont).toStringAsFixed(1);
-    mediaTotal = double.parse(mediaFomatada);
-    urlEmoji =  Utils.respostaEmoji(mediaTotal);
-    print("media "+media.toString());
-    print("count "+cont.toString());
-    print("mediatotal "+mediaTotal.toString());
+        cont ++;
+      }
+      var mediaFomatada = (media / cont).toStringAsFixed(1);
+      mediaTotal = double.parse(mediaFomatada);
+      urlEmoji =  Utils.respostaEmoji(mediaTotal);
+      print("media "+media.toString());
+      print("count "+cont.toString());
+      print("mediatotal "+mediaTotal.toString());
 
-  });
+    });
   }
 }
 _selectedItemDimensao(var data) {
 
   return data;
 }
-  class ChartData {
-    final String x;
-    final int y;
-    final Color? color;
+class ChartData {
+  final String x;
+  final int y;
+  final Color? color;
 
-    ChartData(this.x, this.y, this.color);
+  ChartData(this.x, this.y, this.color);
 
-  }
+}
