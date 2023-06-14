@@ -23,7 +23,7 @@ class UsuarioDataModel{
                                     $foto TEXT, $telefone TEXT, $dataNascimento TEXT,
                                     $responsavelId TEXT, $turmaId TEXT, $enderecoId TEXT);
            ''';
-  }
+        }
 
   static String dropTable(){
     return   "DROP TABLE IF EXISTS $TABELA;";

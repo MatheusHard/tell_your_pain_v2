@@ -75,7 +75,6 @@ class _ColumnChartState extends State<ColumnChart> {
 
   }
 
-
   _cardTitulo(List<ChartData> chartData){
     var width = MediaQuery.of(context).size.width;
 

@@ -43,21 +43,21 @@ class RespostaRepository  implements IRespostaRepository{
   }
 
   @override
-  Future<List> getCountSentimentoByDimensao(int dimensao, String usuarioId) async{
+  Future<List> getCountSentimentoByDimensao(int dimensao, String alunoId) async{
     var lista = await _db.rawQuery('''SELECT count(${RespostaDataModel.respostaCodigo}) as total, r.${RespostaDataModel.respostaCodigo}  
                                      FROM ${RespostaDataModel.getTabela()} r
                                      WHERE r.${RespostaDataModel.dimensaoId} =  $dimensao
-                                     AND r.${RespostaDataModel.usuarioId} =  '$usuarioId'
+                                     AND r.${RespostaDataModel.alunoId} =  '$alunoId'
                                      GROUP BY r.${RespostaDataModel.respostaCodigo}''');
     return lista.toList();
   }
 
   @override
-  Future<List> getRespostaByDimensao(int dimensao, String usuarioId) async {
+  Future<List> getRespostaByDimensao(int dimensao, String alunoId) async {
     var lista = await _db.rawQuery('''SELECT r.${RespostaDataModel.respostaCodigo} 
                                      FROM ${RespostaDataModel.getTabela()} r
                                      WHERE r.${RespostaDataModel.dimensaoId} =  $dimensao
-                                     AND r.${RespostaDataModel.usuarioId} =  '$usuarioId'
+                                     AND r.${RespostaDataModel.alunoId} =  '$alunoId'
 
                                      ''');
     return lista.toList();
@@ -70,7 +70,7 @@ class RespostaRepository  implements IRespostaRepository{
                                              count(r.${RespostaDataModel.respostaCodigo}) as count,
                                              r.${RespostaDataModel.dimensaoId} 
                                       FROM ${RespostaDataModel.getTabela()} r
-                                      WHERE r.${RespostaDataModel.usuarioId} =  '$id'
+                                      WHERE r.${RespostaDataModel.alunoId} =  '$id'
                                       GROUP BY r.${RespostaDataModel.dimensaoId}
                                      ''');
     return lista.toList();
@@ -80,7 +80,7 @@ class RespostaRepository  implements IRespostaRepository{
   Future<List> getMediaGeralRespostaByUsuarioId(String id) async {
     var res = await _db.rawQuery('''SELECT avg(r.${RespostaDataModel.respostaCodigo}) as mediaGeral
                                       FROM ${RespostaDataModel.getTabela()} r
-                                      WHERE r.${RespostaDataModel.usuarioId} =  '$id'
+                                      WHERE r.${RespostaDataModel.alunoId} =  '$id'
                                      ''');
     return res.toList();
   }

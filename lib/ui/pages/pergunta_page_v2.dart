@@ -657,11 +657,11 @@ class _PerguntaPage2State extends State<PerguntaPage2> {
     }
     var meuEnderecoIp = await Utils.getIpDevice();
 
-    Resposta resposta = Resposta(id: Utils.generateGuide(), escolaId:  usuarioLogado.data.escolaId,
-                                usuarioId: usuarioLogado.data.id, statusEnvio: StatusEnvio.A_ENVIAR.index,
+    Resposta resposta = Resposta(id: Utils.generateGuide(),
+                                alunoId: usuarioLogado.data.id, statusEnvio: StatusEnvio.A_ENVIAR.index,
                                 erros: "", respostaCodigo: indexSentimento, dataResposta: Utils.getDataHoraDotNet(),
-                                geoReferenciamento: '''${geoLocalizacao.latitude};${geoLocalizacao.longitude}''' , enderecoIp: meuEnderecoIp,
-                                dimensaoId: _perguntaTipo, poloId: escola!.poloId, turmaId: usuarioLogado.data.turmaId);
+                                geoReferenciamento: '''${geoLocalizacao.latitude};${geoLocalizacao.longitude}''' ,
+                                enderecoIp: meuEnderecoIp, dimensaoId: _perguntaTipo);
 
       int res = await respostaRepository.add(resposta).catchError((error){
         Utils.showDefaultSnackbar(context, '''Sentimento não salvo -> [ ${error.toString().substring(0,35)} ]...''');
