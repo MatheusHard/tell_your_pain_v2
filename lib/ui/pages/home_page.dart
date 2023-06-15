@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:tell_your_pain_v2/ui/api/escola_api.dart';
 import 'package:tell_your_pain_v2/ui/pages/perfil_page.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/screen_arguments_usuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_colors.dart';
@@ -12,6 +13,7 @@ import 'package:tell_your_pain_v2/ui/pages/widgets/charts/charts.dart';
 import 'package:tell_your_pain_v2/ui/pages/widgets/drawer/header_drawer.dart';
 
 import '../api/resposta_api.dart';
+import '../api/turma_api.dart';
 import '../enums/drawer_sections.dart';
 import 'main_page.dart';
 
@@ -236,6 +238,8 @@ class _HomePageState extends State<HomePage> {
     if(await Utils.isConnected()) RespostaApi(context).enviarRespostas(lista);
 
   }
+
+
 }
 
 

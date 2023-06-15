@@ -6,8 +6,9 @@ class Turma {
   String descricao;
   String dataCadastro;
   String dataAlteracao;
+  bool ativo;
 
-Turma({required this.id, required this.escolaId, required this.descricao, required this.dataCadastro, required this.dataAlteracao});
+Turma({required this.ativo, required this.id, required this.escolaId, required this.descricao, required this.dataCadastro, required this.dataAlteracao});
 
   factory Turma.fromMap(Map<String, dynamic> json) => Turma(
 
@@ -15,7 +16,8 @@ Turma({required this.id, required this.escolaId, required this.descricao, requir
       escolaId: json['escolaId'] ?? '',
       descricao: json['descricao'],
       dataCadastro: json['dataCadastro'],
-      dataAlteracao:  json['dataAlteracao']
+      dataAlteracao:  json['dataAlteracao'],
+      ativo:  json['ativo'] == 1 ? true : false
 
   );
 
@@ -25,7 +27,8 @@ Turma({required this.id, required this.escolaId, required this.descricao, requir
       'escolaId': escolaId,
       'descricao': descricao,
       'dataCadastro': dataCadastro,
-      'dataAlteracao':  dataAlteracao
+      'dataAlteracao':  dataAlteracao,
+      'ativo':  ativo == true ? 1 : 0
       };
   }
 }

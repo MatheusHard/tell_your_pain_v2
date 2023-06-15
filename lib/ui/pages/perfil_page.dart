@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:tell_your_pain_v2/ui/api/escola_api.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/screen_arguments_usuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_text_styles.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
+
+import '../api/turma_api.dart';
+import '../database/db_helper.dart';
+import '../database/repositories/EscolaRepository.dart';
+import '../database/repositories/TurmaRepository.dart';
+import '../models/escola.dart';
+import '../models/turma.dart';
 
 class PerfilPage extends StatefulWidget {
   final ScreenArgumentsUsuario? usuarioLogado;
@@ -16,10 +24,13 @@ class PerfilPage extends StatefulWidget {
 class _PerfilPageState extends State<PerfilPage> {
 
   ScreenArgumentsUsuario? usuarioLogado;
+  Turma? turma;
+  Escola? escola;
 
   @override
   void initState() {
     usuarioLogado = widget.usuarioLogado;
+    _getTurma();
     super.initState();
   }
   @override
@@ -76,24 +87,11 @@ class _PerfilPageState extends State<PerfilPage> {
             Utils.sizedBox(20, 20),
             Text('''Fone: ${usuarioLogado?.data.telefone}''', style: AppTextStyles.titleCardBlack(30, context),),
             Utils.sizedBox(20, 20),
-            Text('''Escola: ${usuarioLogado?.data.escola.nome}''', style: AppTextStyles.titleCardBlack(30, context),),
+            Text('''Escola: ${escola != null ? escola?.nome : ""}''', style: AppTextStyles.titleCardBlack(30, context),),
             Utils.sizedBox(20, 20),
-            Text('''Turma: ${usuarioLogado?.data.turma.descricao}''', style: AppTextStyles.titleCardBlack(30, context),),
+            Text('''Turma: ${turma?.descricao}''', style: AppTextStyles.titleCardBlack(30, context),),
             Utils.sizedBox(20, 20),
 
-
-            /**
-             *  'id': id,
-                'nome': nome,
-                'cpf': cpf,
-                'email': email,
-                // 'senhaHash':  senhaHash,
-                'dataNascimento': dataNascimento,
-                'escolaId': escolaId,
-                'turmaId': turmaId,
-                'foto': foto,
-                'telefone': telefone
-             * **/
           ],
         ),
       ),
@@ -101,7 +99,48 @@ class _PerfilPageState extends State<PerfilPage> {
     )
     ;
   }
+  void _getTurma() async {
 
+    ///Buscar a turma DB interno:
+    var turmaRepository = TurmaRepository(await DBHelper.instance.database);
+    turma = await turmaRepository.getById(usuarioLogado?.data.turmaId);
+    ///Se turma não existir:
+
+    if(turma == null && mounted){
+      if(await Utils.isConnected()){
+        Turma? turmaApi  = await TurmaApi(context).getById(usuarioLogado?.data.turmaId);
+
+        if(turmaApi != null && mounted){
+          turma = await turmaRepository.getById(usuarioLogado?.data.turmaId);
+          _getEscola(turmaApi.escolaId);
+          }
+        }
+      }else{
+      _getEscola(turma!.escolaId);
+       }
+        setState(() {
+          turma;
+        });
+      }
+
+  _getEscola(String escolaId) async{
+
+    ///Buscar a escola DB interno:
+    var escolaRepository = EscolaRepository(await DBHelper.instance.database);
+    escola = await escolaRepository.getById(escolaId);
+
+    ///Caso vazio, buscar na API:
+    if(escola == null && mounted){
+      if(await Utils.isConnected()){
+         await EscolaApi(context).getById(escolaId);
+      }
+      escola = await escolaRepository.getById(escolaId);
+
+    }
+    setState(() {
+      escola;
+    });
+  }
   _appBar(double width, ScreenArgumentsUsuario? usuarioLogado, String texto){
 
     return AppBar(

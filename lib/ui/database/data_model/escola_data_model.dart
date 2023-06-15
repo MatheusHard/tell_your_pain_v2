@@ -5,21 +5,22 @@ class EscolaDataModel{
   static const String id = "id";
   static const String nome = "nome";
   static const String cnpj = "cnpj";
-  static const String cidadeId = "cidadeId";
-  static const String bairroId = "bairroId";
-  static const String rua = "rua";
   static const String telefone = "telefone";
   static const String dataCadastro = "dataCadastro";
   static const String dataAlteracao = "dataAlteracao";
   static const String poloId = "poloId";
+  static const String email = "email";
+  static const String enderecoId = "enderecoId";
+  static const String ativo = "ativo";
 
 
   static String queryCriarTabela = "";
 
   static String criarTabela() {
 
-    return '''CREATE TABLE $TABELA ($id TEXT PRIMARY KEY, $nome TEXT, $cnpj TEXT, $cidadeId INTEGER, $bairroId INTEGER,
-                                    $rua TEXT, $telefone TEXT, $dataCadastro TEXT, $dataAlteracao TEXT, $poloId TEXT);
+    return '''CREATE TABLE $TABELA ($id TEXT PRIMARY KEY, $nome TEXT, $cnpj TEXT,  $telefone TEXT,
+                                    $dataCadastro TEXT, $dataAlteracao TEXT, $poloId TEXT,
+                                    $email TEXT, $enderecoId TEXT, $ativo INTEGER);
                                     ''';
   }
 

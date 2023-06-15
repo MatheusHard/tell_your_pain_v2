@@ -18,7 +18,7 @@ class EscolaApi{
   EscolaApi(BuildContext context){
     _context = context;
   }
-  final URL_API_ESCOLA = "escola";
+  final URL_API_ESCOLA = "escola/escola";
 
   ///Get All Escolas
   Future<int> getAll() async{
