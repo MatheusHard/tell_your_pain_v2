@@ -1,15 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tell_your_pain_v2/ui/database/db_helper.dart';
-import 'package:tell_your_pain_v2/ui/database/repositories/EscolaRepository.dart';
-import 'package:tell_your_pain_v2/ui/database/repositories/UsuarioRepository.dart';
 import 'dart:convert';
-
-import '../database/repositories/RespostaRepository.dart';
 import '../database/repositories/TurmaRepository.dart';
-import '../models/escola.dart';
 import '../models/turma.dart';
 import '../pages/utils/metods/utils.dart';
 
