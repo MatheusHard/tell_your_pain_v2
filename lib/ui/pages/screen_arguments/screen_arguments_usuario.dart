@@ -1,4 +1,5 @@
 class ScreenArgumentsUsuario {
   final data;
-  ScreenArgumentsUsuario(this.data);
+  final dataRecurso;
+  ScreenArgumentsUsuario(this.data, this.dataRecurso);
 }

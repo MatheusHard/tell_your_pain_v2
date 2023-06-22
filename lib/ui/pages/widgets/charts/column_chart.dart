@@ -5,7 +5,6 @@ import 'package:syncfusion_flutter_charts/charts.dart' as charts;
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:tell_your_pain_v2/ui/database/db_helper.dart';
 import 'package:tell_your_pain_v2/ui/database/repositories/RespostaRepository.dart';
-import 'package:tell_your_pain_v2/ui/enums/pergunta_tipo.dart';
 import 'package:tell_your_pain_v2/ui/enums/resposta_codigo.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_text_styles.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';

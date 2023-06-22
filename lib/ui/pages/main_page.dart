@@ -17,6 +17,7 @@ import 'package:tell_your_pain_v2/ui/pages/you_tube_page.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../api/resposta_api.dart';
+import '../models/recurso.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -53,11 +54,11 @@ class _MainPageState extends State<MainPage> {
 
   click(int index, context, usuarioLogado) {
     if (index == 0) {
-      Navigator.of(context).pushNamed('/pergunta_page', arguments: ScreenArgumentsUsuario(usuarioLogado));
+      Navigator.of(context).pushNamed('/pergunta_page', arguments: ScreenArgumentsUsuario(usuarioLogado, null));
     } else if (index == 1) {
-      Navigator.of(context).pushNamed('/avaliacao_page', arguments: ScreenArgumentsUsuario(usuarioLogado));
+      Navigator.of(context).pushNamed('/avaliacao_page', arguments: ScreenArgumentsUsuario(usuarioLogado, null));
     } else if (index == 2) {
-      Navigator.of(context).pushNamed('/charts_page', arguments: ScreenArgumentsUsuario(usuarioLogado));
+      Navigator.of(context).pushNamed('/charts_page', arguments: ScreenArgumentsUsuario(usuarioLogado, null));
     } else if (index == 3) {
       //FirebaseAuth.instance.signOut().then((user) {
         exit(0);
@@ -128,14 +129,15 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           ///Imagem pra tela do YouTube:
-          _getTumbnail(usuarioLogado!, width, url)
+          _getTumbnail(usuarioLogado!, width)
         ],
       ),
     );
   }
 
-  _getTumbnail(ScreenArgumentsUsuario usuarioLogado, var width, var url){
+  _getTumbnail(ScreenArgumentsUsuario usuarioLogado, var width){
 
+  Recurso? recurso = usuarioLogado.dataRecurso;
 
    return Expanded(
         child: Container(
@@ -146,7 +148,7 @@ class _MainPageState extends State<MainPage> {
            onTap: (){
             Navigator.push(
                  context,
-                 MaterialPageRoute(builder: (context) => YouTubePage(usuarioLogado!, url)));
+                 MaterialPageRoute(builder: (context) => YouTubePage(usuarioLogado!, recurso)));
              },
           child: Container(
 
@@ -167,7 +169,7 @@ class _MainPageState extends State<MainPage> {
               child:
           Image.network(
 
-              Utils.getYoutubeThumbnail(url)!
+              Utils.getYoutubeThumbnail(recurso!.link)!
               )
               ),
           ),

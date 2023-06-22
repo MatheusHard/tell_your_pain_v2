@@ -17,9 +17,9 @@ class RecursoApi{
   RecursoApi(BuildContext context){
     _context = context;
   }
-  final URL_API_RECURSO = "recurso/recurso";
+  final URL_API_RECURSO = "recurso/recursos";
 
-  ///Get All REcursos
+  ///Get All Recursos
   Future<int> getAll() async{
 
     Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_RECURSO''');
@@ -27,19 +27,21 @@ class RecursoApi{
 
     print(response);
     if(response.statusCode == 200) {
-//      await db.deletarTabelaCidade();
 
-      //Pegar dados da API:
+      ///Pegar dados da API:
       List _dados = json.decode(response.body);
 
       for (int i = 0; i < _dados.length; i++) {
-        //Inserir no DB interno dados da API:
-        // await db.inserirCidade(new Cidade(_dados[i]["descricao_cidade"], _dados[i]["uf_id"] , null));
+
+         var recursoRepository = RecursoRepository(await DBHelper.instance.database);
+         var recurso = Recurso.fromMapApi(_dados[i]);
+         ///Recurso Exists:
+         Recurso? recursoExists = await recursoRepository.getById(recurso.id);
+         ///Add Recurso:
+         if(recursoExists == null) await recursoRepository.add(recurso);
       }
-      //List d = await DBHelper.instance.getCidadesUfs();
       print(_dados);
 
-      //return json.decode(response.body);
       return response.statusCode;
 
     }else{

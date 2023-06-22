@@ -10,7 +10,7 @@ import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 import '../api/resposta_api.dart';
 import '../database/db_helper.dart';
 import '../database/repositories/RespostaRepository.dart';
-import '../enums/pergunta_tipo.dart';
+import '../enums/dimensao.dart';
 import '../enums/resposta_codigo.dart';
 import '../enums/status_envio.dart';
 import '../models/resposta.dart';

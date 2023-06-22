@@ -40,4 +40,23 @@ class RecursoRepository  implements IRecursoRepository {
 
     }
   }
+
+  @override
+  Future<Recurso?> getRecursoAtivo(int ativo) async {
+    var res = await _db.rawQuery('''SELECT * FROM ${RecursoDataModel.getTabela()} r 
+                                    WHERE r.${RecursoDataModel.ativo} = $ativo ''');
+    if(res.isNotEmpty) {
+      return Recurso.fromMap(res.first);
+    }else {
+      return null;
+
+    }
+  }
+
+  @override
+  Future<int> updateAtivo(int ativo) async {
+    int res =  await _db.rawUpdate('''UPDATE ${RecursoDataModel.getTabela()} SET ${RecursoDataModel.ativo} = ?   
+    WHERE ${RecursoDataModel.id} = ? ''', [ativo]);
+      return res;
+    }
 }

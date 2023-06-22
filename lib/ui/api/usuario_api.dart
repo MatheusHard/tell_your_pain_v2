@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:tell_your_pain_v2/ui/api/escola_api.dart';
+import 'package:tell_your_pain_v2/ui/api/recurso_api.dart';
 import 'package:tell_your_pain_v2/ui/database/db_helper.dart';
 import 'package:tell_your_pain_v2/ui/database/repositories/UsuarioRepository.dart';
 import 'package:tell_your_pain_v2/ui/enums/tipo_usuario.dart';
@@ -12,7 +13,9 @@ import 'package:tell_your_pain_v2/ui/models/escola.dart';
 import 'dart:convert';
 
 import '../database/repositories/EscolaRepository.dart';
+import '../database/repositories/RecursoRepository.dart';
 import '../models/endereco.dart';
+import '../models/recurso.dart';
 import '../models/usuario.dart';
 import '../pages/screen_arguments/screen_arguments_usuario.dart';
 import '../pages/utils/metods/utils.dart';
@@ -74,7 +77,7 @@ class UsuarioApi{
     int resultAdd = await usuarioRepository.add(usuario);
 
     if (resultAdd >= 1) {
-      Navigator.popAndPushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
+      Navigator.popAndPushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario, null));
     } else {
       Utils.showDefaultSnackbar(_context!, "response.body");
     }
@@ -106,11 +109,9 @@ class UsuarioApi{
 
       int deleteALl = await usuarioRepository.deleteAll();
 
-      // if(deleteALl == 1) {
       int resultAdd = await usuarioRepository.add(usuario);
-      if (resultAdd == 1) Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
-      //  }
-      //Utils.saveSession("usuarioLogado", usuario);
+      if (resultAdd == 1) Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario, null));
+
 
     }else{
       Utils.showDefaultSnackbar(_context!, response.body);
@@ -144,15 +145,18 @@ class UsuarioApi{
       int deleteALlUsuarios = await usuarioRepository.deleteAll();
       int resultAdd = await usuarioRepository.add(usuario);
 
-      ///CRUD Escola:
-    /*  var escolaRepository = EscolaRepository(await DBHelper.instance.database);
-      Escola? escola = usuario.escola;
-      int deleteALlEscolas = await escolaRepository.deleteAll();
-      await escolaRepository.add(escola!);*/
+      ///Logar a Tela de Aluno:
+       if (resultAdd == 1 && login['tipoUsuario'] == TipoUsuario.Aluno.index) {
 
-      if (resultAdd == 1 && login['tipoUsuario'] == TipoUsuario.Aluno.index) {
-        Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario));
+         ///Pegar os Recursos:
+         await RecursoApi(_context!).getAll();
+        ///Setar recurso atual:
+         var repositoryRecurso = RecursoRepository(await DBHelper.instance.database);
+         Recurso? recurso =  await repositoryRecurso.getRecursoAtivo(1);
+
+         Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario, recurso));
       }
+
     }else{
       Utils.showDefaultSnackbar(_context!, '''Codigo: ${respostaToken['status']} -> ${respostaToken['token']}''');
     }

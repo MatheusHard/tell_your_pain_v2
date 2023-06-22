@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:tell_your_pain_v2/ui/models/recurso.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/screen_arguments_usuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/screen_arguments_you_tube.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
@@ -12,9 +13,9 @@ import '../enums/resposta_codigo.dart';
 
 class YouTubePage extends StatefulWidget {
   final ScreenArgumentsUsuario? usuarioLogado;
-  final url;
+  final Recurso? recurso;
 
-  const YouTubePage(this.usuarioLogado, this.url, {Key? key}) : super(key: key);
+  const YouTubePage(this.usuarioLogado, this.recurso, {Key? key}) : super(key: key);
   @override
   State<YouTubePage> createState() => _YouTubePageState();
 }
@@ -23,6 +24,7 @@ class _YouTubePageState extends State<YouTubePage> {
 
   late YoutubePlayerController _controller;
   ScreenArgumentsUsuario? usuarioLogado;
+  Recurso? recurso;
   bool _pressedIconMuitoFeliz = true;
   bool _pressedIconFeliz = true;
   bool _pressedIconNormal = true;
@@ -40,7 +42,7 @@ class _YouTubePageState extends State<YouTubePage> {
 
   void runYoutubePlayer() {
     _controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(widget.url)!,
+        initialVideoId: YoutubePlayer.convertUrlToId(recurso!.link)!,
         flags: const YoutubePlayerFlags(
             enableCaption: false,
             isLive: false,
@@ -66,6 +68,7 @@ class _YouTubePageState extends State<YouTubePage> {
   @override
   void initState() {
     usuarioLogado = widget.usuarioLogado;
+    recurso = widget.recurso;
 
     runYoutubePlayer();
     super.initState();

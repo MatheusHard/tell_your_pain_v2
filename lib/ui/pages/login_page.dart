@@ -4,6 +4,7 @@ import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 
 import '../api/escola_api.dart';
+import '../api/recurso_api.dart';
 import '../enums/tipo_usuario.dart';
 
 class LoginPage extends StatefulWidget {
@@ -151,7 +152,6 @@ class _LoginPageState extends State<LoginPage> {
     final botao = GestureDetector(
 
       onTap: ()  {
-
         if(isChecked){
           if(_formKey.currentState!.validate()) {
             _isLoading ? null : _startLoading();
@@ -159,10 +159,9 @@ class _LoginPageState extends State<LoginPage> {
               _isLoading = false;
             });
           }
-        }else{
-          Utils.showDefaultSnackbar(context, "Aceite os termos!!!");
+        }else if(mounted){
+          Utils.showDefaultSnackbar( context, "Aceite os termos!!!");
         }
-
       },
       child:   Container(
 
@@ -293,13 +292,10 @@ class _LoginPageState extends State<LoginPage> {
   ///Loading Icon and Text:
   void _startLoading() async {
 
-    //await Future.delayed(const Duration(seconds: 3));
-
     setState(() {
       _isLoading = true;
       UsuarioApi(context).loginUsuario(_login(_email, Utils.toSha1(_senha)));
     });
-//    await Future.delayed(const Duration(seconds: 3));
 
     setState(() {
       _isLoading = false;
