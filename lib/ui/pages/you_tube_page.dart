@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:tell_your_pain_v2/ui/api/consumo_recurso_api.dart';
+import 'package:tell_your_pain_v2/ui/models/consumo_recurso.dart';
 import 'package:tell_your_pain_v2/ui/models/recurso.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/screen_arguments_usuario.dart';
 import 'package:tell_your_pain_v2/ui/pages/screen_arguments/screen_arguments_you_tube.dart';
@@ -304,14 +306,20 @@ class _YouTubePageState extends State<YouTubePage> {
   }
   void _registrar(int indexSentimento, var usuarioLogado) async {
 
-    var geoLocalizacao = await Utils.getGeolocalizacao();
+    if(validateConsumoRecurso()) {
+      ConsumoRecurso consumoRecurso = ConsumoRecurso(id: Utils.generateGuide(),
+          dataCadastro: Utils.getDataHoraDotNet(),
+          recursoId: recurso!.id,
+          respostaCodigo: indexSentimento,
+          usuarioId: usuarioLogado.data.id);
 
+      ConsumoRecursoApi(context).enviarConsumoRecurso(consumoRecurso, usuarioLogado.data);
+    }else{
+      Utils.showDefaultSnackbar(context, "Não foi possivel salvar o Consumo de Recurso!!!");
+    }
 
   }
-  TextStyle _estiloEmogis(var numero){
 
-    return TextStyle(fontSize: MediaQuery.of(context).size.width / numero);
-  }
   _changeIcons(int numero){
 
     switch(numero){
@@ -403,5 +411,14 @@ class _YouTubePageState extends State<YouTubePage> {
       //leadingWidth: 220,
 
     );
+  }
+
+  bool validateConsumoRecurso() {
+
+    bool validate = true;
+    if(usuarioLogado == null) validate = false;
+    if(recurso == null) validate == false;
+
+    return validate;
   }
 }

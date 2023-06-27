@@ -152,7 +152,10 @@ class UsuarioApi{
          await RecursoApi(_context!).getAll();
         ///Setar recurso atual:
          var repositoryRecurso = RecursoRepository(await DBHelper.instance.database);
+
          Recurso? recurso =  await repositoryRecurso.getRecursoAtivo(1);
+
+         recurso ??= await Utils.getRecursoPadrao();
 
          Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario, recurso));
       }

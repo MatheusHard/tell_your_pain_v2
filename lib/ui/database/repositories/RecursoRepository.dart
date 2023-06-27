@@ -54,9 +54,9 @@ class RecursoRepository  implements IRecursoRepository {
   }
 
   @override
-  Future<int> updateAtivo(int ativo) async {
+  Future<int> updateAtivo(int ativo, String id) async {
     int res =  await _db.rawUpdate('''UPDATE ${RecursoDataModel.getTabela()} SET ${RecursoDataModel.ativo} = ?   
-    WHERE ${RecursoDataModel.id} = ? ''', [ativo]);
+    WHERE ${RecursoDataModel.id} = ? ''', [ativo, id]);
       return res;
     }
 }

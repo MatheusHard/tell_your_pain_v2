@@ -6,7 +6,7 @@ class ConsumoRecurso {
   String usuarioId;
   String recursoId;
   String dataCadastro;
-  RespostaCodigo respostaCodigo;
+  int respostaCodigo;
 
 
   ConsumoRecurso({required this.id, required this.usuarioId, required this.recursoId,

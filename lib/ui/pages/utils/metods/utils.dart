@@ -15,6 +15,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:encrypt/encrypt.dart' as crypt;
 import 'package:uuid/uuid.dart';
 
+import '../../../models/recurso.dart';
+
 
   class Utils {
 
@@ -363,6 +365,15 @@ import 'package:uuid/uuid.dart';
         );
   }
     static Uint8List fileFromBase64String(String bytes)=> base64.decode(bytes);
+
+  static  Future<Recurso?> getRecursoPadrao() async {
+
+    return Recurso(
+      id: generateGuide(), tipoRecurso: 0, link: "https://www.youtube.com/watch?v=cjONzZPJONc",
+        intervaloInicial: 0, intervaloFinal: 0, indicacao: "",dataAlteracao: getDataHoraDotNet(),
+      dataCadastro: getDataHoraDotNet(), ativo: 1
+    );
+  }
 
   }
 

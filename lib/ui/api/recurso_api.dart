@@ -6,7 +6,6 @@ import 'package:tell_your_pain_v2/ui/database/repositories/EscolaRepository.dart
 import 'dart:convert';
 
 import '../database/repositories/RecursoRepository.dart';
-import '../models/escola.dart';
 import '../models/recurso.dart';
 import '../pages/utils/metods/utils.dart';
 
