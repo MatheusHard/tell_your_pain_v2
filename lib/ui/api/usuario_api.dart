@@ -121,8 +121,9 @@ class UsuarioApi{
 
 
   //Login
-  loginUsuario(Map login) async{
+  Future<bool> loginUsuario(Map login) async{
 
+    bool flag = false;
 
     var respostaToken = await getToken(login);
 
@@ -156,13 +157,16 @@ class UsuarioApi{
          Recurso? recurso =  await repositoryRecurso.getRecursoAtivo(1);
 
          recurso ??= await Utils.getRecursoPadrao();
-
+         flag = true;
          Navigator.pushNamed(_context!, '/home_page', arguments: ScreenArgumentsUsuario(usuario, recurso));
       }
 
     }else{
       Utils.showDefaultSnackbar(_context!, '''Codigo: ${respostaToken['status']} -> ${respostaToken['token']}''');
+      flag = false;
     }
+
+    return flag;
 
   }
 

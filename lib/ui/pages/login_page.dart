@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   final textFieldFocusNode = FocusNode();
 
   bool obscured = true;
-  bool _isLoading = false;
+  final _isLoading = ValueNotifier<bool>(false);
 
 
   @override
@@ -154,10 +154,11 @@ class _LoginPageState extends State<LoginPage> {
       onTap: ()  {
         if(isChecked){
           if(_formKey.currentState!.validate()) {
-            _isLoading ? null : _startLoading();
-            setState(() {
-              _isLoading = false;
-            });
+
+
+              _isLoading.value = !_isLoading.value;
+              _logar();
+
           }
         }else if(mounted){
           Utils.showDefaultSnackbar( context, "Aceite os termos!!!");
@@ -183,29 +184,42 @@ class _LoginPageState extends State<LoginPage> {
 
         ),
 
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:  [
-            _isLoading
-                ? const SizedBox(width: 25, height: 25, child: CircularProgressIndicator())
-                : const Icon(Icons.account_circle_rounded, color: Colors.white, size: 25),
+        child: AnimatedBuilder(
+         animation: _isLoading,
+          builder: (context, _) {
+            return _isLoading.value
+                ?
+                ///Loading:
+                Padding(
+                  padding:  EdgeInsets.only(left: width / 2.5,bottom: 15, right: width /2.5, top:  15),
+                  child: const SizedBox(
+                          width: 20,
+                          height: 20,
+                  child: CircularProgressIndicator(
+                    valueColor:  AlwaysStoppedAnimation<Color>(Colors.white),
+                  )),
+                )
+                ///Botão de Logar:
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:  const [
 
-            const SizedBox(
-              width: 15,
-            ),
-            Text( _isLoading ? 'Carregando':'Log In',textAlign: TextAlign.left,
-              style: const TextStyle(
-                fontFamily: "Netflix",
-                fontWeight: FontWeight.w600,
-                fontSize: 18,
-                letterSpacing: 0.0,
-                color: Colors.white,
+                      Icon(Icons.account_circle_rounded, color: Colors.white, size: 20),
+                      SizedBox( width: 15,),
+                      Text('Log In', textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontFamily: "Netflix",
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          letterSpacing: 0.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  );}
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
+            );
 
     final termosConsentimento = Row(
 
@@ -244,18 +258,6 @@ class _LoginPageState extends State<LoginPage> {
 
     );
 
-
-    final cadastrar = TextButton(
-      child: const Text(
-        'Não tem uma conta? Cadastre-se',
-        style: TextStyle(color: Colors.blue, fontSize: 16),
-      ),
-      onPressed: () {
-        Navigator.pushNamed(
-            context, '/cadastro_page', arguments: null);
-      },
-    );
-
     return Scaffold(
         key: _scaffoldKey,
         backgroundColor: Colors.white,
@@ -290,16 +292,9 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
   ///Loading Icon and Text:
-  void _startLoading() async {
+  void _logar() async {
 
-    setState(() {
-      _isLoading = true;
-      UsuarioApi(context).loginUsuario(_login(_email, Utils.toSha1(_senha)));
-    });
-
-    setState(() {
-      _isLoading = false;
-    });
+    _isLoading.value = await UsuarioApi(context).loginUsuario(_login(_email, Utils.toSha1(_senha)));
 
   }
 
