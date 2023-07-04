@@ -71,7 +71,7 @@ class _BarChartState extends State<BarChart> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children:
                           [
-                            Text('''Media Geral: ${ mediaGeral ?? 0}''',
+                            Text('''Média Geral: ${ mediaGeral.isNaN ? 0.0 : mediaGeral}''',
                               style: AppTextStyles.titleAppBarUsuario(35, context),),
                             const SizedBox( width: 10),
                             //urlEmoji == "" ? Image.asset(urlEmoji, height: width / 20, width: width / 20,): Container()

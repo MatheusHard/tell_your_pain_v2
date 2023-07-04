@@ -13,6 +13,13 @@ class AppTextStyles {
     fontSize: 18,
     fontWeight: FontWeight.w400,
   );
+  static final TextStyle textLogin = GoogleFonts.notoSans(
+    color: AppColors.white,
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.0
+
+  );
   static TextStyle loginHint = GoogleFonts.notoSans(
     color: AppColors.white,
     fontSize: 18,
@@ -94,6 +101,15 @@ class AppTextStyles {
     ) ;
 
   }
+
+  static TextStyle titleLogin(){
+    return  GoogleFonts.notoSans(
+      color: AppColors.white,
+      fontSize: 25,
+      fontWeight: FontWeight.w600,
+      );
+    }
+
   static final TextStyle titleBold = GoogleFonts.notoSans(
     color: AppColors.white,
     fontSize: 30,
@@ -106,11 +122,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
   );
 
-  static final TextStyle titleLogin = GoogleFonts.notoSans(
-    color: AppColors.white,
-    fontSize: 25,
-    fontWeight: FontWeight.w600,
-  );
+
 
   static final TextStyle heading = GoogleFonts.notoSans(
     color: AppColors.black,

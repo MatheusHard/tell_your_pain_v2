@@ -103,7 +103,5 @@ class ConsumoRecursoApi{
 
     return newRecurso;
   }
-
-
 }
 

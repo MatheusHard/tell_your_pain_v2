@@ -106,7 +106,7 @@ class _ColumnChartState extends State<ColumnChart> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children:
                                   [
-                                    Text('''Media: ${ mediaTotal ?? 0}''',
+                                    Text('''Média: ${  mediaTotal.isNaN ? '0.0' : mediaTotal }''',
                                       style: AppTextStyles.titleAppBarUsuario(35, context),),
                                     const SizedBox( width: 10),
                                     //urlEmoji == "" ? Image.asset(urlEmoji, height: width / 20, width: width / 20,): Container()

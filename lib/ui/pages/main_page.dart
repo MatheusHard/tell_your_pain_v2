@@ -103,11 +103,12 @@ class _MainPageState extends State<MainPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Utils.getIconSemaforo(mediaGeral),
-                            Text('''$mediaGeral ''', style: TextStyle(color: Utils.getColorSemaforo(mediaGeral)),),
+                            Text(mediaGeral.isNaN ? '0.0' : '''$mediaGeral''',
+                              style: TextStyle(color: Utils.getColorSemaforo(mediaGeral)),),
                           ],
                         ),
-                        Text('''$mediaGeral ''',
-                          style: AppTextStyles.titleCardBlack(10, context),),
+                        Text(mediaGeral.isNaN ? '0.0' : '''$mediaGeral''',
+                             style: AppTextStyles.titleCardBlack(10, context),),
                         const SizedBox( width: 10),
                         mediaGeral > 0 && !mediaGeral.isNaN ?
                         Image.asset(_getUrl(mediaGeral), height: width / 10, width: width / 10,):

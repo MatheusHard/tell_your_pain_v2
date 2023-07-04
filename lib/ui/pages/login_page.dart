@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tell_your_pain_v2/ui/api/usuario_api.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/core/app_gradients.dart';
+import 'package:tell_your_pain_v2/ui/pages/utils/core/core.dart';
 import 'package:tell_your_pain_v2/ui/pages/utils/metods/utils.dart';
 
 import '../api/escola_api.dart';
@@ -131,10 +132,7 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
           child: GestureDetector(
             onTap: _toggleObscured,
-            child: Icon(
-              obscured
-                  ? Icons.visibility_rounded
-                  : Icons.visibility_off_rounded,
+            child: Icon( obscured ? Icons.visibility_rounded :Icons.visibility_off_rounded,
               size: 24,
             ),
           ),
@@ -154,14 +152,11 @@ class _LoginPageState extends State<LoginPage> {
       onTap: ()  {
         if(isChecked){
           if(_formKey.currentState!.validate()) {
-
-
               _isLoading.value = !_isLoading.value;
               _logar();
-
           }
         }else if(mounted){
-          Utils.showDefaultSnackbar( context, "Aceite os termos!!!");
+          Utils.showDefaultSnackbar(context, "Aceite os termos!!!");
         }
       },
       child:   Container(
@@ -179,9 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                 blurRadius: 10,
                 offset: const Offset(0, 3),
               )
-
             ]
-
         ),
 
         child: AnimatedBuilder(
@@ -202,18 +195,11 @@ class _LoginPageState extends State<LoginPage> {
                 ///Botão de Logar:
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children:  const [
-
-                      Icon(Icons.account_circle_rounded, color: Colors.white, size: 20),
-                      SizedBox( width: 15,),
-                      Text('Log In', textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontFamily: "Netflix",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          letterSpacing: 0.0,
-                          color: Colors.white,
-                        ),
+                    children:  [
+                      const Icon(Icons.account_circle_rounded, color: Colors.white, size: 20),
+                      Utils.sizedBox(15, 0),
+                      Text("Log In", textAlign: TextAlign.left,
+                        style:  AppTextStyles.textLogin
                       ),
                     ],
                   );}
@@ -250,12 +236,8 @@ class _LoginPageState extends State<LoginPage> {
             _dialogAceiteosTermos(context);
 
           },
-
         )
-
       ],
-
-
     );
 
     return Scaffold(
@@ -276,7 +258,6 @@ class _LoginPageState extends State<LoginPage> {
                 _sizedBox(24.0),
                 botao,
                 termosConsentimento,
-                ///cadastrar
               ],
             ),
           ),
@@ -293,9 +274,7 @@ class _LoginPageState extends State<LoginPage> {
   }
   ///Loading Icon and Text:
   void _logar() async {
-
     _isLoading.value = await UsuarioApi(context).loginUsuario(_login(_email, Utils.toSha1(_senha)));
-
   }
 
   _sizedBox(double height){

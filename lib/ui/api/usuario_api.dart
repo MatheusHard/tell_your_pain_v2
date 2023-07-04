@@ -132,7 +132,7 @@ class UsuarioApi{
       Map<String, dynamic> decodedToken = JwtDecoder.decode(respostaToken['token']);
       var id = decodedToken['id'];
 
-      Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_USUARIO/?id=$id''');
+      Uri url = Uri.parse('''${Utils.URL_WEB_SERVICE}$URL_API_USUARIO/$id''');
       http.Response response = await http.get(url);
       print('''RESPONSE USUARIO: ${response.body}''');
 

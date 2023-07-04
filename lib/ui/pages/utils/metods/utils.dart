@@ -23,7 +23,7 @@ import '../../../models/recurso.dart';
   ///Servidor
   //static String URL_WEB_SERVICE = "http://192.99.158.20:80/api/";
   ///Local
-  static String URL_WEB_SERVICE = "http://192.168.0.4:5001/api/";
+  static String URL_WEB_SERVICE = "http://192.168.0.7:5001/api/";
 
   //String URL_WEB_SERVICE = "http://avaliacoes-backend.herokuapp.com/";
   static const String IMG_KEY = 'IMAGE_KEY';
@@ -80,6 +80,8 @@ import '../../../models/recurso.dart';
     if(value >= 3 && value < 4) {cor = Colors.yellow; icon = Icons.arrow_right;}
     if(value >= 4 && value < 5) {cor = Colors.green; icon = Icons.arrow_drop_up;}
     if(value >= 5) {cor = Colors.greenAccent; icon = Icons.arrow_drop_up;}
+    if(value.isNaN) {cor = Colors.black; icon = Icons.arrow_left;}
+
 
     return Icon(icon, size: 25, color: cor);
 
@@ -87,12 +89,12 @@ import '../../../models/recurso.dart';
   static Color? getColorSemaforo(double value){
     var cor;
 
-    if(value >= 1 && value < 2) {cor = Colors.red;}
-    if(value >= 2 && value < 3) {cor = Colors.orange;}
-    if(value >= 3 && value < 4) {cor = Colors.yellow;}
-    if(value >= 4 && value < 5) {cor = Colors.green; }
-    if(value >= 5) {cor = Colors.greenAccent; }
-
+    if(value >= 1 && value < 2) cor = Colors.red;
+    if(value >= 2 && value < 3) cor = Colors.orange;
+    if(value >= 3 && value < 4) cor = Colors.yellow;
+    if(value >= 4 && value < 5) cor = Colors.green;
+    if(value >= 5) cor = Colors.greenAccent;
+    if(value.isNaN) cor = Colors.black;
     return  cor;
 
   }
