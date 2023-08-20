@@ -183,14 +183,10 @@ class _LoginPageState extends State<LoginPage> {
             return _isLoading.value
                 ?
                 ///Loading:
-                Padding(
-                  padding:  EdgeInsets.only(left: width / 2.5,bottom: 15, right: width /2.5, top:  15),
-                  child: const SizedBox(
-                          width: 20,
-                          height: 20,
+                const Center(
                   child: CircularProgressIndicator(
                     valueColor:  AlwaysStoppedAnimation<Color>(Colors.white),
-                  )),
+                  ),
                 )
                 ///Botão de Logar:
                 : Row(
